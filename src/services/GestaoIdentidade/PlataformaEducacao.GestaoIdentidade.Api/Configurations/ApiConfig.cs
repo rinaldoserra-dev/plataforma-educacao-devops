@@ -44,7 +44,8 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            if (!environment.IsEnvironment("Docker"))
+                app.UseHttpsRedirection();
 
             app.UseRouting();
 
