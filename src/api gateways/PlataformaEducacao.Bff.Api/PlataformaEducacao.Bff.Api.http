@@ -1,0 +1,6 @@
+@PlataformaEducacao.Bff.Api_HostAddress = http://localhost:5231
+
+GET {{PlataformaEducacao.Bff.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

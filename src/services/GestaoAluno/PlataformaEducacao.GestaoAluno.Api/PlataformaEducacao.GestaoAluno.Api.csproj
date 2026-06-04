@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.20" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.20" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.20" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.20" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.20" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.20">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\building-blocks\PlataformaEducacao.Core\PlataformaEducacao.Core.csproj" />
+    <ProjectReference Include="..\..\..\building-blocks\PlataformaEducacao.MessageBus\PlataformaEducacao.MessageBus.csproj" />
+    <ProjectReference Include="..\..\..\building-blocks\PlataformaEducacao.WebApi.Core\PlataformaEducacao.WebApi.Core.csproj" />
+    <ProjectReference Include="..\PlataformaEducacao.GestaoAluno.Data\PlataformaEducacao.GestaoAluno.Data.csproj" />
+    <ProjectReference Include="..\PlataformaEducacao.GestaoAluno.Domain\PlataformaEducacao.GestaoAluno.Domain.csproj" />
+    <ProjectReference Include="..\PlataformaEducacao.GestaoAluno.Application\PlataformaEducacao.GestaoAluno.Application.csproj" />
+  </ItemGroup>
+
+
+</Project>
