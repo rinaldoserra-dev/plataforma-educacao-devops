@@ -34,9 +34,10 @@ LABEL org.opencontainers.image.title="gestao-identidade-api" \
       org.opencontainers.image.revision=$VCS_REF \
       org.opencontainers.image.version=$VERSION
 
-RUN addgroup --system --gid 1001 app \
-    && adduser --system --uid 1001 --ingroup app app \
-    && chown -R app:app /app
+RUN deluser app 2>/dev/null || true && delgroup app 2>/dev/null || true && \
+    addgroup --system --gid 1001 app && \
+    adduser --system --uid 1001 --ingroup app app && \
+    chown -R app:app /app
 
 COPY --from=publish --chown=app:app /app/publish .
 
