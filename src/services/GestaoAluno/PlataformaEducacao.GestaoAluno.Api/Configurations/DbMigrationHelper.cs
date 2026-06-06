@@ -25,7 +25,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
 
                 var alunoContext = scope.ServiceProvider.GetRequiredService<GestaoAlunoContext>();
 
-                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing")
+                if (env.EnvironmentName is "Development" or "Docker" or "Testing")
                 {
                     await alunoContext.Database.MigrateAsync();
 
