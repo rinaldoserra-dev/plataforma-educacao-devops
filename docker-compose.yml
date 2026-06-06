@@ -32,6 +32,25 @@ services:
       rabbitmq:
         condition: service_healthy
 
+  gestao-aluno-api:
+    build:
+      context: .
+      dockerfile: src/services/GestaoAluno/PlataformaEducacao.GestaoAluno.Api/Dockerfile
+    container_name: plataforma-aluno
+    ports:
+      - "5460:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoAluno.db
+      - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
+    volumes:
+      - sqlite-data:/app/data
+    networks:
+      - plataforma-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
 networks:
   plataforma-network:
     driver: bridge
