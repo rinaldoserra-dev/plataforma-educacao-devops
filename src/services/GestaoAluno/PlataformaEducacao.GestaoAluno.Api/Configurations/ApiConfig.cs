@@ -52,11 +52,10 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
 
-            app.UseHttpsRedirection();
+            if (env.IsEnvironment("Docker") is false)
+                app.UseHttpsRedirection();
 
             app.UseRouting();
 
