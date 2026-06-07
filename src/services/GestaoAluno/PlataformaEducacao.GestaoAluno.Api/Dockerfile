@@ -37,16 +37,9 @@ LABEL org.opencontainers.image.title="gestao-aluno-api" \
       org.opencontainers.image.revision=$VCS_REF \
       org.opencontainers.image.version=$VERSION
 
-RUN deluser app 2>/dev/null || true && delgroup app 2>/dev/null || true && \
-    addgroup --system --gid 1001 app && \
-    adduser --system --uid 1001 --ingroup app app && \
-    chown -R app:app /app
-
-COPY --from=publish --chown=app:app /app/publish .
-
-USER app
+COPY --from=publish /app/publish .
 
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-    CMD curl --fail http://localhost:8080/health || exit 1
+    CMD curl --fail http://localhost:8080/swagger/index.html || exit 1
 
 ENTRYPOINT ["dotnet", "PlataformaEducacao.GestaoAluno.Api.dll"]
