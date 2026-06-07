@@ -25,7 +25,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
 
                 var identityContext = scope.ServiceProvider.GetRequiredService<GestaoIdentidadeContext>();
 
-                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing")
+                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing" || env.EnvironmentName == "Docker")
                 {
                     await identityContext.Database.MigrateAsync();
 

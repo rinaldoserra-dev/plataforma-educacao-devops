@@ -1,0 +1,40 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: plataforma-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - plataforma-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  gestao-identidade-api:
+    build:
+      context: .
+      dockerfile: src/services/GestaoIdentidade/PlataformaEducacao.GestaoIdentidade.Api/Dockerfile
+    container_name: plataforma-identidade
+    ports:
+      - "5430:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoIdentidade.db
+      - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
+    volumes:
+      - sqlite-data:/app/data
+    networks:
+      - plataforma-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+networks:
+  plataforma-network:
+    driver: bridge
+
+volumes:
+  sqlite-data:
