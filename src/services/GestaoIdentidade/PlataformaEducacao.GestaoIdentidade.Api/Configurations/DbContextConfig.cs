@@ -7,7 +7,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
     {
         public static IServiceCollection AddDbContextConfig(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
-            if (environment.IsDevelopment() || environment.EnvironmentName == "Testing")
+            if (environment.IsDevelopment() || environment.EnvironmentName == "Testing" || environment.EnvironmentName == "Docker")
             {
                 services.AddDbContext<GestaoIdentidadeContext>(opt =>
                 {
