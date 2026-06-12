@@ -13,10 +13,6 @@
     <None Remove="Migrations\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="Dockerfile" />
-  </ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.20" />
