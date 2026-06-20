@@ -25,7 +25,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
 
                 var financeiroContext = scope.ServiceProvider.GetRequiredService<PagamentosContext>();
 
-                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing")
+                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing" || env.EnvironmentName == "Docker")
                 {
                     await financeiroContext.Database.MigrateAsync();
 
