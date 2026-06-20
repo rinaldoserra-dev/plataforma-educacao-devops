@@ -26,7 +26,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
 
                 var conteudoContext = scope.ServiceProvider.GetRequiredService<GestaoConteudoContext>();
 
-                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing")
+                if (env.EnvironmentName is "Development" or "Docker" or "Testing")
                 {
                     await conteudoContext.Database.MigrateAsync();
 
