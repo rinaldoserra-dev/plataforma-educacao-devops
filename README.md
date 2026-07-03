@@ -35,7 +35,8 @@ O projeto consiste em:
   - EasyNetQ (Abstração do RabbitMQ)
   - Polly (Resiliência e retry policies)
 - **Banco de Dados:**
-  - SQLite (Desenvolvimento e Testes)
+  - SQL Server (Desenvolvimento e Docker)
+  - SQLite em memória (Testes)
 - **Mensageria:** RabbitMQ
 - **Autenticação e Autorização:**
   - ASP.NET Core Identity
@@ -99,7 +100,7 @@ A estrutura do projeto é organizada da seguinte forma:
 ### **Pré-requisitos**
 
 - .NET SDK 8.0 ou superior
-- RabbitMQ (pode ser executado via Docker)
+- SQL Server e RabbitMQ (podem ser executados via Docker)
 - Visual Studio 2022 ou superior (ou qualquer IDE de sua preferência)
 - Git
 
@@ -115,7 +116,7 @@ A estrutura do projeto é organizada da seguinte forma:
 
 3. **Configuração do Banco de Dados:**
    - No arquivo `appsettings.json` de cada API, em `ConnectionStrings:DefaultConnection`, configure a string de conexão conforme necessário.
-   - Em ambiente de desenvolvimento (Development), o banco SQLite é criado e populado automaticamente ao executar os serviços.
+   - Em ambiente de desenvolvimento (Development), os bancos SQL Server são criados e populados automaticamente ao executar os serviços.
 
 4. **Executar a API de Gestão de Identidade:**
    - `dotnet run --project src/services/GestaoIdentidade/PlataformaEducacao.GestaoIdentidade.Api`

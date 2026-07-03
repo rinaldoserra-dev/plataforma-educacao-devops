@@ -7,7 +7,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
     {
         public static IServiceCollection AddDbContextConfig(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
-            if (environment.IsDevelopment() || environment.EnvironmentName == "Testing" || environment.EnvironmentName == "Docker")
+            if (environment.EnvironmentName == "Testing")
             {
                 services.AddDbContext<PagamentosContext>(opt =>
                 {

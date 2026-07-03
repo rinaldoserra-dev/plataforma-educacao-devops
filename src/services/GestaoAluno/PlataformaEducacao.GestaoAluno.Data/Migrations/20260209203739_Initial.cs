@@ -14,7 +14,7 @@ namespace PlataformaEducacao.GestaoAluno.Data.Migrations
                 name: "Alunos",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(255)", nullable: false),
                     Email = table.Column<string>(type: "varchar(254)", nullable: false)
                 },
@@ -27,17 +27,17 @@ namespace PlataformaEducacao.GestaoAluno.Data.Migrations
                 name: "Matriculas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    CursoId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CursoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NomeCurso = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Valor = table.Column<decimal>(type: "TEXT", nullable: false),
-                    AlunoId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DataMatricula = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    SituacaoMatricula = table.Column<int>(type: "INTEGER", nullable: false),
-                    TotalAulasCurso = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 0),
-                    ProgressoGeralCurso = table.Column<double>(type: "REAL", nullable: false, defaultValue: 0.0),
-                    SituacaoCurso = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 0),
-                    DataConclusao = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    AlunoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataMatricula = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    SituacaoMatricula = table.Column<int>(type: "int", nullable: false),
+                    TotalAulasCurso = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ProgressoGeralCurso = table.Column<double>(type: "float", nullable: false, defaultValue: 0.0),
+                    SituacaoCurso = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    DataConclusao = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,8 +53,8 @@ namespace PlataformaEducacao.GestaoAluno.Data.Migrations
                 name: "Certificados",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    MatriculaId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MatriculaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CodigoVerificacao = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
@@ -71,10 +71,10 @@ namespace PlataformaEducacao.GestaoAluno.Data.Migrations
                 name: "ProgressoAulas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    MatriculaId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AulaId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    DataConclusao = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MatriculaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AulaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataConclusao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

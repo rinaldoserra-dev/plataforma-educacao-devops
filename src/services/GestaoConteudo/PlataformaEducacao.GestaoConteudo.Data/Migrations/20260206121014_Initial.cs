@@ -14,12 +14,12 @@ namespace PlataformaEducacao.GestaoConteudo.Data.Migrations
                 name: "Cursos",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(255)", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(255)", maxLength: 1000, nullable: false),
-                    CargaHoraria = table.Column<int>(type: "INTEGER", nullable: false),
-                    Valor = table.Column<decimal>(type: "TEXT", nullable: false),
-                    Disponivel = table.Column<bool>(type: "INTEGER", nullable: false)
+                    CargaHoraria = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Disponivel = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,12 +30,12 @@ namespace PlataformaEducacao.GestaoConteudo.Data.Migrations
                 name: "Aulas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Titulo = table.Column<string>(type: "varchar(255)", nullable: false),
                     Conteudo = table.Column<string>(type: "varchar(255)", maxLength: 1000, nullable: false),
-                    Ordem = table.Column<int>(type: "INTEGER", nullable: false),
+                    Ordem = table.Column<int>(type: "int", nullable: false),
                     Material = table.Column<string>(type: "varchar(255)", nullable: true),
-                    CursoId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    CursoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {

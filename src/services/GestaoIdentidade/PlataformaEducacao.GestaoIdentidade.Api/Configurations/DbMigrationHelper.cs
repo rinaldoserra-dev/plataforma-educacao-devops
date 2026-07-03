@@ -25,10 +25,14 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
 
                 var identityContext = scope.ServiceProvider.GetRequiredService<GestaoIdentidadeContext>();
 
-                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing" || env.EnvironmentName == "Docker")
+                if (env.EnvironmentName == "Testing")
+                {
+                    await identityContext.Database.EnsureCreatedAsync();
+                    await SeedUserAndRoles(identityContext);
+                }
+                else if (env.EnvironmentName == "Development" || env.EnvironmentName == "Docker")
                 {
                     await identityContext.Database.MigrateAsync();
-
                     await SeedUserAndRoles(identityContext);
                 }
             }
