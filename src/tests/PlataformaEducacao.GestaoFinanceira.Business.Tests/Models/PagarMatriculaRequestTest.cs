@@ -1,12 +1,12 @@
-using PlataformaEducacao.GestaoFinanceira.Api.Models.Requests;
+Ôªøusing PlataformaEducacao.GestaoFinanceira.Api.Models.Requests;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
 {
     public class PagarMatriculaRequestTest
     {
-        [Fact(DisplayName = "PagarMatriculaRequest v·lido È considerado v·lido")]
-        [Trait("Categoria", "Gest„o Financeira - Requests - PagarMatriculaRequest")]
+        [Fact(DisplayName = "PagarMatriculaRequest v√°lido √© considerado v√°lido")]
+        [Trait("Categoria", "Gest√£o Financeira - Requests - PagarMatriculaRequest")]
         public void PagarMatriculaRequest_Valido_RetornaValido()
         {
             // Arrange
@@ -31,8 +31,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
             Assert.Empty(resultados);
         }
 
-        [Fact(DisplayName = "PagarMatriculaRequest sem nome do cart„o retorna erro")]
-        [Trait("Categoria", "Gest„o Financeira - Requests - PagarMatriculaRequest")]
+        [Fact(DisplayName = "PagarMatriculaRequest sem nome do cart√£o retorna erro")]
+        [Trait("Categoria", "Gest√£o Financeira - Requests - PagarMatriculaRequest")]
         public void PagarMatriculaRequest_SemNomeCartao_RetornaErro()
         {
             // Arrange
@@ -56,7 +56,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
         }
 
         [Fact(DisplayName = "PagarMatriculaRequest com valor zero retorna erro")]
-        [Trait("Categoria", "Gest„o Financeira - Requests - PagarMatriculaRequest")]
+        [Trait("Categoria", "Gest√£o Financeira - Requests - PagarMatriculaRequest")]
         public void PagarMatriculaRequest_ValorZero_RetornaErro()
         {
             // Arrange
@@ -80,7 +80,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
         }
 
         [Fact(DisplayName = "PagarMatriculaRequest sem CVV retorna erro")]
-        [Trait("Categoria", "Gest„o Financeira - Requests - PagarMatriculaRequest")]
+        [Trait("Categoria", "Gest√£o Financeira - Requests - PagarMatriculaRequest")]
         public void PagarMatriculaRequest_SemCvv_RetornaErro()
         {
             // Arrange

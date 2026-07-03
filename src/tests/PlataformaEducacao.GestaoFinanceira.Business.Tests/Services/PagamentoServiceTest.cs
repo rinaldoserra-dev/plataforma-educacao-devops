@@ -1,4 +1,4 @@
-using Moq;
+ï»¿using Moq;
 using PlataformaEducacao.Core.DomainObjects;
 using PlataformaEducacao.Core.Messages.Integration;
 using PlataformaEducacao.GestaoFinanceira.Api.Services;
@@ -23,8 +23,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             _service = new PagamentoService(_facadeMock.Object, _repositoryMock.Object, _busMock.Object);
         }
 
-        [Fact(DisplayName = "AutorizarPagamento com transação autorizada deve retornar sucesso")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "AutorizarPagamento com transaÃ§Ã£o autorizada deve retornar sucesso")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task AutorizarPagamento_TransacaoAutorizada_DeveRetornarSucesso()
         {
             // Arrange
@@ -52,8 +52,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             _repositoryMock.Verify(r => r.AdicionarPagamento(pagamento), Times.Once);
         }
 
-        [Fact(DisplayName = "AutorizarPagamento com transação recusada deve retornar erro")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "AutorizarPagamento com transaÃ§Ã£o recusada deve retornar erro")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task AutorizarPagamento_TransacaoRecusada_DeveRetornarErro()
         {
             // Arrange
@@ -81,7 +81,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
         }
 
         [Fact(DisplayName = "AutorizarPagamento com falha ao persistir deve retornar erro")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task AutorizarPagamento_FalhaAoPersistir_DeveRetornarErro()
         {
             // Arrange
@@ -116,7 +116,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
         }
 
         [Theory(DisplayName = "ObterStatusPorMatricula com pagamento existente deve retornar status")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         [InlineData(true)]
         [InlineData(false)]
         public async Task ObterStatusPorMatricula_PagamentoExistente_DeveRetornarStatus(bool isAdmin)
@@ -152,7 +152,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
         }
 
         [Theory(DisplayName = "ObterStatusPorMatricula sem pagamento deve retornar null")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         [InlineData(true)]
         [InlineData(false)]
         public async Task ObterStatusPorMatricula_SemPagamento_DeveRetornarNull(bool isAdmin)
@@ -169,8 +169,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             Assert.Null(resultado);
         }
 
-        [Fact(DisplayName = "CapturarPagamento com transação autorizada deve capturar")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "CapturarPagamento com transaÃ§Ã£o autorizada deve capturar")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task CapturarPagamento_TransacaoAutorizada_DeveCapturar()
         {
             // Arrange
@@ -210,8 +210,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             _repositoryMock.Verify(r => r.AdicionarTransacao(transacaoCapturada), Times.Once);
         }
 
-        [Fact(DisplayName = "CancelarPagamento com transação autorizada deve cancelar")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "CancelarPagamento com transaÃ§Ã£o autorizada deve cancelar")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task CancelarPagamento_TransacaoAutorizada_DeveCancelar()
         {
             // Arrange
@@ -251,8 +251,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             _repositoryMock.Verify(r => r.AdicionarTransacao(transacaoCancelada), Times.Once);
         }
 
-        [Fact(DisplayName = "AutorizarPagamento com exceção no PublishAsync deve retornar erro")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "AutorizarPagamento com exceÃ§Ã£o no PublishAsync deve retornar erro")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task AutorizarPagamento_ExcecaoNoPublish_DeveRetornarErro()
         {
             // Arrange
@@ -294,8 +294,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             Assert.Contains(resultado.ValidationResult.Errors, e => e.ErrorMessage.Contains("houve falha ao notificar"));
         }
 
-        [Fact(DisplayName = "CapturarPagamento com status não pago deve retornar erro")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "CapturarPagamento com status nÃ£o pago deve retornar erro")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task CapturarPagamento_StatusNaoPago_DeveRetornarErro()
         {
             // Arrange
@@ -335,7 +335,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
         }
 
         [Fact(DisplayName = "CapturarPagamento com falha ao persistir deve retornar erro")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task CapturarPagamento_FalhaAoPersistir_DeveRetornarErro()
         {
             // Arrange
@@ -375,8 +375,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             Assert.Contains(resultado.ValidationResult.Errors, e => e.ErrorMessage.Contains("persistir a captura"));
         }
 
-        [Fact(DisplayName = "CancelarPagamento com status não cancelado deve retornar erro")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "CancelarPagamento com status nÃ£o cancelado deve retornar erro")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task CancelarPagamento_StatusNaoCancelado_DeveRetornarErro()
         {
             // Arrange
@@ -407,7 +407,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
         }
 
         [Fact(DisplayName = "CancelarPagamento com falha ao persistir deve retornar erro")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task CancelarPagamento_FalhaAoPersistir_DeveRetornarErro()
         {
             // Arrange
@@ -438,8 +438,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             Assert.Contains(resultado.ValidationResult.Errors, e => e.ErrorMessage.Contains("persistir o cancelamento"));
         }
 
-        [Fact(DisplayName = "CapturarPagamento sem transação autorizada deve lançar DomainException")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "CapturarPagamento sem transaÃ§Ã£o autorizada deve lanÃ§ar DomainException")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task CapturarPagamento_SemTransacaoAutorizada_DeveLancarDomainException()
         {
             // Arrange
@@ -451,8 +451,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             await Assert.ThrowsAsync<DomainException>(() => _service.CapturarPagamento(matriculaId));
         }
 
-        [Fact(DisplayName = "CancelarPagamento sem transação autorizada deve lançar DomainException")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Fact(DisplayName = "CancelarPagamento sem transaÃ§Ã£o autorizada deve lanÃ§ar DomainException")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         public async Task CancelarPagamento_SemTransacaoAutorizada_DeveLancarDomainException()
         {
             // Arrange
@@ -464,8 +464,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             await Assert.ThrowsAsync<DomainException>(() => _service.CancelarPagamento(matriculaId));
         }
 
-        [Theory(DisplayName = "ObterStatusPorMatricula sem transações deve retornar Sem transações")]
-        [Trait("Categoria", "Gestão Financeira - PagamentoService")]
+        [Theory(DisplayName = "ObterStatusPorMatricula sem transaÃ§Ãµes deve retornar Sem transaÃ§Ãµes")]
+        [Trait("Categoria", "GestÃ£o Financeira - PagamentoService")]
         [InlineData(true)]
         [InlineData(false)]
         public async Task ObterStatusPorMatricula_SemTransacoes_DeveRetornarSemTransacoes(bool isAdmin)
@@ -490,7 +490,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
 
             // Assert
             Assert.NotNull(resultado);
-            Assert.Equal("Sem transações", resultado!.Status);
+            Assert.Equal("Sem transaÃ§Ãµes", resultado!.Status);
         }
 
         private static Pagamento CriarPagamento()

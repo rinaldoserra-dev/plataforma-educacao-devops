@@ -1,4 +1,4 @@
-using FluentValidation.Results;
+Ôªøusing FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using PlataformaEducacao.Core.Communication;
@@ -33,7 +33,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Controllers
         }
 
         [Fact(DisplayName = "PagarMatricula com sucesso deve retornar OK")]
-        [Trait("Categoria", "Gest„o Financeira - Controllers - PagamentoController")]
+        [Trait("Categoria", "Gest√£o Financeira - Controllers - PagamentoController")]
         public async Task PagarMatricula_ComSucesso_DeveRetornarOk()
         {
             // Arrange
@@ -68,7 +68,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Controllers
         }
 
         [Fact(DisplayName = "PagarMatricula com falha deve retornar BadRequest")]
-        [Trait("Categoria", "Gest„o Financeira - Controllers - PagamentoController")]
+        [Trait("Categoria", "Gest√£o Financeira - Controllers - PagamentoController")]
         public async Task PagarMatricula_ComFalha_DeveRetornarBadRequest()
         {
             // Arrange
@@ -100,7 +100,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Controllers
         }
 
         [Theory(DisplayName = "ObterStatus com pagamento existente deve retornar OK")]
-        [Trait("Categoria", "Gest„o Financeira - Controllers - PagamentoController")]
+        [Trait("Categoria", "Gest√£o Financeira - Controllers - PagamentoController")]
         [InlineData(true)]
         [InlineData(false)]
         public async Task ObterStatus_PagamentoExistente_DeveRetornarOk(bool isAdmin)
@@ -137,7 +137,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Controllers
         }
 
         [Theory(DisplayName = "ObterStatus sem pagamento deve retornar PagamentoPendente")]
-        [Trait("Categoria", "Gest„o Financeira - Controllers - PagamentoController")]
+        [Trait("Categoria", "Gest√£o Financeira - Controllers - PagamentoController")]
         [InlineData(true)]
         [InlineData(false)]
         public async Task ObterStatus_SemPagamento_DeveRetornarPagamentoPendente(bool isAdmin)

@@ -1,4 +1,4 @@
-using FluentAssertions;
+Ôªøusing FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -27,7 +27,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             resultado.Should().BeTrue();
         }
 
-        [Fact(DisplayName = "ValidarClaimsUsuario n„o autenticado deve retornar false")]
+        [Fact(DisplayName = "ValidarClaimsUsuario n√£o autenticado deve retornar false")]
         [Trait("Categoria", "WebApi.Core - Identidade - CustomAuthorization")]
         public void ValidarClaimsUsuario_NaoAutenticado_DeveRetornarFalse()
         {
@@ -73,7 +73,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
 
         #region RequisitoClaimFilter
 
-        [Fact(DisplayName = "RequisitoClaimFilter n„o autenticado deve retornar 401")]
+        [Fact(DisplayName = "RequisitoClaimFilter n√£o autenticado deve retornar 401")]
         [Trait("Categoria", "WebApi.Core - Identidade - RequisitoClaimFilter")]
         public void OnAuthorization_NaoAutenticado_DeveRetornar401()
         {
@@ -109,7 +109,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             statusResult!.StatusCode.Should().Be(403);
         }
 
-        [Fact(DisplayName = "RequisitoClaimFilter autenticado com claim correta n„o deve definir Result")]
+        [Fact(DisplayName = "RequisitoClaimFilter autenticado com claim correta n√£o deve definir Result")]
         [Trait("Categoria", "WebApi.Core - Identidade - RequisitoClaimFilter")]
         public void OnAuthorization_AutenticadoComClaim_NaoDeveDefinirResult()
         {
@@ -129,7 +129,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
 
         #region ClaimsAuthorizeAttribute
 
-        [Fact(DisplayName = "ClaimsAuthorizeAttribute deve criar inst‚ncia com Arguments")]
+        [Fact(DisplayName = "ClaimsAuthorizeAttribute deve criar inst√¢ncia com Arguments")]
         [Trait("Categoria", "WebApi.Core - Identidade - ClaimsAuthorizeAttribute")]
         public void ClaimsAuthorizeAttribute_DeveCriarComArguments()
         {

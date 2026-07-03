@@ -1,11 +1,11 @@
-using PlataformaEducacao.GestaoFinanceira.Business.Models;
+Ôªøusing PlataformaEducacao.GestaoFinanceira.Business.Models;
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
 {
     public class PagamentoTest
     {
-        [Fact(DisplayName = "Novo Pagamento deve inicializar com lista vazia de transaÁıes")]
-        [Trait("Categoria", "Gest„o Financeira - Business - Pagamento")]
+        [Fact(DisplayName = "Novo Pagamento deve inicializar com lista vazia de transa√ß√µes")]
+        [Trait("Categoria", "Gest√£o Financeira - Business - Pagamento")]
         public void NovoPagamento_DeveInicializarComListaVazia()
         {
             // Act
@@ -16,8 +16,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
             Assert.Empty(pagamento.Transacoes);
         }
 
-        [Fact(DisplayName = "AdicionarTransacao deve adicionar ‡ coleÁ„o")]
-        [Trait("Categoria", "Gest„o Financeira - Business - Pagamento")]
+        [Fact(DisplayName = "AdicionarTransacao deve adicionar √† cole√ß√£o")]
+        [Trait("Categoria", "Gest√£o Financeira - Business - Pagamento")]
         public void AdicionarTransacao_DeveAdicionarAColecao()
         {
             // Arrange
@@ -51,7 +51,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
         }
 
         [Fact(DisplayName = "Pagamento deve ter propriedades corretas")]
-        [Trait("Categoria", "Gest„o Financeira - Business - Pagamento")]
+        [Trait("Categoria", "Gest√£o Financeira - Business - Pagamento")]
         public void Pagamento_DeveAtribuirPropriedadesCorretamente()
         {
             // Arrange

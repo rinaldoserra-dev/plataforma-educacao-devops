@@ -1,4 +1,4 @@
-using FluentAssertions;
+ï»¿using FluentAssertions;
 using PlataformaEducacao.WebApi.Core.Usuario;
 using System.Security.Claims;
 
@@ -35,7 +35,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             resultado.Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "GetUserId com principal nulo deve lançar ArgumentNullException")]
+        [Fact(DisplayName = "GetUserId com principal nulo deve lanÃ§ar ArgumentNullException")]
         [Trait("Categoria", "WebApi.Core - Usuario - ClaimsPrincipalExtensions")]
         public void GetUserId_PrincipalNulo_DeveLancarArgumentNullException()
         {
@@ -74,7 +74,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             resultado.Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "GetUserEmail com principal nulo deve lançar ArgumentNullException")]
+        [Fact(DisplayName = "GetUserEmail com principal nulo deve lanÃ§ar ArgumentNullException")]
         [Trait("Categoria", "WebApi.Core - Usuario - ClaimsPrincipalExtensions")]
         public void GetUserEmail_PrincipalNulo_DeveLancarArgumentNullException()
         {
@@ -105,7 +105,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             principal.GetUserToken().Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "GetUserToken com principal nulo deve lançar ArgumentNullException")]
+        [Fact(DisplayName = "GetUserToken com principal nulo deve lanÃ§ar ArgumentNullException")]
         [Trait("Categoria", "WebApi.Core - Usuario - ClaimsPrincipalExtensions")]
         public void GetUserToken_PrincipalNulo_DeveLancarArgumentNullException()
         {
@@ -136,7 +136,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             principal.GetUserRefreshToken().Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "GetUserRefreshToken com principal nulo deve lançar ArgumentNullException")]
+        [Fact(DisplayName = "GetUserRefreshToken com principal nulo deve lanÃ§ar ArgumentNullException")]
         [Trait("Categoria", "WebApi.Core - Usuario - ClaimsPrincipalExtensions")]
         public void GetUserRefreshToken_PrincipalNulo_DeveLancarArgumentNullException()
         {

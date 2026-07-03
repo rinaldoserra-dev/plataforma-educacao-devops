@@ -1,4 +1,4 @@
-using PlataformaEducacao.Bff.Api.Services;
+ï»¿using PlataformaEducacao.Bff.Api.Services;
 using PlataformaEducacao.Core.Communication;
 using System.Net;
 using System.Text;
@@ -27,7 +27,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             Assert.Contains("100", json);
         }
 
-        [Fact(DisplayName = "DeserializarObjetoResponse com JSON válido deve retornar ResponseResult")]
+        [Fact(DisplayName = "DeserializarObjetoResponse com JSON vÃ¡lido deve retornar ResponseResult")]
         [Trait("Categoria", "Bff.Api - Services - Service")]
         public async Task DeserializarObjetoResponse_ComJsonValido_DeveRetornarResponseResult()
         {
@@ -47,7 +47,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             Assert.Equal(200, result.Status);
         }
 
-        [Fact(DisplayName = "DeserializarObjetoResponse com JSON inválido deve retornar fallback")]
+        [Fact(DisplayName = "DeserializarObjetoResponse com JSON invÃ¡lido deve retornar fallback")]
         [Trait("Categoria", "Bff.Api - Services - Service")]
         public async Task DeserializarObjetoResponse_ComJsonInvalido_DeveRetornarFallback()
         {
@@ -67,7 +67,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             Assert.Contains("Internal Server Error", result.Erros.Mensagens);
         }
 
-        [Fact(DisplayName = "DeserializarObjetoResponse com conteúdo vazio deve retornar fallback")]
+        [Fact(DisplayName = "DeserializarObjetoResponse com conteÃºdo vazio deve retornar fallback")]
         [Trait("Categoria", "Bff.Api - Services - Service")]
         public async Task DeserializarObjetoResponse_ComConteudoVazio_DeveRetornarFallback()
         {
@@ -85,7 +85,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             Assert.Equal(204, result.Status);
         }
 
-        [Fact(DisplayName = "DeserializarObjetoResponse com conteúdo vazio e ReasonPhrase deve usar ReasonPhrase")]
+        [Fact(DisplayName = "DeserializarObjetoResponse com conteÃºdo vazio e ReasonPhrase deve usar ReasonPhrase")]
         [Trait("Categoria", "Bff.Api - Services - Service")]
         public async Task DeserializarObjetoResponse_ComReasonPhrase_DeveUsarReasonPhrase()
         {

@@ -1,12 +1,12 @@
-using PlataformaEducacao.GestaoIdentidade.Api.Models;
+Ôªøusing PlataformaEducacao.GestaoIdentidade.Api.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
 {
     public class UsuarioRegistroTest
     {
-        [Fact(DisplayName = "UsuarioRegistro v·lido È considerado v·lido")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioRegistro")]
+        [Fact(DisplayName = "UsuarioRegistro v√°lido √© considerado v√°lido")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioRegistro")]
         public void UsuarioRegistro_Valido_RetornaValido()
         {
             // Arrange
@@ -29,7 +29,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
         }
 
         [Fact(DisplayName = "UsuarioRegistro sem nome retorna erro")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioRegistro")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioRegistro")]
         public void UsuarioRegistro_SemNome_RetornaErro()
         {
             // Arrange
@@ -50,8 +50,8 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
             Assert.False(ehValido);
         }
 
-        [Fact(DisplayName = "UsuarioRegistro com email inv·lido retorna erro")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioRegistro")]
+        [Fact(DisplayName = "UsuarioRegistro com email inv√°lido retorna erro")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioRegistro")]
         public void UsuarioRegistro_EmailInvalido_RetornaErro()
         {
             // Arrange
@@ -73,7 +73,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
         }
 
         [Fact(DisplayName = "UsuarioRegistro com senhas diferentes retorna erro")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioRegistro")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioRegistro")]
         public void UsuarioRegistro_SenhasDiferentes_RetornaErro()
         {
             // Arrange
@@ -93,11 +93,11 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
             // Assert
             Assert.False(ehValido);
             var mensagens = resultados.Select(r => r.ErrorMessage).ToList();
-            Assert.Contains("As senhas n„o conferem.", mensagens);
+            Assert.Contains("As senhas n√£o conferem.", mensagens);
         }
 
         [Fact(DisplayName = "UsuarioRegistro com senha curta retorna erro")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioRegistro")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioRegistro")]
         public void UsuarioRegistro_SenhaCurta_RetornaErro()
         {
             // Arrange

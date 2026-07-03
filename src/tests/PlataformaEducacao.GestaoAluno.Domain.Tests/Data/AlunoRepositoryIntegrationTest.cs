@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+Ôªøusing Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using PlataformaEducacao.Core.Mediator;
@@ -33,12 +33,12 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             _repository = new AlunoRepository(_context);
         }
 
-        [Fact(DisplayName = "Inserir aluno e obter com matrÌculas deve persistir")]
+        [Fact(DisplayName = "Inserir aluno e obter com matr√≠culas deve persistir")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public async Task Inserir_EObterComMatriculas_DevePersistir()
         {
             // Arrange
-            var aluno = new Aluno(Guid.NewGuid(), "Jo„o", "joao@test.com");
+            var aluno = new Aluno(Guid.NewGuid(), "Jo√£o", "joao@test.com");
 
             // Act
             await _repository.Inserir(aluno, CancellationToken.None);
@@ -48,12 +48,12 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("Jo„o", result!.Nome);
+            Assert.Equal("Jo√£o", result!.Nome);
             Assert.Equal("joao@test.com", result.Email.Endereco);
             Assert.Empty(result.Matriculas);
         }
 
-        [Fact(DisplayName = "RealizarMatricula deve persistir matrÌcula")]
+        [Fact(DisplayName = "RealizarMatricula deve persistir matr√≠cula")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public async Task RealizarMatricula_DevePersistir()
         {
@@ -135,7 +135,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             Assert.Single(result);
         }
 
-        [Fact(DisplayName = "ObterAlunosPendentesPorCursoId deve retornar n„o ativos")]
+        [Fact(DisplayName = "ObterAlunosPendentesPorCursoId deve retornar n√£o ativos")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public async Task ObterAlunosPendentesPorCursoId_DeveRetornarNaoAtivos()
         {
@@ -155,7 +155,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             Assert.Single(result);
         }
 
-        [Fact(DisplayName = "ObterMatriculaComProgressoAulasPorId deve retornar matrÌcula com progresso")]
+        [Fact(DisplayName = "ObterMatriculaComProgressoAulasPorId deve retornar matr√≠cula com progresso")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public async Task ObterMatriculaComProgressoAulas_DeveRetornarComProgresso()
         {
@@ -174,7 +174,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             Assert.NotNull(result!.ProgressoAulas);
         }
 
-        [Fact(DisplayName = "AtualizarMatricula deve persistir alteraÁ„o")]
+        [Fact(DisplayName = "AtualizarMatricula deve persistir altera√ß√£o")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public async Task AtualizarMatricula_DevePersistirAlteracao()
         {
@@ -186,7 +186,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             await _repository.RealizarMatricula(matricula, CancellationToken.None);
             await _context.SaveChangesAsync();
 
-            // Ativar matrÌcula
+            // Ativar matr√≠cula
             aluno.ConcluirPagamentoMatricula(matricula);
             await _repository.AtualizarMatricula(matricula, CancellationToken.None);
             await _context.SaveChangesAsync();
@@ -269,7 +269,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             Assert.Equal("CERT-456", result.Certificado!.CodigoVerificacao);
         }
 
-        [Fact(DisplayName = "ObterCertificadoPorCodigoVerificacao deve retornar matrÌcula")]
+        [Fact(DisplayName = "ObterCertificadoPorCodigoVerificacao deve retornar matr√≠cula")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public async Task ObterCertificadoPorCodigoVerificacao_DeveRetornar()
         {
@@ -316,7 +316,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             Assert.NotNull(result.Matricula.Aluno);
         }
 
-        [Fact(DisplayName = "ObterComMatriculasPorId quando n„o existe deve retornar null")]
+        [Fact(DisplayName = "ObterComMatriculasPorId quando n√£o existe deve retornar null")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public async Task ObterComMatriculas_QuandoNaoExiste_DeveRetornarNull()
         {
@@ -324,7 +324,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             Assert.Null(result);
         }
 
-        [Fact(DisplayName = "Commit com alteraÁ„o deve retornar true")]
+        [Fact(DisplayName = "Commit com altera√ß√£o deve retornar true")]
         [Trait("Categoria", "GestaoAluno - Data - GestaoAlunoContext")]
         public async Task Commit_ComAlteracao_DeveRetornarTrue()
         {
@@ -347,7 +347,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             Assert.NotNull(_repository.UnitOfWork);
         }
 
-        [Fact(DisplayName = "Dispose n„o deve lanÁar exceÁ„o")]
+        [Fact(DisplayName = "Dispose n√£o deve lan√ßar exce√ß√£o")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public void Dispose_NaoDeveLancarExcecao()
         {

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Identity;
+Ôªøusing Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using PlataformaEducacao.GestaoIdentidade.Api.Data;
@@ -92,7 +92,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Configurations
             Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
         }
 
-        [Fact(DisplayName = "Autenticar com dados inv·lidos deve retornar BadRequest")]
+        [Fact(DisplayName = "Autenticar com dados inv√°lidos deve retornar BadRequest")]
         [Trait("Categoria", "GestaoIdentidade.Api - Controllers - IdentidadeController")]
         public async Task Autenticar_DadosInvalidos_DeveRetornarBadRequest()
         {
@@ -118,7 +118,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Configurations
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        [Fact(DisplayName = "NovoAluno com dados inv·lidos deve retornar BadRequest")]
+        [Fact(DisplayName = "NovoAluno com dados inv√°lidos deve retornar BadRequest")]
         [Trait("Categoria", "GestaoIdentidade.Api - Controllers - IdentidadeController")]
         public async Task NovoAluno_DadosInvalidos_DeveRetornarBadRequest()
         {
@@ -133,7 +133,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Configurations
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        [Fact(DisplayName = "NovoAluno com dados v·lidos deve registrar e retornar Created")]
+        [Fact(DisplayName = "NovoAluno com dados v√°lidos deve registrar e retornar Created")]
         [Trait("Categoria", "GestaoIdentidade.Api - Controllers - IdentidadeController")]
         public async Task NovoAluno_DadosValidos_DeveRetornarCreated()
         {
