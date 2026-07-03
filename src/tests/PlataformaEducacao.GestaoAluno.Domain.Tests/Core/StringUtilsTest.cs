@@ -1,11 +1,11 @@
-using FluentAssertions;
+ï»¿using FluentAssertions;
 using PlataformaEducacao.Core.Utils;
 
 namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
 {
     public class StringUtilsTest
     {
-        [Fact(DisplayName = "ApenasNumeros deve retornar somente dígitos")]
+        [Fact(DisplayName = "ApenasNumeros deve retornar somente dÃ­gitos")]
         [Trait("Categoria", "Core - Utils - StringUtils")]
         public void ApenasNumeros_ComLetrasENumeros_DeveRetornarSomenteDigitos()
         {
@@ -16,7 +16,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             resultado.Should().Be("123456");
         }
 
-        [Fact(DisplayName = "ApenasNumeros com string sem números deve retornar vazio")]
+        [Fact(DisplayName = "ApenasNumeros com string sem nÃºmeros deve retornar vazio")]
         [Trait("Categoria", "Core - Utils - StringUtils")]
         public void ApenasNumeros_SemNumeros_DeveRetornarVazio()
         {
@@ -38,7 +38,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             resultado.Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "ApenasNumeros com somente números deve retornar mesma string")]
+        [Fact(DisplayName = "ApenasNumeros com somente nÃºmeros deve retornar mesma string")]
         [Trait("Categoria", "Core - Utils - StringUtils")]
         public void ApenasNumeros_SomenteNumeros_DeveRetornarMesmaString()
         {
@@ -49,7 +49,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             resultado.Should().Be("123456");
         }
 
-        [Fact(DisplayName = "ApenasNumeros com caracteres especiais deve retornar somente dígitos")]
+        [Fact(DisplayName = "ApenasNumeros com caracteres especiais deve retornar somente dÃ­gitos")]
         [Trait("Categoria", "Core - Utils - StringUtils")]
         public void ApenasNumeros_ComCaracteresEspeciais_DeveRetornarSomenteDigitos()
         {

@@ -1,11 +1,11 @@
-using PlataformaEducacao.GestaoFinanceira.EduPag;
+Ôªøusing PlataformaEducacao.GestaoFinanceira.EduPag;
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
 {
     public class EduPagServiceTest
     {
         [Fact(DisplayName = "EduPagService deve atribuir ApiKey e EncryptionKey")]
-        [Trait("Categoria", "Gest„o Financeira - EduPag - EduPagService")]
+        [Trait("Categoria", "Gest√£o Financeira - EduPag - EduPagService")]
         public void EduPagService_DeveAtribuirChaves()
         {
             // Act
@@ -25,7 +25,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
         }
 
         [Fact(DisplayName = "AuthorizeCardTransaction deve retornar Authorized ou Refused")]
-        [Trait("Categoria", "Gest„o Financeira - EduPag - Transaction")]
+        [Trait("Categoria", "Gest√£o Financeira - EduPag - Transaction")]
         public async Task AuthorizeCardTransaction_DeveRetornarTransacao()
         {
             // Arrange
@@ -49,7 +49,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
         }
 
         [Fact(DisplayName = "CaptureCardTransaction deve retornar status Paid")]
-        [Trait("Categoria", "Gest„o Financeira - EduPag - Transaction")]
+        [Trait("Categoria", "Gest√£o Financeira - EduPag - Transaction")]
         public async Task CaptureCardTransaction_DeveRetornarPaid()
         {
             // Arrange
@@ -74,7 +74,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
         }
 
         [Fact(DisplayName = "CancelAuthorization deve retornar status Cancelled")]
-        [Trait("Categoria", "Gest„o Financeira - EduPag - Transaction")]
+        [Trait("Categoria", "Gest√£o Financeira - EduPag - Transaction")]
         public async Task CancelAuthorization_DeveRetornarCancelled()
         {
             // Arrange
@@ -98,7 +98,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
         }
 
         [Fact(DisplayName = "Transaction deve atribuir propriedades")]
-        [Trait("Categoria", "Gest„o Financeira - EduPag - Transaction")]
+        [Trait("Categoria", "Gest√£o Financeira - EduPag - Transaction")]
         public void Transaction_DeveAtribuirPropriedades()
         {
             // Arrange & Act
@@ -169,8 +169,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
 
     public class CardHashTest
     {
-        [Fact(DisplayName = "CardHash.Generate deve retornar string n„o vazia")]
-        [Trait("Categoria", "Gest„o Financeira - EduPag - CardHash")]
+        [Fact(DisplayName = "CardHash.Generate deve retornar string n√£o vazia")]
+        [Trait("Categoria", "Gest√£o Financeira - EduPag - CardHash")]
         public void Generate_DeveRetornarHashNaoVazio()
         {
             // Arrange
@@ -195,7 +195,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
     public class PaymentMethodTest
     {
         [Fact(DisplayName = "PaymentMethod deve conter valores esperados")]
-        [Trait("Categoria", "Gest„o Financeira - EduPag - PaymentMethod")]
+        [Trait("Categoria", "Gest√£o Financeira - EduPag - PaymentMethod")]
         public void PaymentMethod_ValoresEsperados()
         {
             Assert.Equal(1, (int)PaymentMethod.CreditCard);
@@ -206,7 +206,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
     public class TransactionStatusTest
     {
         [Fact(DisplayName = "TransactionStatus deve conter valores esperados")]
-        [Trait("Categoria", "Gest„o Financeira - EduPag - TransactionStatus")]
+        [Trait("Categoria", "Gest√£o Financeira - EduPag - TransactionStatus")]
         public void TransactionStatus_ValoresEsperados()
         {
             Assert.Equal(1, (int)TransactionStatus.Authorized);

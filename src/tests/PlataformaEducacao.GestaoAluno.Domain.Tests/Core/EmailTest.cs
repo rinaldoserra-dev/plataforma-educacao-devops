@@ -1,11 +1,11 @@
-using FluentAssertions;
+Ôªøusing FluentAssertions;
 using PlataformaEducacao.Core.DomainObjects;
 
 namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
 {
     public class EmailTest
     {
-        [Fact(DisplayName = "Criar Email com endereÁo v·lido deve atribuir Endereco")]
+        [Fact(DisplayName = "Criar Email com endere√ßo v√°lido deve atribuir Endereco")]
         [Trait("Categoria", "Core - DomainObjects - Email")]
         public void Criar_EnderecoValido_DeveAtribuir()
         {
@@ -16,7 +16,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             email.Endereco.Should().Be("teste@dominio.com");
         }
 
-        [Fact(DisplayName = "Criar Email com endereÁo inv·lido deve lanÁar DomainException")]
+        [Fact(DisplayName = "Criar Email com endere√ßo inv√°lido deve lan√ßar DomainException")]
         [Trait("Categoria", "Core - DomainObjects - Email")]
         public void Criar_EnderecoInvalido_DeveLancarDomainException()
         {
@@ -24,14 +24,14 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             Assert.Throws<DomainException>(() => new Email("invalido-sem-arroba"));
         }
 
-        [Fact(DisplayName = "Validar com email v·lido deve retornar true")]
+        [Fact(DisplayName = "Validar com email v√°lido deve retornar true")]
         [Trait("Categoria", "Core - DomainObjects - Email")]
         public void Validar_EmailValido_DeveRetornarTrue()
         {
             Email.Validar("fulano@teste.com").Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Validar com email inv·lido deve retornar false")]
+        [Fact(DisplayName = "Validar com email inv√°lido deve retornar false")]
         [Trait("Categoria", "Core - DomainObjects - Email")]
         public void Validar_EmailInvalido_DeveRetornarFalse()
         {

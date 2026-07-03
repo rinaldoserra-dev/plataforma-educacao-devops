@@ -1,11 +1,11 @@
-using PlataformaEducacao.GestaoIdentidade.Api.Models;
+Ôªøusing PlataformaEducacao.GestaoIdentidade.Api.Models;
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
 {
     public class UsuarioRespostaLoginTest
     {
         [Fact(DisplayName = "UsuarioRespostaLogin deve atribuir propriedades corretamente")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioRespostaLogin")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioRespostaLogin")]
         public void UsuarioRespostaLogin_DeveAtribuirPropriedades()
         {
             // Arrange & Act
@@ -32,8 +32,8 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
             Assert.Single(resposta.UsuarioToken.Claims);
         }
 
-        [Fact(DisplayName = "UsuarioToken deve ter valores padr„o")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioToken")]
+        [Fact(DisplayName = "UsuarioToken deve ter valores padr√£o")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioToken")]
         public void UsuarioToken_DeveTerValoresPadrao()
         {
             // Arrange & Act
@@ -47,7 +47,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
         }
 
         [Fact(DisplayName = "UsuarioClaim deve atribuir propriedades")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioClaim")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioClaim")]
         public void UsuarioClaim_DeveAtribuirPropriedades()
         {
             // Arrange & Act

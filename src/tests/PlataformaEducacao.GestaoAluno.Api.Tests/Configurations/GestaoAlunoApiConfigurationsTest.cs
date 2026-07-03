@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.Testing;
+ï»¿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using PlataformaEducacao.Core.Mediator;
 using PlataformaEducacao.GestaoAluno.Api.Tests.Config;
@@ -32,7 +32,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Configurations
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             var content = await response.Content.ReadAsStringAsync();
-            Assert.Contains("Gestão Aluno", content);
+            Assert.Contains("GestÃ£o Aluno", content);
         }
 
         [Fact(DisplayName = "Swagger UI deve retornar OK")]
@@ -44,7 +44,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Configurations
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Fact(DisplayName = "API controller sem autenticação deve retornar Unauthorized")]
+        [Fact(DisplayName = "API controller sem autenticaÃ§Ã£o deve retornar Unauthorized")]
         [Trait("Categoria", "GestaoAluno.Api - Configurations - ApiConfig")]
         public async Task ApiController_SemAuth_DeveRetornarUnauthorized()
         {
@@ -113,7 +113,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Configurations
 
             var response = await _client.SendAsync(request);
 
-            // Should not return 405 Method Not Allowed — CORS is configured
+            // Should not return 405 Method Not Allowed â€” CORS is configured
             Assert.NotEqual(HttpStatusCode.MethodNotAllowed, response.StatusCode);
         }
 

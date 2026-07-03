@@ -1,4 +1,4 @@
-using FluentAssertions;
+Ôªøusing FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using PlataformaEducacao.Bff.Api.Extensions;
@@ -8,7 +8,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Extensions
 {
     public class HttpClientAuthorizationDelegatingHandlerTest
     {
-        [Fact(DisplayName = "SendAsync com header Authorization deve propagar para a requisiÁ„o")]
+        [Fact(DisplayName = "SendAsync com header Authorization deve propagar para a requisi√ß√£o")]
         [Trait("Categoria", "Bff.Api - Extensions - HttpClientAuthorizationDelegatingHandler")]
         public async Task SendAsync_ComAuthorization_DevePropagarHeader()
         {
@@ -39,7 +39,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Extensions
                 .Should().Contain("Bearer meu-token");
         }
 
-        [Fact(DisplayName = "SendAsync sem header Authorization n„o deve adicionar header")]
+        [Fact(DisplayName = "SendAsync sem header Authorization n√£o deve adicionar header")]
         [Trait("Categoria", "Bff.Api - Extensions - HttpClientAuthorizationDelegatingHandler")]
         public async Task SendAsync_SemAuthorization_NaoDeveAdicionarHeader()
         {

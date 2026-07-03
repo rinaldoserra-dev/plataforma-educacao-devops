@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+ï»¿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using PlataformaEducacao.Core.Mediator;
@@ -261,7 +261,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Data
             Assert.Equal(EntityState.Modified, _context.Entry(matricula).State);
         }
 
-        [Fact(DisplayName = "Commit deve retornar true quando há alterações")]
+        [Fact(DisplayName = "Commit deve retornar true quando hÃ¡ alteraÃ§Ãµes")]
         [Trait("Categoria", "GestaoAluno - Data - GestaoAlunoContext")]
         public async Task Commit_ComAlteracao_DeveRetornarTrue()
         {
@@ -273,7 +273,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Data
             Assert.True(result);
         }
 
-        [Fact(DisplayName = "Commit sem alterações deve retornar false")]
+        [Fact(DisplayName = "Commit sem alteraÃ§Ãµes deve retornar false")]
         [Trait("Categoria", "GestaoAluno - Data - GestaoAlunoContext")]
         public async Task Commit_SemAlteracao_DeveRetornarFalse()
         {
@@ -289,7 +289,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Data
             Assert.NotNull(_repository.UnitOfWork);
         }
 
-        [Fact(DisplayName = "Dispose não deve lançar exceção")]
+        [Fact(DisplayName = "Dispose nÃ£o deve lanÃ§ar exceÃ§Ã£o")]
         [Trait("Categoria", "GestaoAluno - Data - AlunoRepository")]
         public void Dispose_NaoDeveLancarExcecao()
         {

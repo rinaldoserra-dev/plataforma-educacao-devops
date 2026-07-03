@@ -1,11 +1,11 @@
-using PlataformaEducacao.GestaoFinanceira.Api.Models.Response;
+﻿using PlataformaEducacao.GestaoFinanceira.Api.Models.Response;
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
 {
     public class PagamentoStatusResponseTest
     {
         [Fact(DisplayName = "PagamentoStatusResponse deve atribuir propriedades")]
-        [Trait("Categoria", "Gest�o Financeira - Response - PagamentoStatusResponse")]
+        [Trait("Categoria", "Gestão Financeira - Response - PagamentoStatusResponse")]
         public void PagamentoStatusResponse_DeveAtribuirPropriedades()
         {
             // Arrange

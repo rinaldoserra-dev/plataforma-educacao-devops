@@ -1,11 +1,11 @@
-using PlataformaEducacao.GestaoFinanceira.Business.Models;
+Ôªøusing PlataformaEducacao.GestaoFinanceira.Business.Models;
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
 {
     public class TransacaoTest
     {
         [Fact(DisplayName = "Transacao deve atribuir propriedades corretamente")]
-        [Trait("Categoria", "Gest„o Financeira - Business - Transacao")]
+        [Trait("Categoria", "Gest√£o Financeira - Business - Transacao")]
         public void Transacao_DeveAtribuirPropriedadesCorretamente()
         {
             // Arrange & Act
@@ -35,7 +35,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
         }
 
         [Fact(DisplayName = "StatusTransacao deve conter valores esperados")]
-        [Trait("Categoria", "Gest„o Financeira - Business - StatusTransacao")]
+        [Trait("Categoria", "Gest√£o Financeira - Business - StatusTransacao")]
         public void StatusTransacao_ValoresEsperados()
         {
             Assert.Equal(1, (int)StatusTransacao.Autorizado);
@@ -46,7 +46,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
         }
 
         [Fact(DisplayName = "TipoPagamento deve conter valores esperados")]
-        [Trait("Categoria", "Gest„o Financeira - Business - TipoPagamento")]
+        [Trait("Categoria", "Gest√£o Financeira - Business - TipoPagamento")]
         public void TipoPagamento_ValoresEsperados()
         {
             Assert.Equal(1, (int)TipoPagamento.CartaoCredito);

@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Options;
+Ôªøusing Microsoft.Extensions.Options;
 using PlataformaEducacao.GestaoFinanceira.Business.Facade;
 using PlataformaEducacao.GestaoFinanceira.Business.Models;
 using PlataformaEducacao.GestaoFinanceira.EduPag;
@@ -8,7 +8,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
     public class PagamentoCartaoCreditoFacadeTest
     {
         [Fact(DisplayName = "ParaTransacao deve converter Transaction para Transacao corretamente")]
-        [Trait("Categoria", "Gest„o Financeira - Facade - PagamentoCartaoCreditoFacade")]
+        [Trait("Categoria", "Gest√£o Financeira - Facade - PagamentoCartaoCreditoFacade")]
         public void ParaTransacao_DeveConverterCorretamente()
         {
             // Arrange
@@ -40,7 +40,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
         }
 
         [Fact(DisplayName = "ParaTransaction deve converter Transacao para Transaction corretamente")]
-        [Trait("Categoria", "Gest„o Financeira - Facade - PagamentoCartaoCreditoFacade")]
+        [Trait("Categoria", "Gest√£o Financeira - Facade - PagamentoCartaoCreditoFacade")]
         public void ParaTransaction_DeveConverterCorretamente()
         {
             // Arrange
@@ -70,7 +70,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
         }
 
         [Fact(DisplayName = "ParaTransacao com status Refused deve converter para Negado")]
-        [Trait("Categoria", "Gest„o Financeira - Facade - PagamentoCartaoCreditoFacade")]
+        [Trait("Categoria", "Gest√£o Financeira - Facade - PagamentoCartaoCreditoFacade")]
         public void ParaTransacao_StatusRefused_DeveConverterParaNegado()
         {
             // Arrange
@@ -94,7 +94,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
         }
 
         [Fact(DisplayName = "ParaTransacao com status Cancelled deve converter para Cancelado")]
-        [Trait("Categoria", "Gest„o Financeira - Facade - PagamentoCartaoCreditoFacade")]
+        [Trait("Categoria", "Gest√£o Financeira - Facade - PagamentoCartaoCreditoFacade")]
         public void ParaTransacao_StatusCancelled_DeveConverterParaCancelado()
         {
             // Arrange
@@ -118,7 +118,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
         }
 
         [Fact(DisplayName = "AutorizarPagamento deve retornar transacao")]
-        [Trait("Categoria", "Gest„o Financeira - Facade - PagamentoCartaoCreditoFacade")]
+        [Trait("Categoria", "Gest√£o Financeira - Facade - PagamentoCartaoCreditoFacade")]
         public async Task AutorizarPagamento_DeveRetornarTransacao()
         {
             // Arrange
@@ -147,7 +147,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
         }
 
         [Fact(DisplayName = "CapturarPagamento deve retornar transacao com status Pago")]
-        [Trait("Categoria", "Gest„o Financeira - Facade - PagamentoCartaoCreditoFacade")]
+        [Trait("Categoria", "Gest√£o Financeira - Facade - PagamentoCartaoCreditoFacade")]
         public async Task CapturarPagamento_DeveRetornarTransacaoPaga()
         {
             // Arrange
@@ -176,7 +176,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
         }
 
         [Fact(DisplayName = "CancelarAutorizacao deve retornar transacao com status Cancelado")]
-        [Trait("Categoria", "Gest„o Financeira - Facade - PagamentoCartaoCreditoFacade")]
+        [Trait("Categoria", "Gest√£o Financeira - Facade - PagamentoCartaoCreditoFacade")]
         public async Task CancelarAutorizacao_DeveRetornarTransacaoCancelada()
         {
             // Arrange
