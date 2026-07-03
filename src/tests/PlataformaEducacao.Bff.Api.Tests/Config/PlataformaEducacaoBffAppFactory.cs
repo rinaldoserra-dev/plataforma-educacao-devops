@@ -88,7 +88,8 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
             {
                 Sucesso = true,
                 Status = StatusCodes.Status200OK,
-                Data = new {
+                Data = new
+                {
                     RefreshToken = "fake-refresh-token"
                 }
             });

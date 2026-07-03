@@ -1,12 +1,12 @@
-using PlataformaEducacao.GestaoIdentidade.Api.Models;
+Ôªøusing PlataformaEducacao.GestaoIdentidade.Api.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
 {
     public class UsuarioLoginTest
     {
-        [Fact(DisplayName = "UsuarioLogin v·lido È considerado v·lido")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioLogin")]
+        [Fact(DisplayName = "UsuarioLogin v√°lido √© considerado v√°lido")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioLogin")]
         public void UsuarioLogin_Valido_RetornaValido()
         {
             // Arrange
@@ -27,7 +27,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
         }
 
         [Fact(DisplayName = "UsuarioLogin sem email retorna erro")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioLogin")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioLogin")]
         public void UsuarioLogin_SemEmail_RetornaErro()
         {
             // Arrange
@@ -46,8 +46,8 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
             Assert.False(ehValido);
         }
 
-        [Fact(DisplayName = "UsuarioLogin com email inv·lido retorna erro")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioLogin")]
+        [Fact(DisplayName = "UsuarioLogin com email inv√°lido retorna erro")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioLogin")]
         public void UsuarioLogin_EmailInvalido_RetornaErro()
         {
             // Arrange
@@ -67,7 +67,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
         }
 
         [Fact(DisplayName = "UsuarioLogin sem senha retorna erro")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioLogin")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioLogin")]
         public void UsuarioLogin_SemSenha_RetornaErro()
         {
             // Arrange
@@ -87,7 +87,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
         }
 
         [Fact(DisplayName = "UsuarioLogin com senha curta retorna erro")]
-        [Trait("Categoria", "Gest„o Identidade - Models - UsuarioLogin")]
+        [Trait("Categoria", "Gest√£o Identidade - Models - UsuarioLogin")]
         public void UsuarioLogin_SenhaCurta_RetornaErro()
         {
             // Arrange

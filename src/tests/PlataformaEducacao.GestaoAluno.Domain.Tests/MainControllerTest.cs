@@ -1,4 +1,4 @@
-using FluentValidation.Results;
+Ôªøusing FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using PlataformaEducacao.Core.Communication;
 using PlataformaEducacao.WebApi.Core.Controllers;
@@ -26,14 +26,14 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
         public void CustomResponse_ComErros_DeveRetornarBadRequest()
         {
             var controller = new TestableMainController();
-            controller.TestAdicionarErro("Erro genÈrico");
+            controller.TestAdicionarErro("Erro gen√©rico");
 
             var result = controller.TestCustomResponse();
 
             var badRequest = Assert.IsType<BadRequestObjectResult>(result);
             var response = Assert.IsType<ResponseResult>(badRequest.Value);
             Assert.False(response.Sucesso);
-            Assert.Contains("Erro genÈrico", response.Erros.Mensagens);
+            Assert.Contains("Erro gen√©rico", response.Erros.Mensagens);
         }
 
         [Fact(DisplayName = "CustomResponse com dados deve retornar dados no response")]
@@ -49,7 +49,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
             Assert.Equal("dados de teste", response.Data);
         }
 
-        [Fact(DisplayName = "CustomResponse com ValidationResult v·lido deve retornar OK")]
+        [Fact(DisplayName = "CustomResponse com ValidationResult v√°lido deve retornar OK")]
         [Trait("Categoria", "WebApi.Core - Controllers - MainController")]
         public void CustomResponse_ValidationResultValido_DeveRetornarOk()
         {
@@ -63,7 +63,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
             Assert.True(response.Sucesso);
         }
 
-        [Fact(DisplayName = "CustomResponse com ValidationResult inv·lido deve retornar BadRequest")]
+        [Fact(DisplayName = "CustomResponse com ValidationResult inv√°lido deve retornar BadRequest")]
         [Trait("Categoria", "WebApi.Core - Controllers - MainController")]
         public void CustomResponse_ValidationResultInvalido_DeveRetornarBadRequest()
         {
@@ -79,18 +79,18 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
             Assert.Contains("Erro no campo", response.Erros.Mensagens);
         }
 
-        [Fact(DisplayName = "CustomResponse com ModelState inv·lido deve retornar BadRequest")]
+        [Fact(DisplayName = "CustomResponse com ModelState inv√°lido deve retornar BadRequest")]
         [Trait("Categoria", "WebApi.Core - Controllers - MainController")]
         public void CustomResponse_ModelStateInvalido_DeveRetornarBadRequest()
         {
             var controller = new TestableMainController();
-            controller.ModelState.AddModelError("Nome", "Nome obrigatÛrio");
+            controller.ModelState.AddModelError("Nome", "Nome obrigat√≥rio");
 
             var result = controller.TestCustomResponseModelState();
 
             var badRequest = Assert.IsType<BadRequestObjectResult>(result);
             var response = Assert.IsType<ResponseResult>(badRequest.Value);
-            Assert.Contains("Nome obrigatÛrio", response.Erros.Mensagens);
+            Assert.Contains("Nome obrigat√≥rio", response.Erros.Mensagens);
         }
 
         [Fact(DisplayName = "CustomResponse com ResponseResult sucesso deve retornar OK")]

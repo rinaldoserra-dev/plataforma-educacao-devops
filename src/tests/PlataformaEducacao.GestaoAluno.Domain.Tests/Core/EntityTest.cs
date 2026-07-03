@@ -1,4 +1,4 @@
-using FluentAssertions;
+ï»¿using FluentAssertions;
 using PlataformaEducacao.Core.DomainObjects;
 using PlataformaEducacao.Core.Messages;
 
@@ -15,7 +15,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             public EventoDeTeste() : base() { }
         }
 
-        [Fact(DisplayName = "Construtor deve gerar Id e inicializar notificações")]
+        [Fact(DisplayName = "Construtor deve gerar Id e inicializar notificaÃ§Ãµes")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void Construtor_DeveGerarIdEInicializarNotificacoes()
         {
@@ -42,7 +42,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             entidade.Id.Should().Be(novoId);
         }
 
-        [Fact(DisplayName = "AdicionarEvento deve adicionar à lista de notificações")]
+        [Fact(DisplayName = "AdicionarEvento deve adicionar Ã  lista de notificaÃ§Ãµes")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void AdicionarEvento_DeveAdicionarNaLista()
         {
@@ -57,7 +57,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             entidade.Notificacoes.Should().ContainSingle().Which.Should().Be(evento);
         }
 
-        [Fact(DisplayName = "RemoverEvento deve remover da lista de notificações")]
+        [Fact(DisplayName = "RemoverEvento deve remover da lista de notificaÃ§Ãµes")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void RemoverEvento_DeveRemoverDaLista()
         {
@@ -73,7 +73,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             entidade.Notificacoes.Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "LimparEventos deve remover todas as notificações")]
+        [Fact(DisplayName = "LimparEventos deve remover todas as notificaÃ§Ãµes")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void LimparEventos_DeveLimparLista()
         {
@@ -89,7 +89,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             entidade.Notificacoes.Should().BeEmpty();
         }
 
-        [Fact(DisplayName = "Equals com mesma referência deve retornar true")]
+        [Fact(DisplayName = "Equals com mesma referÃªncia deve retornar true")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void Equals_MesmaReferencia_DeveRetornarTrue()
         {
@@ -150,7 +150,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             entidade.Equals(outroObjeto).Should().BeFalse();
         }
 
-        [Fact(DisplayName = "Operator == com ambas referências nulas deve retornar true")]
+        [Fact(DisplayName = "Operator == com ambas referÃªncias nulas deve retornar true")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void OperatorIgual_AmbasNulas_DeveRetornarTrue()
         {
@@ -162,7 +162,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             (a == b).Should().BeTrue();
         }
 
-        [Fact(DisplayName = "Operator == com primeira referência nula deve retornar false")]
+        [Fact(DisplayName = "Operator == com primeira referÃªncia nula deve retornar false")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void OperatorIgual_PrimeiraNula_DeveRetornarFalse()
         {
@@ -174,7 +174,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             (a == b).Should().BeFalse();
         }
 
-        [Fact(DisplayName = "Operator == com segunda referência nula deve retornar false")]
+        [Fact(DisplayName = "Operator == com segunda referÃªncia nula deve retornar false")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void OperatorIgual_SegundaNula_DeveRetornarFalse()
         {
@@ -273,7 +273,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
             resultado.Should().Contain(entidade.Id.ToString());
         }
 
-        [Fact(DisplayName = "EhValido deve lançar NotImplementedException por padrão")]
+        [Fact(DisplayName = "EhValido deve lanÃ§ar NotImplementedException por padrÃ£o")]
         [Trait("Categoria", "Core - DomainObjects - Entity")]
         public void EhValido_DeveLancarNotImplementedException()
         {

@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using PlataformaEducacao.Bff.Api.Extensions;
 using PlataformaEducacao.Bff.Api.Models.Request.Identidade;
 using PlataformaEducacao.Bff.Api.Services;
@@ -52,7 +52,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             {
                 Sucesso = false,
                 Status = 400,
-                Erros = new ResponseErrorMessages { Mensagens = ["Credenciais inv�lidas."] }
+                Erros = new ResponseErrorMessages { Mensagens = ["Credenciais inválidas."] }
             });
             var login = new LoginRequest { Email = "user@test.com", Senha = "errada" };
 

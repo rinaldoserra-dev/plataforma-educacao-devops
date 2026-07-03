@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+ï»¿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using PlataformaEducacao.GestaoFinanceira.Api.Data;
 using PlataformaEducacao.GestaoFinanceira.Api.Data.Repository;
@@ -114,7 +114,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Data
             Assert.NotNull(result);
         }
 
-        [Fact(DisplayName = "ObterTransacoesPorMatriculaId deve retornar transações")]
+        [Fact(DisplayName = "ObterTransacoesPorMatriculaId deve retornar transaÃ§Ãµes")]
         [Trait("Categoria", "GestaoFinanceira.Api - Data - PagamentoRepository")]
         public async Task ObterTransacoesPorMatriculaId_DeveRetornar()
         {
@@ -143,7 +143,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Data
             Assert.NotEmpty(result);
         }
 
-        [Fact(DisplayName = "Commit deve retornar true quando há alterações")]
+        [Fact(DisplayName = "Commit deve retornar true quando hÃ¡ alteraÃ§Ãµes")]
         [Trait("Categoria", "GestaoFinanceira.Api - Data - PagamentosContext")]
         public async Task Commit_ComAlteracao_DeveRetornarTrue()
         {
@@ -156,7 +156,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Data
             Assert.True(result);
         }
 
-        [Fact(DisplayName = "Commit sem alterações deve retornar false")]
+        [Fact(DisplayName = "Commit sem alteraÃ§Ãµes deve retornar false")]
         [Trait("Categoria", "GestaoFinanceira.Api - Data - PagamentosContext")]
         public async Task Commit_SemAlteracao_DeveRetornarFalse()
         {
@@ -173,7 +173,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Data
             Assert.NotNull(_repository.UnitOfWork);
         }
 
-        [Fact(DisplayName = "Dispose não deve lançar exceção")]
+        [Fact(DisplayName = "Dispose nÃ£o deve lanÃ§ar exceÃ§Ã£o")]
         [Trait("Categoria", "GestaoFinanceira.Api - Data - PagamentoRepository")]
         public void Dispose_NaoDeveLancarExcecao()
         {

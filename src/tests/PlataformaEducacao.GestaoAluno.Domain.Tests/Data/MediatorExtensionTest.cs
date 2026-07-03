@@ -1,4 +1,4 @@
-using Microsoft.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using PlataformaEducacao.Core.Mediator;
@@ -55,7 +55,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Event>()), Times.AtLeastOnce);
         }
 
-        [Fact(DisplayName = "PublicarEventos sem eventos n�o deve chamar PublishEvent")]
+        [Fact(DisplayName = "PublicarEventos sem eventos não deve chamar PublishEvent")]
         [Trait("Categoria", "GestaoAluno - Data - MediatorExtension")]
         public async Task PublicarEventos_SemEventos_NaoDevePublicar()
         {

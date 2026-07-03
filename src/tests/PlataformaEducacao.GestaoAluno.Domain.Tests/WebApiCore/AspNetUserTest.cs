@@ -1,4 +1,4 @@
-using FluentAssertions;
+Ôªøusing FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using PlataformaEducacao.WebApi.Core.Usuario;
 using System.Security.Claims;
@@ -7,7 +7,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
 {
     public class AspNetUserTest
     {
-        [Fact(DisplayName = "ObterUserId autenticado deve retornar Guid do usu·rio")]
+        [Fact(DisplayName = "ObterUserId autenticado deve retornar Guid do usu√°rio")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void ObterUserId_Autenticado_DeveRetornarGuid()
         {
@@ -22,7 +22,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             resultado.Should().Be(userId);
         }
 
-        [Fact(DisplayName = "ObterUserId n„o autenticado deve retornar Guid.Empty")]
+        [Fact(DisplayName = "ObterUserId n√£o autenticado deve retornar Guid.Empty")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void ObterUserId_NaoAutenticado_DeveRetornarGuidEmpty()
         {
@@ -50,7 +50,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             resultado.Should().Be("teste@teste.com");
         }
 
-        [Fact(DisplayName = "ObterUserEmail n„o autenticado deve retornar vazio")]
+        [Fact(DisplayName = "ObterUserEmail n√£o autenticado deve retornar vazio")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void ObterUserEmail_NaoAutenticado_DeveRetornarVazio()
         {
@@ -78,7 +78,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             resultado.Should().Be("meu-jwt");
         }
 
-        [Fact(DisplayName = "ObterUserToken n„o autenticado deve retornar vazio")]
+        [Fact(DisplayName = "ObterUserToken n√£o autenticado deve retornar vazio")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void ObterUserToken_NaoAutenticado_DeveRetornarVazio()
         {
@@ -106,7 +106,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             resultado.Should().Be("meu-refresh");
         }
 
-        [Fact(DisplayName = "ObterUserRefreshToken n„o autenticado deve retornar vazio")]
+        [Fact(DisplayName = "ObterUserRefreshToken n√£o autenticado deve retornar vazio")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void ObterUserRefreshToken_NaoAutenticado_DeveRetornarVazio()
         {
@@ -131,7 +131,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             aspNetUser.EstaAutenticado().Should().BeTrue();
         }
 
-        [Fact(DisplayName = "EstaAutenticado quando n„o autenticado deve retornar false")]
+        [Fact(DisplayName = "EstaAutenticado quando n√£o autenticado deve retornar false")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void EstaAutenticado_QuandoNaoAutenticado_DeveRetornarFalse()
         {
@@ -153,7 +153,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             aspNetUser.PossuiRole("ADMIN").Should().BeTrue();
         }
 
-        [Fact(DisplayName = "PossuiRole deve retornar false quando n„o possui a role")]
+        [Fact(DisplayName = "PossuiRole deve retornar false quando n√£o possui a role")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void PossuiRole_QuandoNaoPossui_DeveRetornarFalse()
         {
@@ -164,7 +164,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             aspNetUser.PossuiRole("ADMIN").Should().BeFalse();
         }
 
-        [Fact(DisplayName = "ObterClaims deve retornar claims do usu·rio")]
+        [Fact(DisplayName = "ObterClaims deve retornar claims do usu√°rio")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void ObterClaims_DeveRetornarClaims()
         {
@@ -192,7 +192,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             httpContext.Should().NotBeNull();
         }
 
-        [Fact(DisplayName = "Name deve retornar nome do usu·rio autenticado")]
+        [Fact(DisplayName = "Name deve retornar nome do usu√°rio autenticado")]
         [Trait("Categoria", "WebApi.Core - Usuario - AspNetUser")]
         public void Name_Autenticado_DeveRetornarNome()
         {

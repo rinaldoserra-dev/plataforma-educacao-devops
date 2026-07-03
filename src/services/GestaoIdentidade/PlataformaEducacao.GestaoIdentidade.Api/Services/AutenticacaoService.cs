@@ -29,7 +29,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Services
             return refreshToken;
         }
 
-        public async Task<RefreshToken> ObterRefreshToken (Guid refreshToken)
+        public async Task<RefreshToken> ObterRefreshToken(Guid refreshToken)
         {
             return await _autenticacaoRepository.ObterRefreshToken(refreshToken);
         }

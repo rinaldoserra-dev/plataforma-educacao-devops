@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Options;
+Ôªøusing Microsoft.Extensions.Options;
 using Moq;
 using PlataformaEducacao.Bff.Api.Extensions;
 using PlataformaEducacao.Bff.Api.Models.GestaoAlunos;
@@ -71,7 +71,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
         {
             var cursoId = Guid.NewGuid();
             _cursosServiceMock.Setup(c => c.ObterCursoComAulasPorCursoId(cursoId))
-                .ReturnsAsync(new ResponseResult { Sucesso = false, Status = 400, Erros = new ResponseErrorMessages { Mensagens = ["Curso n„o encontrado"] } });
+                .ReturnsAsync(new ResponseResult { Sucesso = false, Status = 400, Erros = new ResponseErrorMessages { Mensagens = ["Curso n√£o encontrado"] } });
 
             var dto = new MatricularDTO { CursoId = cursoId };
 
@@ -80,7 +80,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             Assert.False(result.Sucesso);
         }
 
-        [Fact(DisplayName = "Matricular quando curso È null (data inv·lida) deve retornar 502")]
+        [Fact(DisplayName = "Matricular quando curso √© null (data inv√°lida) deve retornar 502")]
         [Trait("Categoria", "Bff.Api - Services - AlunosService")]
         public async Task Matricular_CursoNull_DeveRetornar502()
         {
@@ -96,7 +96,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             Assert.Equal(502, result.Status);
         }
 
-        [Fact(DisplayName = "Matricular quando curso n„o disponÌvel deve retornar 400")]
+        [Fact(DisplayName = "Matricular quando curso n√£o dispon√≠vel deve retornar 400")]
         [Trait("Categoria", "Bff.Api - Services - AlunosService")]
         public async Task Matricular_CursoIndisponivel_DeveRetornar400()
         {

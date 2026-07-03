@@ -1,11 +1,11 @@
-using PlataformaEducacao.GestaoFinanceira.Business.Facade;
+﻿using PlataformaEducacao.GestaoFinanceira.Business.Facade;
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
 {
     public class PagamentoConfigTest
     {
         [Fact(DisplayName = "PagamentoConfig deve atribuir propriedades")]
-        [Trait("Categoria", "Gest�o Financeira - Facade - PagamentoConfig")]
+        [Trait("Categoria", "Gestão Financeira - Facade - PagamentoConfig")]
         public void PagamentoConfig_DeveAtribuirPropriedades()
         {
             // Act

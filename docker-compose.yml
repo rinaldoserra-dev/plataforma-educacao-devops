@@ -50,6 +50,63 @@ services:
         condition: service_healthy
       rabbitmq:
         condition: service_healthy
+ 
+  gestao-financeira-api:
+    build:
+      context: .
+      dockerfile: src/services/GestaoFinanceira/PlataformaEducacao.GestaoFinanceira.Api/Dockerfile
+    container_name: plataforma-financeira
+    ports:
+      - "7083:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoFinanceira.db
+      - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
+    volumes:
+      - sqlite-data:/app/data
+    networks:
+      - plataforma-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  gestao-aluno-api:
+    build:
+      context: .
+      dockerfile: src/services/GestaoAluno/PlataformaEducacao.GestaoAluno.Api/Dockerfile
+    container_name: plataforma-aluno
+    ports:
+      - "5460:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoAluno.db
+      - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
+    volumes:
+      - sqlite-data:/app/data
+    networks:
+      - plataforma-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  gestao-conteudo-api:
+    build:
+      context: .
+      dockerfile: src/services/GestaoConteudo/PlataformaEducacao.GestaoConteudo.Api/Dockerfile
+    container_name: plataforma-conteudo
+    ports:
+      - "5440:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoConteudo.db
+      - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
+    volumes:
+      - sqlite-data:/app/data
+    networks:
+      - plataforma-network
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
   bff-api:
     build:

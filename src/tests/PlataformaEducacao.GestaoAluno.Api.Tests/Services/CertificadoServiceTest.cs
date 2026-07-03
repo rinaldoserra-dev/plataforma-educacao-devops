@@ -1,4 +1,4 @@
-using PlataformaEducacao.GestaoAluno.Data.Services;
+Ôªøusing PlataformaEducacao.GestaoAluno.Data.Services;
 using PlataformaEducacao.GestaoAluno.Domain;
 using QuestPDF.Infrastructure;
 
@@ -11,15 +11,15 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Services
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
-        [Fact(DisplayName = "GerarCertificado deve retornar bytes de PDF v·lido")]
+        [Fact(DisplayName = "GerarCertificado deve retornar bytes de PDF v√°lido")]
         [Trait("Categoria", "GestaoAluno - Data - CertificadoService")]
         public async Task GerarCertificado_DeveRetornarBytesDePdf()
         {
             // Arrange
             var service = new CertificadoService();
-            var aluno = new Aluno(Guid.NewGuid(), "Jo„o da Silva", "joao@teste.com");
+            var aluno = new Aluno(Guid.NewGuid(), "Jo√£o da Silva", "joao@teste.com");
             var matricula = Matricula.MatriculaFactory.CriarComCursoFinalizado(
-                Guid.NewGuid(), "Curso de MicrosserviÁos", 1, 199.90m, aluno);
+                Guid.NewGuid(), "Curso de Microsservi√ßos", 1, 199.90m, aluno);
             var certificado = Certificado.CertificadoFactory.CriarCompleto(
                 matricula, Guid.NewGuid().ToString());
 
@@ -43,7 +43,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Services
             var service = new CertificadoService();
             var aluno = new Aluno(Guid.NewGuid(), "A", "a@teste.com");
             var matricula = Matricula.MatriculaFactory.CriarComCursoFinalizado(
-                Guid.NewGuid(), "Curso B·sico", 1, 50m, aluno);
+                Guid.NewGuid(), "Curso B√°sico", 1, 50m, aluno);
             var certificado = Certificado.CertificadoFactory.CriarCompleto(
                 matricula, "codigo-verificacao-teste");
 

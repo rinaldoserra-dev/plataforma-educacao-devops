@@ -1,4 +1,4 @@
-using FluentAssertions;
+ï»¿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using PlataformaEducacao.Bff.Api.Extensions;
@@ -22,7 +22,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             };
         }
 
-        [Fact(DisplayName = "VerificarSaude quando todos serviços saudáveis deve retornar sucesso")]
+        [Fact(DisplayName = "VerificarSaude quando todos serviÃ§os saudÃ¡veis deve retornar sucesso")]
         [Trait("Categoria", "Bff.Api - Services - HealthCheckService")]
         public async Task VerificarSaude_TodosSaudaveis_DeveRetornarSucesso()
         {
@@ -42,7 +42,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             resultado.Status.Should().Be(StatusCodes.Status200OK);
         }
 
-        [Fact(DisplayName = "VerificarSaude quando um serviço falha deve retornar 503")]
+        [Fact(DisplayName = "VerificarSaude quando um serviÃ§o falha deve retornar 503")]
         [Trait("Categoria", "Bff.Api - Services - HealthCheckService")]
         public async Task VerificarSaude_UmServicoFalha_DeveRetornar503()
         {
@@ -66,7 +66,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             resultado.Erros.Mensagens.Should().Contain("Uma ou mais dependencias estao indisponiveis.");
         }
 
-        [Fact(DisplayName = "VerificarSaude quando serviço lança exceção deve retornar indisponível")]
+        [Fact(DisplayName = "VerificarSaude quando serviÃ§o lanÃ§a exceÃ§Ã£o deve retornar indisponÃ­vel")]
         [Trait("Categoria", "Bff.Api - Services - HealthCheckService")]
         public async Task VerificarSaude_ServicoLancaExcecao_DeveRetornarIndisponivel()
         {
@@ -84,7 +84,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             resultado.Status.Should().Be(StatusCodes.Status503ServiceUnavailable);
         }
 
-        [Fact(DisplayName = "VerificarSaude deve retornar dados de todas as dependências")]
+        [Fact(DisplayName = "VerificarSaude deve retornar dados de todas as dependÃªncias")]
         [Trait("Categoria", "Bff.Api - Services - HealthCheckService")]
         public async Task VerificarSaude_DeveRetornarDadosDeTodasDependencias()
         {
@@ -107,7 +107,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
         {
             protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {
-                throw new HttpRequestException("Serviço indisponível");
+                throw new HttpRequestException("ServiÃ§o indisponÃ­vel");
             }
         }
     }

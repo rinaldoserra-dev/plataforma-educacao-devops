@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.Testing;
+ï»¿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using PlataformaEducacao.GestaoFinanceira.Api.Data;
 using PlataformaEducacao.GestaoFinanceira.Api.Services;
@@ -44,7 +44,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Configurations
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Fact(DisplayName = "API controller sem autenticação deve retornar Unauthorized")]
+        [Fact(DisplayName = "API controller sem autenticaÃ§Ã£o deve retornar Unauthorized")]
         [Trait("Categoria", "GestaoFinanceira.Api - Configurations - ApiConfig")]
         public async Task ApiController_SemAuth_DeveRetornarUnauthorized()
         {
