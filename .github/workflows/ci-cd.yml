@@ -33,7 +33,7 @@ jobs:
         run: dotnet build PlataformaEducacao.sln -c Release --no-restore
 
       - name: Testes com coleta de cobertura
-        run: dotnet test PlataformaEducacao.sln -c Release --no-build --collect:"XPlat Code Coverage"
+        run: dotnet test PlataformaEducacao.sln -c Release --no-build --collect:"XPlat Code Coverage" --settings coverage.runsettings
 
   lint:
     name: Lint e análise estática
