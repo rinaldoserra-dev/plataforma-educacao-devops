@@ -60,13 +60,13 @@ services:
       - "7083:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoFinanceira.db
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
-    volumes:
-      - sqlite-data:/app/data
     networks:
       - plataforma-network
     depends_on:
+      sqlserver:
+        condition: service_healthy
       rabbitmq:
         condition: service_healthy
 
@@ -79,13 +79,13 @@ services:
       - "5460:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoAluno.db
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
-    volumes:
-      - sqlite-data:/app/data
     networks:
       - plataforma-network
     depends_on:
+      sqlserver:
+        condition: service_healthy
       rabbitmq:
         condition: service_healthy
 
@@ -98,13 +98,13 @@ services:
       - "5440:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoConteudo.db
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoConteudo;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
-    volumes:
-      - sqlite-data:/app/data
     networks:
       - plataforma-network
     depends_on:
+      sqlserver:
+        condition: service_healthy
       rabbitmq:
         condition: service_healthy
 
