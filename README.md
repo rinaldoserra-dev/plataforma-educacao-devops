@@ -1,11 +1,20 @@
 # **Plataforma Educacional Distribuída com Microsserviços REST**
 
+[![.NET](https://img.shields.io/badge/.NET-8.0-blue)](https://dotnet.microsoft.com)
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-enabled-success)](https://kubernetes.io)
+[![CI/CD Pipeline](https://github.com/rinaldoserra-dev/plataforma-educacao-devops/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/rinaldoserra-dev/plataforma-educacao-devops/actions/workflows/ci-cd.yml)
+
 ## **1. Apresentação**
 
-Bem-vindo ao repositório do projeto **Plataforma Educacional Distribuída**. Este projeto é uma entrega do MBA DevXpert Full Stack .NET e é referente ao módulo **Construção de Aplicações Corporativas**.
-O objetivo principal é desenvolver uma evolução do projeto do Módulo 3, transformando a aplicação monolítica em um conjunto de APIs independentes, distribuídas por contexto de negócio (Bounded Context), utilizando boas práticas de arquitetura de microsserviços, comunicação resiliente entre serviços, mensageria e segurança baseada em JWT. Cada API representa um Bounded Context (BC) com banco de dados isolado e responsabilidade clara, integrando-se via HTTP e eventos assíncronos (RabbitMQ), com autenticação centralizada por JWT e um BFF (Backend for Frontend) que orquestra as chamadas para o front-end.
+Bem-vindo ao repositório do projeto **Plataforma Educacional com Pipeline CI/CD, Docker e Kubernetes**. Este projeto é uma entrega do MBA DevXpert Full Stack .NET e é referente ao quinto módulo do MBA Desenvolvedor.IO.
+
+O objetivo é evoluir a Plataforma Educacional Distribuída desenvolvida no módulo 4, transformando-a em um ecossistema DevOps completo, com automação de build, testes, integração, entrega e orquestração em ambiente Kubernetes.
+
+O trabalho tem como finalidade aplicar, de forma prática, os conceitos de Git/GitHub, Docker, GitHub Actions, Kubernetes e Cultura DevOps, preparando o sistema para rodar em ambientes reais com escalabilidade, resiliência e processos automatizados de entrega contínua.
 
 ### **Autores**
+
 - **Diego Junqueira**
 - **Felício Melloni**
 - **Márcio Gomes**
@@ -26,61 +35,62 @@ O projeto consiste em:
 
 ## **3. Tecnologias Utilizadas**
 
-- **Linguagem de Programação:** C# 12
-- **Frameworks e Bibliotecas:**
-  - ASP.NET Core 8 Web API
-  - Entity Framework Core 8
-  - MediatR (Mediator pattern para CQRS)
-  - FluentValidation (Validação de Commands)
-  - EasyNetQ (Abstração do RabbitMQ)
-  - Polly (Resiliência e retry policies)
-- **Banco de Dados:**
-  - SQL Server (Desenvolvimento e Docker)
-  - SQLite em memória (Testes)
-- **Mensageria:** RabbitMQ
-- **Autenticação e Autorização:**
-  - ASP.NET Core Identity
-  - JWT (JSON Web Token) para autenticação nas APIs
-- **Documentação da API:** Swagger 
+- **Linguagem:** C# 12
+- **Framework:** ASP.NET Core 8 Web API, Entity Framework Core 8
+- **Padrões:** CQRS com MediatR, FluentValidation, Domain Events
+- **Mensageria:** RabbitMQ com EasyNetQ
+- **Resiliência:** Polly (Retry, Circuit Breaker)
+- **Banco de Dados:** SQL Server
+- **Autenticação:** ASP.NET Core Identity + JWT
+- **Containerização:** Docker, Docker Compose
+- **Orquestração:** Kubernetes (Kind local)
+- **CI/CD:** GitHub Actions
+- **Documentação:** Swagger / OpenAPI
 
 ## **4. Estrutura do Projeto**
+
 A estrutura do projeto é organizada da seguinte forma:
 
-- src/
-  - api gateways/
-    - PlataformaEducacao.Bff.Api/                           - BFF - API Gateway
-  - building-blocks/
-    - PlataformaEducacao.Core/                              - Kernel compartilhado (Entities, Value Objects, Events, Mediator, Validações)
-    - PlataformaEducacao.MessageBus/                        - Abstração do RabbitMQ com EasyNetQ
-    - PlataformaEducacao.WebApi.Core/                       - Configurações compartilhadas (JWT, Controllers base, Identity)
-  - services/
-    - GestaoIdentidade/
-      - PlataformaEducacao.GestaoIdentidade.Api/            - API de Identidade (registro, login, JWT)
-    - GestaoConteudo/
-      - PlataformaEducacao.GestaoConteudo.Api/              - API de Gestão de Conteúdo
-      - PlataformaEducacao.GestaoConteudo.Application/      - Commands, Queries e Handlers
-      - PlataformaEducacao.GestaoConteudo.Domain/           - Entidades e regras de domínio (Curso, Aula, ConteudoProgramatico)
-      - PlataformaEducacao.GestaoConteudo.Data/             - Persistência e repositórios
-    - GestaoAluno/
-      - PlataformaEducacao.GestaoAluno.Api/                 - API de Gestão de Alunos
-      - PlataformaEducacao.GestaoAluno.Application/         - Commands, Queries, Handlers e Integration Handlers
-      - PlataformaEducacao.GestaoAluno.Domain/              - Entidades e regras de domínio (Aluno, Matricula, Certificado, ProgressoAula)
-      - PlataformaEducacao.GestaoAluno.Data/                - Persistência e repositórios
-    - GestaoFinanceira/
-      - PlataformaEducacao.GestaoFinanceira.Api/            - API de Gestão Financeira
-      - PlataformaEducacao.GestaoFinanceira.Business/       - Regras de negócio e modelos de pagamento
-      - PlataformaEducacao.GestaoFinanceira.EduPag/         - Gateway de pagamento simulado
-  - tests/
-      - PlataformaEducacao.Bff.Api.Tests/                   - Testes do BFF - API Gateway
-      - PlataformaEducacao.GestaoAluno.Api.Tests/           - Testes da API de Gestão de Alunos
-      - PlataformaEducacao.GestaoAluno.Application.Tests    - Testes da aplicação da Gestão de Alunos
-      - PlataformaEducacao.GestaoAluno.Domain.Tests         - Testes do domínio da Gestão de Alunos
-      - PlataformaEducacao.GestaoConteudo.Api.Tests         - Testes da API de Gestão de Conteúdo
-      - PlataformaEducacao.GestaoConteudo.Application.Tests - Testes da aplicação da Gestão de Conteúdo
-      - PlataformaEducacao.GestaoConteudo.Domain.Tests      - Testes do domínio da Gestão de Conteúdo
-      - PlataformaEducacao.GestaoFinanceira.Api.Tests       - Testes da API de Gestão Financeira
-      - PlataformaEducacao.GestaoFinanceira.Business.Tests  - Testes das regras de negócio e modelos da Gestão Financeira
-      - PlataformaEducacao.GestaoIdentidade.Api.Tests       - Testes da API de Gestão de Identidade 
+```
+plataforma-educacao-devops/
+|
++-- .github/workflows/
+|   +-- ci-cd.yml            # CI: build + testes + push de imagens no push à main
+|
++-- k8s/                     # Kubernetes manifests
+|   +-- namespace.yaml
+|   +-- configmap.yaml
+|   +-- secret.yaml
+|   +-- rabbitmq.yaml
+|   +-- bff-api.yaml
+|   +-- gestao-identidade.yaml
+|   +-- gestao-conteudo.yaml
+|   +-- gestao-aluno.yaml
+|   +-- gestao-financeira.yaml
+|
++-- src/
+|   +-- api-gateways/
+|   |   +-- PlataformaEducacao.Bff.Api/
+|   +-- services/
+|   |   +-- GestaoIdentidade/        (1 projeto: Api)
+|   |   +-- GestaoConteudo/          (4 projetos: Api, Application, Data, Domain)
+|   |   +-- GestaoAluno/             (4 projetos: Api, Application, Data, Domain)
+|   |   +-- GestaoFinanceira/        (3 projetos: Api, Business, EduPag)
+|   +-- building-blocks/
+|   |   +-- PlataformaEducacao.Core/
+|   |   +-- PlataformaEducacao.MessageBus/
+|   |   +-- PlataformaEducacao.WebApi.Core/
+|   +-- tests/
+|       +-- PlataformaEducacao.GestaoIdentidade.Api.Tests/   (SQL Server + RabbitMQ)
+|       +-- PlataformaEducacao.GestaoConteudo.Api.Tests/     (SQL Server)
+|       +-- PlataformaEducacao.GestaoAluno.Api.Tests/        (SQL Server + RabbitMQ)
+|       +-- PlataformaEducacao.GestaoFinanceira.Api.Tests/   (SQL Server + RabbitMQ)
+|       +-- ... (demais projetos de teste)
+|
++-- docker-compose.yml
++-- PlataformaEducacao.sln
++-- build.ps1 / build.sh
+```
 
 ## **5. Funcionalidades Implementadas**
 
@@ -95,64 +105,193 @@ A estrutura do projeto é organizada da seguinte forma:
 - **Consulta de Histórico do Aluno:** Visualização do histórico completo do aluno com matrículas, progresso e certificados.
 - **API Gateway (BFF):** Ponto único de entrada que agrega chamadas dos serviços de Identidade, Conteúdo e Alunos.
 - **Documentação da API:** Documentação automática dos endpoints de cada API utilizando Swagger.
+- **Health checks nativos (/health)**
 
-## **6. Como Executar o Projeto**
-### **Pré-requisitos**
+## 6. Arquitetura DevOps
+
+```
+                    +-------------------+
+                    |    Front-end      |
+                    +--------+----------+
+                             |
+                    +--------v----------+
+                    |  BFF API Gateway  |
+                    |  :5450 / :8080    |
+                    +---+---+---+---+---+
+                        |   |   |   |
+            +-----------+   |   |   +-----------+
+            |               |   |               |
+    +-------v------+ +------v--++ +------v------+ +-------v------+
+    |  Identidade  | | Conteudo| |   Aluno     | |  Financeira  |
+    |  API :5430   | | :5440   | |  :5460      | |  :7083       |
+    +-------+------+ +----+-----+ +------+------+ +-------+------+
+            |              |            |                |
+            +--------------+------------+----------------+
+                           |
+                    +------v------+
+                    |   RabbitMQ  |
+                    |  :5672      |
+                    +-------------+
+```
+
+### Fluxo DevOps
+
+```
+Desenvolvedor
+    |
+    v
+feature/ branch --> PR --> main
+                            |
+                            v
+                        CI CD (build + testes + lint + push imagens Docker Hub)
+                            |                            
+                            v
+                    kubectl apply -f k8s/
+                            |
+                            v
+                    Cluster Kubernetes (Kind)
+```
+
+
+## **7. Como Executar o Projeto**
+
+### 7.1. Pré-requisitos
 
 - .NET SDK 8.0 ou superior
-- SQL Server e RabbitMQ (podem ser executados via Docker)
+- Docker e Docker Compose
+- RabbitMQ (pode ser executado via Docker)
 - Visual Studio 2022 ou superior (ou qualquer IDE de sua preferência)
 - Git
+- (Opcional) Kind para Kubernetes local
 
-### **Passos para Execução**
+### 7.2. Execução Local (sem Docker)
 
-1. **Clone o Repositório:**
-   - `git clone https://github.com/rinaldoserra-dev/plataforma-educacao-distribuida.git`
-   - `cd plataforma-educacao-distribuida`
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/rinaldoserra-dev/plataforma-devops.git
+   cd plataforma-devops
+   ```
 
-2. **Inicie o RabbitMQ** (caso não esteja rodando):
-   - `docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management`
-   - Painel de gerenciamento: http://localhost:15672/ (usuário: `guest`, senha: `guest`)
+2. Inicie o RabbitMQ:
+   ```bash
+   docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+   ```
+   Painel: http://localhost:15672 (guest/guest)
 
-3. **Configuração do Banco de Dados:**
-   - No arquivo `appsettings.json` de cada API, em `ConnectionStrings:DefaultConnection`, configure a string de conexão conforme necessário.
-   - Em ambiente de desenvolvimento (Development), os bancos SQL Server são criados e populados automaticamente ao executar os serviços.
+3. Execute as APIs (em terminais separados):
+   ```bash
+   dotnet run --project src/services/GestaoIdentidade/PlataformaEducacao.GestaoIdentidade.Api
+   dotnet run --project src/services/GestaoConteudo/PlataformaEducacao.GestaoConteudo.Api
+   dotnet run --project src/services/GestaoAluno/PlataformaEducacao.GestaoAluno.Api
+   dotnet run --project src/services/GestaoFinanceira/PlataformaEducacao.GestaoFinanceira.Api
+   dotnet run --project "src/api-gateways/PlataformaEducacao.Bff.Api"
+   ```
 
-4. **Executar a API de Gestão de Identidade:**
-   - `dotnet run --project src/services/GestaoIdentidade/PlataformaEducacao.GestaoIdentidade.Api`
-   - Acesse a documentação em https://localhost:5431/swagger/
+4. Usuários de teste:
+   - admin@teste.com (ADMIN) / aluno@teste.com (ALUNO)
+   - Senha: **Teste@123**
 
-5. **Executar a API de Gestão de Conteúdo:**
-   - `dotnet run --project src/services/GestaoConteudo/PlataformaEducacao.GestaoConteudo.Api`
-   - Acesse a documentação em https://localhost:5441/swagger/
+### 7.3. Execução com Docker Compose
 
-6. **Executar a API de Gestão de Alunos:**
-   - `dotnet run --project src/services/GestaoAluno/PlataformaEducacao.GestaoAluno.Api`
-   - Acesse a documentação em https://localhost:5461/swagger/
+```bash
+docker compose up --build
+```
 
-7. **Executar a API de Gestão Financeira:**
-   - `dotnet run --project src/services/GestaoFinanceira/PlataformaEducacao.GestaoFinanceira.Api`
-   - Acesse em https://localhost:7083/swagger/
+Todos os serviços + RabbitMQ sobem automaticamente. Swagger acessível em:
 
-8. **Executar o BFF (API Gateway):**
-   - Certifique-se de que os demais serviços estejam em execução.
-   - `dotnet run --project "src/api gateways/PlataformaEducacao.Bff.Api"`
-   - Acesse a documentação em https://localhost:5451/swagger/
+| Serviço | URL |
+|---------|-----|
+| Gestão Identidade API | http://localhost:5430/swagger/ |
+| Gestão Conteúdo API | http://localhost:5440/swagger/ |
+| Gestão Aluno API | http://localhost:5460/swagger/ |
+| Gestão Financeira API | http://localhost:7083/swagger/ |
+| BFF API Gateway | http://localhost:5450/swagger/ |
+| RabbitMQ Management | http://localhost:15672 |
 
-9. **Usuários registrados na carga inicial:**
-   - admin@teste.com (Role: ADMIN)
-   - aluno@teste.com (Role: ALUNO)
-   - A senha para ambos os usuários é: **Teste@123**
+Para derrubar:
+```bash
+docker compose down -v
+```
 
-## **7. Instruções de Execução e Cobertura dos Testes**
+### 7.4. Execução no Kubernetes (Kind)
+
+1. Crie o cluster Kind:
+   ```bash
+   kind create cluster --name plataforma-educacao
+   ```
+
+2. Aplique os manifests:
+   ```bash
+   kubectl apply -f k8s/
+   ```
+
+3. Verifique os pods:
+   ```bash
+   kubectl get pods -n plataforma-educacao
+   ```
+
+4. Acesse os serviços via port-forward:
+   ```bash
+   kubectl port-forward -n plataforma-educacao service/bff-api 5450:8080
+   kubectl port-forward -n plataforma-educacao service/gestao-identidade-api 5430:8080
+   # etc.
+   ```
+
+5. Para deletar o cluster:
+   ```bash
+   kind delete cluster --name plataforma-educacao
+   ```
+
+## 8. Pipeline CI/CD
+
+### CI (Integração Contínua)
+
+Disparada em **pull requests** e **push** para `main`:
+
+A etapa de CI é composta por 2 jobs paralelos:
+
+1. **build-test (Build e testes)**
+   - `actions/checkout@v4` → `actions/setup-dotnet@v4` (utilizando .NET 8.0.x)
+   - `dotnet restore PlataformaEducacao.sln` — restaura as dependências da solução
+   - `dotnet build PlataformaEducacao.sln -c Release --no-restore` — compila o projeto em modo Release
+   - `dotnet test PlataformaEducacao.sln -c Release --no-build --collect:"XPlat Code Coverage"` — executa os testes unitários e coleta a cobertura de código utilizando o coletor XPlat.
+
+2. **lint (Lint e análise estática)**
+   - `actions/checkout@v4` → `actions/setup-dotnet@v4` (utilizando .NET 8.0.x)
+   - `dotnet restore PlataformaEducacao.sln` — restaura as dependências da solução
+   - `dotnet format PlataformaEducacao.sln --verify-no-changes --no-restore` — valida se o código segue os padrões de formatação definidos, falhando o job caso existam divergências.
+
+### CD (Deploy Contínuo)
+
+Disparada automaticamente após o sucesso dos jobs de CI (build-test e lint) apenas quando o evento for um push na branch `main`:
+
+1. **docker-push (Build e push das imagens) (matrix strategy)**
+   - `docker/login-action@v3` — realiza a autenticação no Docker Hub
+   - `docker/build-push-action@v6` — executa o build e push de cada microsserviço
+   - Aplica as tags `latest` e o SHA do commit (`${{ github.sha }}`) correspondente.
+
+Imagens publicadas em: https://hub.docker.com/u/`${{ secrets.DOCKERHUB_USERNAME }}`
+
+### Secrets do GitHub
+
+| Secret | Descrição |
+|--------|-----------|
+| `DOCKERHUB_USERNAME` | Nome de usuário no Docker Hub |
+| `DOCKERHUB_TOKEN` | Token de acesso do Docker Hub |
+
+## **9. Instruções de Execução e Cobertura dos Testes**
+
 O projeto adota o **Test-Driven Development (TDD)**, e todos os testes podem ser executados com o comando `dotnet test`.
-### **7.1. Executar Todos os Testes**
+
+### **Executar Todos os Testes**
+
 Para rodar todos os testes unitários e de integração na solução, execute na raiz do projeto:
    ```bash
 dotnet test PlataformaEducacao.sln
    ```
-   
-### **7.2.Geração e Visualização do Relatório de Cobertura**
+
+### **Geração e Visualização do Relatório de Cobertura**
+
 O projeto possui scripts de automação que, além de rodarem os testes, utilizam as ferramentas `XPlat Code Coverage` e `ReportGenerator` para gerar relatórios unificados de cobertura em HTML.
 
 #### Execução dos Testes e Geração do Relatório
@@ -160,11 +299,13 @@ O projeto possui scripts de automação que, além de rodarem os testes, utiliza
 Para garantir que a cobertura de código seja gerada corretamente, utilize os scripts específicos do seu ambiente (na raiz do projeto):
 
 * **Ambientes Windows (PowerShell):**
+
     ```powershell
     .\build.ps1
     ```
 
 * **Ambientes Linux/macOS (Shell Script):**
+
     ```bash
     chmod +x build.sh # Torna o script executável, se necessário
     ./build.sh
@@ -185,33 +326,39 @@ start index.html
 open index.html
  ```
 
-     
-## **8. Instruções de Configuração**
+A cobertura mínima exigida no CI é de **80%**. Relatório é gerado via `reportgenerator` em `TestResults/merged/index.html`.
 
-- **JWT para as APIs:** As chaves de configuração do JWT estão no `appsettings.json` de cada serviço, na seção `AppSettings` (Secret, Emissor, ValidoEm, ExpiracaoHoras).
-- **RabbitMQ:** A string de conexão do RabbitMQ está configurada na seção `MessageBus` do `appsettings.json` dos serviços que utilizam mensageria (Identidade, Aluno, Financeira e BFF).
-- **Migrações do Banco de Dados:** As migrações são gerenciadas pelo Entity Framework Core e aplicadas automaticamente em ambiente de desenvolvimento. Não é necessário executar manualmente.
+## 10. Documentação das APIs (Swagger)
 
-## **9. Documentação das APIs**
+Todas as APIs possuem Swagger configurado com autenticação Bearer JWT.
 
-A documentação de cada API está disponível através do Swagger. Após iniciar os serviços, acesse:
+### URLs de acesso
 
-| Serviço | URL do Swagger |
-|---|---|
-| Gestão Identidade API | https://localhost:5431/swagger/ |
-| Gestão Conteúdo API | https://localhost:5441/swagger/ |
-| Gestão Aluno API | https://localhost:5461/swagger/ |
-| Gestão Financeira API | https://localhost:7083/swagger/ |
-| BFF API Gateway | https://localhost:5451/swagger/ |
+| Serviço | Desenvolvimento (HTTPS) | Docker (HTTP) | Kubernetes (port-forward) |
+|---------|------------------------|---------------|---------------------------|
+| Identidade | https://localhost:5431/swagger/ | http://localhost:5430/swagger/ | http://localhost:5430/swagger/ |
+| Conteúdo | https://localhost:5441/swagger/ | http://localhost:5440/swagger/ | http://localhost:5440/swagger/ |
+| Aluno | https://localhost:5461/swagger/ | http://localhost:5460/swagger/ | http://localhost:5460/swagger/ |
+| Financeira | https://localhost:7083/swagger/ | http://localhost:7083/swagger/ | http://localhost:7083/swagger/ |
+| BFF | https://localhost:5451/swagger/ | http://localhost:5450/swagger/ | http://localhost:5450/swagger/ |
 
-### **Autenticação nas APIs**
+### Autenticação no Swagger
 
-1. Faça login ou registre um novo aluno via **Gestão Identidade API** (`POST /api/identidade/autenticar` ou `POST /api/identidade/novo-aluno`)
-2. Copie o `accessToken` retornado na resposta
-3. No Swagger de qualquer API, clique em **Authorize** e insira: `Bearer {seu_token}`
+1. Faça login via **Identidade API**: `POST /api/identidade/autenticar`
+2. Copie o `accessToken` da resposta
+3. Clique em **Authorize** no Swagger e insira `Bearer {token}`
 
-## **10. Avaliação**
+## 11. Configuração
 
-- Este projeto é parte de um curso acadêmico e não aceita contribuições externas.
-- Para feedbacks ou dúvidas utilize o recurso de Issues.
-- O arquivo `FEEDBACK.md` é um resumo das avaliações do instrutor e deverá ser modificado apenas por ele.
+- **JWT:** Configurado em `AppSettings` no `appsettings.json` de cada serviço (Secret, Emissor, ValidoEm, ExpiracaoHoras)
+- **RabbitMQ:** String de conexão em `MessageBus` ou `MessageQueueConnection__MessageBus`
+- **Banco de Dados:** SQL Server via container Docker. Migrations aplicadas automaticamente na inicialização (`UseDbMigrationHelper`)
+- **Observabilidade:**  
+  - **Logs:** Serilog com CorrelationId, Console + arquivo rotativo (`logs/log-.txt`, 7 dias de retenção)
+- **Health Checks:** Endpoints `/health` de todas as APIs
+
+## 12. Avaliação
+
+- Projeto acadêmico — não aceita contribuições externas.
+- Feedbacks e dúvidas via Issues do GitHub.
+- O arquivo `FEEDBACK.md` consolida avaliações do instrutor e melhorias realizadas.
