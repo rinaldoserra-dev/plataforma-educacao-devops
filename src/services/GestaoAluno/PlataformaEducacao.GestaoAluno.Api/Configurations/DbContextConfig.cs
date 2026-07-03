@@ -7,7 +7,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
     {
         public static IServiceCollection AddDbContextConfig(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
-            if (environment.IsDevelopment() || environment.EnvironmentName == "Testing")
+            if (environment.EnvironmentName == "Testing")
             {
                 services.AddDbContext<GestaoAlunoContext>(opt =>
                 {

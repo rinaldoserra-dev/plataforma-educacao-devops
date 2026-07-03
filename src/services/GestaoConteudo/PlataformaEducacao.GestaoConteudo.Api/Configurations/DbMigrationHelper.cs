@@ -26,10 +26,14 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
 
                 var conteudoContext = scope.ServiceProvider.GetRequiredService<GestaoConteudoContext>();
 
-                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing")
+                if (env.EnvironmentName == "Testing")
+                {
+                    await conteudoContext.Database.EnsureCreatedAsync();
+                    await SeedTablesGestaoConteudo(conteudoContext);
+                }
+                else if (env.EnvironmentName == "Development" || env.EnvironmentName == "Docker")
                 {
                     await conteudoContext.Database.MigrateAsync();
-
                     await SeedTablesGestaoConteudo(conteudoContext);
                 }
             }

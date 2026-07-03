@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlataformaEducacao.GestaoAluno.Data;
 
@@ -11,9 +12,11 @@ using PlataformaEducacao.GestaoAluno.Data;
 namespace PlataformaEducacao.GestaoAluno.Data.Migrations
 {
     [DbContext(typeof(GestaoAlunoContext))]
-    partial class GestaoAlunoContextModelSnapshot : ModelSnapshot
+    [Migration("20260702222349_SqlServerBaseline")]
+    partial class SqlServerBaseline
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

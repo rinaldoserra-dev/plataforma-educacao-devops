@@ -25,10 +25,14 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
 
                 var alunoContext = scope.ServiceProvider.GetRequiredService<GestaoAlunoContext>();
 
-                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing")
+                if (env.EnvironmentName == "Testing")
+                {
+                    await alunoContext.Database.EnsureCreatedAsync();
+                    await SeedTablesGestaoAluno(alunoContext);
+                }
+                else if (env.EnvironmentName == "Development" || env.EnvironmentName == "Docker")
                 {
                     await alunoContext.Database.MigrateAsync();
-
                     await SeedTablesGestaoAluno(alunoContext);
                 }
             }

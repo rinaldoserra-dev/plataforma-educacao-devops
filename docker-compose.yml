@@ -1,4 +1,23 @@
 services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: plataforma-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Plataforma@2026
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+    networks:
+      - plataforma-network
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Plataforma@2026' -C -Q 'SELECT 1' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: plataforma-rabbitmq
@@ -22,14 +41,29 @@ services:
       - "5430:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Data Source=/app/data/gestaoIdentidade.db
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
-    volumes:
-      - sqlite-data:/app/data
     networks:
       - plataforma-network
     depends_on:
+      sqlserver:
+        condition: service_healthy
       rabbitmq:
+        condition: service_healthy
+
+  bff-api:
+    build:
+      context: .
+      dockerfile: src/api gateways/PlataformaEducacao.Bff.Api/Dockerfile
+    container_name: plataforma-bff
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    networks:
+      - plataforma-network
+    depends_on:
+      gestao-identidade-api:
         condition: service_healthy
 
 networks:
@@ -37,4 +71,4 @@ networks:
     driver: bridge
 
 volumes:
-  sqlite-data:
+  sqlserver-data:

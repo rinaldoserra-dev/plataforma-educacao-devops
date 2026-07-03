@@ -25,10 +25,14 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
 
                 var financeiroContext = scope.ServiceProvider.GetRequiredService<PagamentosContext>();
 
-                if (env.EnvironmentName == "Development" || env.EnvironmentName == "Testing")
+                if (env.EnvironmentName == "Testing")
+                {
+                    await financeiroContext.Database.EnsureCreatedAsync();
+                    await SeedTablesGestaoFinanceira(financeiroContext);
+                }
+                else if (env.EnvironmentName == "Development" || env.EnvironmentName == "Docker")
                 {
                     await financeiroContext.Database.MigrateAsync();
-
                     await SeedTablesGestaoFinanceira(financeiroContext);
                 }
             }

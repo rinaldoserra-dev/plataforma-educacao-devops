@@ -14,10 +14,10 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data.Migrations
                 name: "Pagamentos",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    MatriculaId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TipoPagamento = table.Column<int>(type: "INTEGER", nullable: false),
-                    Valor = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MatriculaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TipoPagamento = table.Column<int>(type: "int", nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,16 +28,16 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data.Migrations
                 name: "Transacoes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CodigoAutorizacao = table.Column<string>(type: "varchar(100)", nullable: false),
                     BandeiraCartao = table.Column<string>(type: "varchar(100)", nullable: false),
-                    DataTransacao = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    ValorTotal = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
-                    CustoTransacao = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
-                    Status = table.Column<int>(type: "INTEGER", nullable: false),
+                    DataTransacao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    CustoTransacao = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     TID = table.Column<string>(type: "varchar(100)", nullable: false),
                     NSU = table.Column<string>(type: "varchar(100)", nullable: false),
-                    PagamentoId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    PagamentoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
