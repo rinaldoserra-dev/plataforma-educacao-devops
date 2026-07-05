@@ -126,14 +126,16 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
         private async Task<UsuarioRespostaLogin> GerarJwt(string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
-            var claims = await _userManager.GetClaimsAsync(user!);
+            if (user == null) throw new ArgumentException("Usuário não encontrado", nameof(email));
 
-            var identityClaims = await ObterClaimsUsuario(claims, user!);
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            var identityClaims = await ObterClaimsUsuario(claims, user);
             var encodedToken = CodificarToken(identityClaims);
 
-            var refreshToken = await _autenticacaoService.GerarRefreshToken(user.UserName);
+            var refreshToken = await _autenticacaoService.GerarRefreshToken(user.UserName!);
 
-            return ObterRespostaToken(encodedToken, user!, claims, refreshToken);
+            return ObterRespostaToken(encodedToken, user, claims, refreshToken);
         }
 
         private async Task<ClaimsIdentity> ObterClaimsUsuario(ICollection<Claim> claims, IdentityUser user)

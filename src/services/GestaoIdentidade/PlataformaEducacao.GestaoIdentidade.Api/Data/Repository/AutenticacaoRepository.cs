@@ -19,7 +19,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Data.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<RefreshToken> ObterRefreshToken(Guid refreshToken)
+        public async Task<RefreshToken?> ObterRefreshToken(Guid refreshToken)
         {
             var token = await _context.RefreshTokens.AsNoTracking().FirstOrDefaultAsync(u => u.Token == refreshToken);
 
