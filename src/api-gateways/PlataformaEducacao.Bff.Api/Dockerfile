@@ -5,16 +5,16 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY ["src/api gateways/PlataformaEducacao.Bff.Api/PlataformaEducacao.Bff.Api.csproj", "src/api gateways/PlataformaEducacao.Bff.Api/"]
+COPY ["src/api-gateways/PlataformaEducacao.Bff.Api/PlataformaEducacao.Bff.Api.csproj", "src/api-gateways/PlataformaEducacao.Bff.Api/"]
 COPY ["src/building-blocks/PlataformaEducacao.Core/PlataformaEducacao.Core.csproj", "src/building-blocks/PlataformaEducacao.Core/"]
 COPY ["src/building-blocks/PlataformaEducacao.MessageBus/PlataformaEducacao.MessageBus.csproj", "src/building-blocks/PlataformaEducacao.MessageBus/"]
 COPY ["src/building-blocks/PlataformaEducacao.WebApi.Core/PlataformaEducacao.WebApi.Core.csproj", "src/building-blocks/PlataformaEducacao.WebApi.Core/"]
 
-RUN dotnet restore "src/api gateways/PlataformaEducacao.Bff.Api/PlataformaEducacao.Bff.Api.csproj"
+RUN dotnet restore "src/api-gateways/PlataformaEducacao.Bff.Api/PlataformaEducacao.Bff.Api.csproj"
 
 COPY . .
 
-WORKDIR "/src/src/api gateways/PlataformaEducacao.Bff.Api"
+WORKDIR /src/src/api-gateways/PlataformaEducacao.Bff.Api
 RUN dotnet build "PlataformaEducacao.Bff.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

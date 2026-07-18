@@ -31,7 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{32
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{64FD18DF-30FA-42C7-AA32-00D73A5D5A40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaEducacao.Bff.Api", "src\api gateways\PlataformaEducacao.Bff.Api\PlataformaEducacao.Bff.Api.csproj", "{AFE31934-AA90-4972-9CD4-7883F4B81733}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaEducacao.Bff.Api", "src\api-gateways\PlataformaEducacao.Bff.Api\PlataformaEducacao.Bff.Api.csproj", "{AFE31934-AA90-4972-9CD4-7883F4B81733}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlataformaEducacao.GestaoConteudo.Data", "src\services\GestaoConteudo\PlataformaEducacao.GestaoConteudo.Data\PlataformaEducacao.GestaoConteudo.Data.csproj", "{B4D49F3A-3A85-43EF-9294-3DF46082F2A4}"
 EndProject

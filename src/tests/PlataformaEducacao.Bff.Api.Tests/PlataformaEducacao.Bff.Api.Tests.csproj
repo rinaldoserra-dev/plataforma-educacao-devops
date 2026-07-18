@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\api gateways\PlataformaEducacao.Bff.Api\PlataformaEducacao.Bff.Api.csproj" />
+    <ProjectReference Include="..\..\api-gateways\PlataformaEducacao.Bff.Api\PlataformaEducacao.Bff.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>
