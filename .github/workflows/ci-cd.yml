@@ -154,6 +154,9 @@ jobs:
           - service: gestao-financeira-api
             dockerfile: src/services/GestaoFinanceira/PlataformaEducacao.GestaoFinanceira.Api/Dockerfile
 
+          - service: bff-api
+            dockerfile: src/api-gateways/PlataformaEducacao.Bff.Api/Dockerfile
+
     steps:
 
       - name: Checkout
