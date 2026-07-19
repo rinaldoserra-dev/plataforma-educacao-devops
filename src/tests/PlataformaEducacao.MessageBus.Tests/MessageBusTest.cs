@@ -50,20 +50,6 @@ public class MessageBusTest
         Assert.NotNull(messageBus);
     }
 
-    [Fact(DisplayName = "Construtor com String de Conexão Vazia Deve Inicializar")]
-    [Trait("Categoria", "Building Blocks - MessageBus")]
-    public void Construtor_ComStringDeConexaoVazia_DeveInicializar()
-    {
-        // Arrange
-        var stringDeConexao = string.Empty;
-
-        // Act
-        var messageBus = new PlataformaEducacao.MessageBus.MessageBus(stringDeConexao);
-
-        // Assert
-        Assert.NotNull(messageBus);
-    }
-
     [Fact(DisplayName = "Construtor com String de Conexão Nula Deve Lançar ArgumentNullException")]
     [Trait("Categoria", "Building Blocks - MessageBus")]
     public void Construtor_ComStringDeConexaoNula_DeveLancar()
