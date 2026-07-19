@@ -148,26 +148,6 @@ public class MessageBusTest
         Assert.Throws<ArgumentNullException>(() => messageBus.Publish(mensagem!));
     }
 
-    [Fact(DisplayName = "Publish Com Subclasse de IntegrationEvent Deve Aceitar")]
-    [Trait("Categoria", "Building Blocks - MessageBus")]
-    public void Publish_ComSubclasseDeIntegrationEvent_DeveAceitar()
-    {
-        // Arrange
-        var stringDeConexao = "host=localhost";
-        var messageBus = new PlataformaEducacao.MessageBus.MessageBus(stringDeConexao);
-        var eventoUsuario = new UsuarioRegistradoIntegrationEvent(
-            Guid.NewGuid(),
-            "Usuario Teste",
-            "teste@exemplo.com"
-        );
-
-        // Act
-        var excecao = Record.Exception(() => messageBus.Publish(eventoUsuario));
-
-        // Assert
-        Assert.True(excecao == null || excecao is OperationCanceledException || excecao is TimeoutException || excecao is Exception);
-    }
-
     #endregion
 
     #region PublishAsync Method Tests
@@ -199,26 +179,6 @@ public class MessageBusTest
 
         // Act & Assert
         await Assert.ThrowsAsync<ArgumentNullException>(async () => await messageBus.PublishAsync(mensagem!));
-    }
-
-    [Fact(DisplayName = "PublishAsync Com Subclasse de IntegrationEvent Deve Aceitar")]
-    [Trait("Categoria", "Building Blocks - MessageBus")]
-    public async Task PublishAsync_ComSubclasseDeIntegrationEvent_DeveAceitar()
-    {
-        // Arrange
-        var stringDeConexao = "host=localhost";
-        var messageBus = new PlataformaEducacao.MessageBus.MessageBus(stringDeConexao);
-        var eventoUsuario = new UsuarioRegistradoIntegrationEvent(
-            Guid.NewGuid(),
-            "Usuario Teste",
-            "teste@exemplo.com"
-        );
-
-        // Act
-        var excecao = await Record.ExceptionAsync(async () => await messageBus.PublishAsync(eventoUsuario));
-
-        // Assert
-        Assert.True(excecao == null || excecao is OperationCanceledException || excecao is TimeoutException || excecao is Exception);
     }
 
     [Fact(DisplayName = "PublishAsync Com Mensagem Válida Deve Retornar Task Completada")]
@@ -494,26 +454,6 @@ public class MessageBusTest
         Assert.NotSame(messageBus1, messageBus2);
     }
 
-    [Fact(DisplayName = "Múltiplas Instâncias Podem Chamar Publish Em Cada Uma")]
-    [Trait("Categoria", "Building Blocks - MessageBus")]
-    public void MultiplasInstancias_PodemChamarPublishEmCadaUma()
-    {
-        // Arrange
-        var stringConexao1 = "host=localhost";
-        var stringConexao2 = "host=localhost";
-        var messageBus1 = new MessageBus(stringConexao1);
-        var messageBus2 = new MessageBus(stringConexao2);
-        var message = new TestIntegrationEvent();
-
-        // Act
-        var ex1 = Record.Exception(() => messageBus1.Publish(message));
-        var ex2 = Record.Exception(() => messageBus2.Publish(message));
-
-        // Assert
-        Assert.True(ex1 == null || ex1 is Exception);
-        Assert.True(ex2 == null || ex2 is Exception);
-    }
-
     #endregion
 
     #region Subscribe Method Tests
@@ -598,26 +538,6 @@ public class MessageBusTest
         Assert.True(exception == null || exception is Exception);
     }
 
-    [Fact(DisplayName = "Subscribe Com Múltiplas Assinaturas Deve Aceitar")]
-    [Trait("Categoria", "Building Blocks - MessageBus")]
-    public void Subscribe_ComMultipleSubscriptions_DeveAceitar()
-    {
-        // Arrange
-        var stringConexao = "host=localhost";
-        var messageBus = new MessageBus(stringConexao);
-        var subscriptionId1 = "subscription-1";
-        var subscriptionId2 = "subscription-2";
-        Action<TestMessage> onMessage = msg => { };
-
-        // Act
-        var exception1 = Record.Exception(() => messageBus.Subscribe(subscriptionId1, onMessage));
-        var exception2 = Record.Exception(() => messageBus.Subscribe(subscriptionId2, onMessage));
-
-        // Assert
-        Assert.True(exception1 == null || exception1 is Exception);
-        Assert.True(exception2 == null || exception2 is Exception);
-    }
-
     #endregion
 
     #region SubscribeAsync Method Tests
@@ -699,26 +619,6 @@ public class MessageBusTest
 
         // Assert
         Assert.True(exception == null || exception is Exception);
-    }
-
-    [Fact(DisplayName = "SubscribeAsync Com Múltiplas Assinaturas Deve Aceitar")]
-    [Trait("Categoria", "Building Blocks - MessageBus")]
-    public void SubscribeAsync_ComMultipleSubscriptions_DeveAceitar()
-    {
-        // Arrange
-        var stringConexao = "host=localhost";
-        var messageBus = new MessageBus(stringConexao);
-        var subscriptionId1 = "subscription-async-1";
-        var subscriptionId2 = "subscription-async-2";
-        Func<TestMessage, Task> onMessage = msg => Task.CompletedTask;
-
-        // Act
-        var exception1 = Record.Exception(() => messageBus.SubscribeAsync(subscriptionId1, onMessage));
-        var exception2 = Record.Exception(() => messageBus.SubscribeAsync(subscriptionId2, onMessage));
-
-        // Assert
-        Assert.True(exception1 == null || exception1 is Exception);
-        Assert.True(exception2 == null || exception2 is Exception);
     }
 
     #endregion
@@ -956,25 +856,6 @@ public class MessageBusTest
 
         // Assert
         Assert.True(exception == null || exception is Exception);
-    }
-
-    [Fact(DisplayName = "Respond Com Múltiplos Responders Deve Aceitar")]
-    [Trait("Categoria", "Building Blocks - MessageBus")]
-    public void Respond_ComMultipleResponders_DeveAceitar()
-    {
-        // Arrange
-        var stringConexao = "host=localhost";
-        var messageBus = new MessageBus(stringConexao);
-        Func<TestIntegrationEvent, TestResponseMessage> responder1 = request => new TestResponseMessage();
-        Func<TestIntegrationEvent, TestResponseMessage> responder2 = request => new TestResponseMessage();
-
-        // Act
-        var exception1 = Record.Exception(() => messageBus.Respond(responder1));
-        var exception2 = Record.Exception(() => messageBus.Respond(responder2));
-
-        // Assert
-        Assert.True(exception1 == null || exception1 is Exception);
-        Assert.True(exception2 == null || exception2 is Exception);
     }
 
     [Fact(DisplayName = "Respond Com Disposable Retornado Deve Poder Ser Disposed")]
