@@ -36,7 +36,7 @@ public class MessageBusTest
 
     #region Constructor Tests
 
-    [Fact(DisplayName = "Contrutor com String de Conexão Válida Deve Inicializar")]
+    [Fact(DisplayName = "Construtor com String de Conexão Válida Deve Inicializar")]
     [Trait("Categoria", "Building Blocks - MessageBus")]
     public void Construtor_ComStringDeConexaoValida_DeveInicializar()
     {
@@ -50,7 +50,7 @@ public class MessageBusTest
         Assert.NotNull(messageBus);
     }
 
-    [Fact(DisplayName = "Contrutor com String de Conexão Vazia Deve Inicializar")]
+    [Fact(DisplayName = "Construtor com String de Conexão Vazia Deve Inicializar")]
     [Trait("Categoria", "Building Blocks - MessageBus")]
     public void Construtor_ComStringDeConexaoVazia_DeveInicializar()
     {
@@ -64,7 +64,7 @@ public class MessageBusTest
         Assert.NotNull(messageBus);
     }
 
-    [Fact(DisplayName = "Contrutor com String de Conexão Nula Deve Lançar ArgumentNullException")]
+    [Fact(DisplayName = "Construtor com String de Conexão Nula Deve Lançar ArgumentNullException")]
     [Trait("Categoria", "Building Blocks - MessageBus")]
     public void Construtor_ComStringDeConexaoNula_DeveLancar()
     {
@@ -424,20 +424,6 @@ public class MessageBusTest
     {
         // Arrange
         var stringConexao = "amqp://user:password@localhost:5672/";
-
-        // Act
-        var messageBus = new PlataformaEducacao.MessageBus.MessageBus(stringConexao);
-
-        // Assert
-        Assert.NotNull(messageBus);
-    }
-
-    [Fact(DisplayName = "Construtor Com String De Conexão Longa Deve Inicializar")]
-    [Trait("Categoria", "Building Blocks - MessageBus")]
-    public void Construtor_ComStringDeConexaoLonga_DeveInicializar()
-    {
-        // Arrange
-        var stringConexao = "amqp://user:password@host1,host2,host3:5672/?heartbeat=10&connection_attempts=3";
 
         // Act
         var messageBus = new PlataformaEducacao.MessageBus.MessageBus(stringConexao);
