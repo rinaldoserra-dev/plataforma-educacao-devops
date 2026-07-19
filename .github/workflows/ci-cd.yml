@@ -73,21 +73,19 @@ jobs:
         shell: bash
         run: |
 
-          LINE_RATE=$(xmllint --xpath "string(/coverage/@line-rate)" TestResults/CoverageReport/Cobertura.xml)
+          BRANCH_RATE=$(xmllint --xpath "string(/coverage/@branch-rate)" TestResults/CoverageReport/Cobertura.xml)
 
-          COVERAGE=$(awk "BEGIN { printf \"%.1f\", $LINE_RATE * 100 }")
+          COVERAGE=$(awk "BEGIN { printf \"%.1f\", $BRANCH_RATE * 100 }")
 
-          echo "Cobertura: ${COVERAGE}%"
-
-          echo "## 📊 Code Coverage" >> $GITHUB_STEP_SUMMARY
+          echo "## 📊 Cobertura de Código" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| Métrica | Valor |" >> $GITHUB_STEP_SUMMARY
           echo "|---------|------:|" >> $GITHUB_STEP_SUMMARY
-          echo "| Line Coverage | ${COVERAGE}% |" >> $GITHUB_STEP_SUMMARY
-          echo "| Threshold | ${{ env.COVERAGE_THRESHOLD }}% |" >> $GITHUB_STEP_SUMMARY
+          echo "| Cobertura de Ramos | ${COVERAGE}% |" >> $GITHUB_STEP_SUMMARY
+          echo "| Limiar | ${{ env.COVERAGE_THRESHOLD }}% |" >> $GITHUB_STEP_SUMMARY
 
           if (( $(echo "$COVERAGE < ${{ env.COVERAGE_THRESHOLD }}" | bc -l) )); then
-            echo "::error::Cobertura ${COVERAGE}% abaixo do mínimo de ${{ env.COVERAGE_THRESHOLD }}%"
+            echo "::error::Cobertura de ${COVERAGE}%, abaixo do mínimo de ${{ env.COVERAGE_THRESHOLD }}%"
             exit 1
           fi
 
