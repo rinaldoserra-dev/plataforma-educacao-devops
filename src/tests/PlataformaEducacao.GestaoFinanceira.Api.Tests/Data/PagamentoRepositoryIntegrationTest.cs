@@ -56,6 +56,14 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Data
             Assert.Equal(pagamento.MatriculaId, result.MatriculaId);
         }
 
+        [Fact(DisplayName = "ObterPagamentoPorMatriculaId inexistente deve retornar null")]
+        [Trait("Categoria", "GestaoFinanceira.Api - Data - PagamentoRepository")]
+        public async Task ObterPagamentoPorMatriculaId_PagamentoInexistente_DeveRetornarNull()
+        {
+            var result = await _repository.ObterPagamentoPorMatriculaId(Guid.NewGuid());
+            Assert.Null(result);
+        }
+
         [Theory(DisplayName = "ObterPagamentoPorMatriculaId com usuarioId deve retornar pagamento")]
         [Trait("Categoria", "GestaoFinanceira.Api - Data - PagamentoRepository")]
         [InlineData(true)]
