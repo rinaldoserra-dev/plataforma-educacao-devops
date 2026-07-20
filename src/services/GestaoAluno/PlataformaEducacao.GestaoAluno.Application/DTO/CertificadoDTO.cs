@@ -12,7 +12,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.DTO
         public string CodigoVerificacao { get; set; } = codigoVerificacao;
 
         public static CertificadoDTO FromMatricula(Matricula m) => new(m.Certificado!.Id,
-             m.Aluno?.Nome ?? string.Empty, m.NomeCurso, m.HistoricoAprendizado.DataConclusao!.Value,
+             m.Aluno.Nome, m.NomeCurso, m.HistoricoAprendizado.DataConclusao!.Value,
              m.Certificado!.CodigoVerificacao);
     }
 }
