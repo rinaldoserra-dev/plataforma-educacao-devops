@@ -9,7 +9,7 @@ namespace PlataformaEducacao.GestaoAluno.Data
         {
             var domainEntities = ctx.ChangeTracker
                 .Entries<Entity>()
-                .Where(x => x.Entity.Notificacoes != null && x.Entity.Notificacoes.Any());
+                .Where(x => x.Entity.Notificacoes.Count > 0);
 
             var domainEvents = domainEntities
                 .SelectMany(x => x.Entity.Notificacoes)
