@@ -111,7 +111,7 @@ services:
   bff-api:
     build:
       context: .
-      dockerfile: src/api gateways/PlataformaEducacao.Bff.Api/Dockerfile
+      dockerfile: src/api-gateways/PlataformaEducacao.Bff.Api/Dockerfile
     container_name: plataforma-bff
     ports:
       - "5000:8080"
