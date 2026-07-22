@@ -25,11 +25,13 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Queries.ViewModels
 
             // Act
             var viewModel = new MatriculaViewModel(matriculaId, alunoId, nomeAluno, cursoId, nomeCurso, situacaoMatricula, dataMatricula, situacaoCurso, dataConclusao, progresso, certificadoId, codigo);
+            var viewModel2 = new MatriculaViewModel(matriculaId, alunoId, null, cursoId, nomeCurso, situacaoMatricula, dataMatricula, situacaoCurso, dataConclusao, progresso, certificadoId, codigo);
 
             // Assert
             Assert.Equal(matriculaId, viewModel.MatriculaId);
             Assert.Equal(alunoId, viewModel.AlunoId);
             Assert.Equal(nomeAluno, viewModel.NomeAluno);
+            Assert.Equal(string.Empty, viewModel2.NomeAluno); // NomeAluno deve ser vazio se for nulo
             Assert.Equal(cursoId, viewModel.CursoId);
             Assert.Equal(nomeCurso, viewModel.NomeCurso);
             Assert.Equal(situacaoMatricula, viewModel.SituacaoMatricula);
