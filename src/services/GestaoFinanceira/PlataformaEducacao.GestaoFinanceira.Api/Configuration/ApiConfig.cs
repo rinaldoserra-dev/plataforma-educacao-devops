@@ -45,6 +45,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
                             .AllowAnyMethod()
                             .AllowAnyHeader());
             });
+            services.AddHealthChecks();
 
             return services;
         }
@@ -68,6 +69,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
+                endpoints.MapHealthChecks("/health/ready");
             });
         }
     }

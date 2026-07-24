@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: plataforma-config
+  namespace: plataforma-educacao
+data:
+  ASPNETCORE_ENVIRONMENT: "Docker"
+  ASPNETCORE_URLS: "http://0.0.0.0:8080"
+
+  MessageQueueConnection__MessageBus: "host=rabbitmq:5672;publisherConfirms=true;timeout=10"
+
+  IdentidadeUrl: "http://gestao-identidade-api:8080"
+  GestaoConteudoUrl: "http://gestao-conteudo-api:8080"
+  GestaoAlunosUrl: "http://gestao-aluno-api:8080"
+  GestaoFinanceiraUrl: "http://gestao-financeira-api:8080"
+
+  AppSettings__ExpiracaoHoras: "2"
+  AppSettings__ExpiracaoRefrehToken: "8"
+  AppSettings__Emissor: "PlataformaEducacao"
+  AppSettings__ValidoEm: "http://gestao-identidade-api:8080"
+  AppTokenSettings__RefreshTokenExpiration: "8"
+
+  rabbitmq_host: "rabbitmq"
+  rabbitmq_port: "5672"
