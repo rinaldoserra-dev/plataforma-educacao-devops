@@ -22,7 +22,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
                 {
                     ["AppSettings:Secret"] = "c1f51f42-5727-4d15-b787-c6bbbb645024",
                     ["AppSettings:ExpiracaoHoras"] = "2",
-                    ["AppSettings:ExpiracaoRefrehToken"] = "8",
+                    ["AppSettings:ExpiracaoRefreshToken"] = "8",
                     ["AppSettings:Emissor"] = "PlataformaEducacao",
                     ["AppSettings:ValidoEm"] = "https://localhost",
                     ["IdentidadeUrl"] = "https://localhost:5431",
