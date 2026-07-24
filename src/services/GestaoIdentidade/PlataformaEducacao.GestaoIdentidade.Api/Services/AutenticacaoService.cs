@@ -21,7 +21,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Services
             var refreshToken = new RefreshToken
             {
                 UserName = userName,
-                ExpirationDate = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoRefrehToken),
+                ExpirationDate = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoRefreshToken),
             };
 
             await _autenticacaoRepository.AdicionarRefreshToken(refreshToken);
