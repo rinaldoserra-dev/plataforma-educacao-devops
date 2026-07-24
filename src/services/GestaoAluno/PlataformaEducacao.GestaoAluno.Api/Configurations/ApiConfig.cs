@@ -45,6 +45,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
                             .AllowAnyMethod()
                             .AllowAnyHeader());
             });
+            services.AddHealthChecks();
 
             return services;
         }
@@ -66,6 +67,8 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
+                endpoints.MapHealthChecks("/health/ready");
             });
         }
     }
