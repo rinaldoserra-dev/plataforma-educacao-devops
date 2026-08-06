@@ -58,7 +58,6 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
             }
             catch (Exception)
             {
-                // log
                 validationResult.Errors.Add(new ValidationFailure("Pagamento", "Pagamento autorizado, mas houve falha ao notificar os demais serviços."));
 
                 // Cancelar pagamento no gateway
