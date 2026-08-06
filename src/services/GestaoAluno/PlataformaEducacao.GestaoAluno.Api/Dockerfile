@@ -39,7 +39,7 @@ LABEL org.opencontainers.image.title="gestao-aluno-api" \
 
 COPY --from=publish /app/publish .
 
-RUN chown -R app:app /app
+RUN mkdir -p /app/logs && chown -R app:app /app
 
 USER app
 
