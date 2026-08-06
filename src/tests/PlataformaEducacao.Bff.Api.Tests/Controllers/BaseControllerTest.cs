@@ -54,7 +54,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Controllers
 
             // Act
             ResponseResult? nullResponse = null;
-            var result = controller.InvokeCustomResponse(nullResponse);
+            var result = controller.InvokeCustomResponse(nullResponse!);
 
             // Assert
             result.Should().BeOfType<BadRequestObjectResult>();
