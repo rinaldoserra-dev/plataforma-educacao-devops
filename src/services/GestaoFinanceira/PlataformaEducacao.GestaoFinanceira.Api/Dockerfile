@@ -36,7 +36,7 @@ LABEL org.opencontainers.image.title="gestao-financeira-api" \
 
 COPY --from=publish /app/publish .
 
-RUN chown -R app:app /app
+RUN mkdir -p /app/logs && chown -R app:app /app
 
 USER app
 

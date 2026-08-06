@@ -59,14 +59,18 @@ plataforma-educacao-devops/
 |
 +-- k8s/                     # Kubernetes manifests
 |   +-- namespace.yaml
-|   +-- configmap.yaml
 |   +-- secret.yaml
+|   +-- configmap.yaml
+|   +-- sqlserver.yaml
 |   +-- rabbitmq.yaml
-|   +-- bff-api.yaml
 |   +-- gestao-identidade.yaml
 |   +-- gestao-conteudo.yaml
 |   +-- gestao-aluno.yaml
 |   +-- gestao-financeira.yaml
+|   +-- bff-api.yaml
+|   +-- ingress.yaml          # Ingress (nginx) roteando host plataforma.local -> bff-api
+|   +-- hpa.yaml              # HorizontalPodAutoscalers das 5 APIs
+|   +-- deploy.sh             # Script único que aplica todos os manifests na ordem correta
 |
 +-- src/
 |   +-- api-gateways/
@@ -215,32 +219,120 @@ docker compose down -v
 
 ### 7.4. Execução no Kubernetes (Kind)
 
-1. Crie o cluster Kind:
-   ```bash
-   kind create cluster --name plataforma-educacao
-   ```
+> **Pré-requisito:** As imagens Docker dos serviços da plataforma são publicadas no Docker Hub pelo pipeline CI/CD (seção 8). O Kind faz o pull dessas imagens do Docker Hub automaticamente, como em qualquer cluster Kubernetes. Não é necessário construir carregar imagens localmente.
+> Certifique-se de estar autenticado no Docker Hub no host (`docker login`) caso o repositório seja privado; caso seja público, nenhuma configuração extra é necessária.
 
-2. Aplique os manifests:
-   ```bash
-   kubectl apply -f k8s/
-   ```
+#### Limpar ambiente anterior (se existir)
 
-3. Verifique os pods:
-   ```bash
-   kubectl get pods -n plataforma-educacao
-   ```
+```bash
+kind delete cluster --name plataforma-educacao
+```
 
-4. Acesse os serviços via port-forward:
-   ```bash
-   kubectl port-forward -n plataforma-educacao service/bff-api 5450:8080
-   kubectl port-forward -n plataforma-educacao service/gestao-identidade-api 5430:8080
-   # etc.
-   ```
+#### Criar cluster do zero
 
-5. Para deletar o cluster:
-   ```bash
-   kind delete cluster --name plataforma-educacao
-   ```
+```bash
+# 1. Criar cluster
+kind create cluster --name plataforma-educacao
+
+# 2. Label do node (necessário para o ingress-nginx)
+kubectl label node plataforma-educacao-control-plane ingress-ready=true
+
+# 3. Instalar ingress controller
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.0/deploy/static/provider/kind/deploy.yaml
+
+# 4. Aguardar ingress-nginx ficar pronto
+kubectl wait --namespace ingress-nginx \
+  --for=condition=ready pod \
+  --selector=app.kubernetes.io/component=controller \
+  --timeout=120s
+```
+
+*(Opcional, recomendado para acelerar o primeiro cold-start)* Pré-carregue as imagens de infra nos nodes do kind, evitando que o Kind as baixe do Docker Hub sob a rede padrão. SQL Server (~1.5 GB) pode levar vários minutos no primeiro pull:
+
+```bash
+docker pull busybox:1.36                          && kind load docker-image busybox:1.36                          --name plataforma-educacao
+docker pull mcr.microsoft.com/mssql/server:2022-latest && kind load docker-image mcr.microsoft.com/mssql/server:2022-latest --name plataforma-educacao
+docker pull rabbitmq:3-management                 && kind load docker-image rabbitmq:3-management                 --name plataforma-educacao
+```
+
+#### Executar o deploy (script único)
+
+O script `k8s/deploy.sh` orquestra toda a aplicação dos manifests na ordem correta (namespace → secret → configmap → infra → wait → APIs → ingress → HPA):
+
+```bash
+./k8s/deploy.sh
+```
+
+> **Importante:** execute o script **a partir da raiz do repositório** (não de dentro de `k8s/`), pois ele referencia os manifests com caminho relativo (`k8s/namespace.yaml`, etc.). No Windows, use Git Bash, WSL ou PowerShell com `bash k8s/deploy.sh`.
+
+> Caso queira pular o script e aplicar manualmente, use `kubectl apply -f k8s/` (pode ocorrer race condition no namespace na primeira execução — aguarde alguns segundos e execute novamente).
+
+#### Verificar o estado do cluster
+
+```bash
+kubectl get pods -n plataforma-educacao
+```
+São esperados 7 pods em `Running` (sqlserver, rabbitmq, 4 APIs e o BFF) e os pods do `ingress-nginx` no namespace `ingress-nginx`.
+
+```bash
+kubectl get hpa -n plataforma-educacao    # ver os autoscalers
+kubectl get ingress -n plataforma-educacao
+```
+
+#### Acessar a aplicação
+
+**Opção A — Via Ingress (recomendada, sem port-forward):**
+
+O `k8s/ingress.yaml` define o host `plataforma.local` roteando para o serviço `bff-api`. Para que esse hostname resolva no seu navegador/curl, adicione a entrada abaixo ao arquivo de hosts do SO:
+
+- **Windows:** `C:\Windows\System32\drivers\etc\hosts` (abrir como Administrador)
+- **Linux/macOS:** `/etc/hosts`
+
+```
+127.0.0.1  plataforma.local
+```
+
+Após salvar, acesse:
+
+```
+http://plataforma.local/swagger/         # BFF (Swagger)
+http://plataforma.local/health            # health check do BFF
+```
+
+> O kind com `ingress-nginx` expõe a porta 80 do host automaticamente; em alguns ambientes pode ser necessário `kubectl port-forward -n ingress-nginx service/ingress-nginx-controller 80:80`.
+
+**Opção B — Via port-forward (alternativa):**
+
+```bash
+kubectl port-forward -n plataforma-educacao service/bff-api             5450:8080
+kubectl port-forward -n plataforma-educacao service/gestao-identidade-api 5430:8080
+# etc.
+```
+Swagger do BFF em `http://localhost:5450/swagger/`.
+
+#### Verificando o log estruturado (JSON)
+
+No k8s, por padrão, apenas o sink Console está ativo (stdout do pod — o sink File é neutralizado via env var no `k8s/configmap.yaml`). Para inspecionar:
+
+```bash
+kubectl logs -n plataforma-educacao deploy/gestao-aluno-api --tail=20
+```
+
+Cada linha é um JSON compacto (formato `Serilog.Formatting.Compact`) contendo `@t` (timestamp), `@mt` (mensagem template), `CorrelationId`, `RequestMethod`, `RequestPath`, `StatusCode`, `Elapsed`, `SourceContext`, `MachineName`, `ProcessId`, `ThreadId`, `Application`, `Service`, entre outros. Pronto para ingestão por stacks de observabilidade (ELK, Datadog, Seq, Loki, etc.) lendo o stdout do pod.
+
+Para rastrear uma requisição ponta-a-ponta entre serviços, envie um header `X-Correlation-ID` e procure o mesmo valor nos logs de todos os pods envolvidos:
+
+```bash
+curl -i -H "X-Correlation-ID: meu-teste-123" http://plataforma.local/api/alunos/matriculas-ativas
+kubectl logs -n plataforma-educacao -l app=bff-api          | grep meu-teste-123
+kubectl logs -n plataforma-educacao -l app=gestao-aluno-api  | grep meu-teste-123
+```
+
+#### Deletar o cluster
+
+```bash
+kind delete cluster --name plataforma-educacao
+```
 
 ## 8. Pipeline CI/CD
 
@@ -354,7 +446,12 @@ Todas as APIs possuem Swagger configurado com autenticação Bearer JWT.
 - **RabbitMQ:** String de conexão em `MessageBus` ou `MessageQueueConnection__MessageBus`
 - **Banco de Dados:** SQL Server via container Docker. Migrations aplicadas automaticamente na inicialização (`UseDbMigrationHelper`)
 - **Observabilidade:**  
-  - **Logs:** Serilog com CorrelationId, Console + arquivo rotativo (`logs/log-.txt`, 7 dias de retenção)
+  - **Logs:** Serilog com CorrelationId, sink Console + sink File rotativo em JSON compacto (`logs/log-YYYYMMDD.json`, rotação diária, retenção de 7 dias). Formato `Serilog.Formatting.Compact.CompactJsonFormatter` — cada evento é um objeto JSON de linha única, pronto para ingestão em ELK/Datadog/Seq/Loki.
+    - Configuração centralizada no building block `PlataformaEducacao.WebApi.Core` (`Extensions/LoggingConfig.cs`), exposta via `AddLoggingConfiguration`, `AddCorrelationIdConfiguration` e `UseLoggingConfiguration` (invocadas nos 5 `Program.cs`).
+    - Pacotes: `Serilog` 4.3.0, `Serilog.AspNetCore` 8.0.3, `Serilog.Extensions.Hosting` 8.0.0, `Serilog.Sinks.Console` 6.0.0, `Serilog.Sinks.File` 6.0.0, `Serilog.Sinks.Debug` 3.0.0, `Serilog.Enrichers.Environment` 3.0.1, `Serilog.Enrichers.Process` 3.0.0, `Serilog.Enrichers.Thread` 4.0.0, `Serilog.Settings.Configuration` 8.0.4, `Serilog.Formatting.Compact` 3.0.0, `CorrelationId` 3.0.1 (stevejgordon).
+    - Campos estruturados por evento: `@t` (timestamp UTC ISO 8601), `@mt` (message template), `@l` (level), `@tr`/`@sp` (TraceId/SpanId), `CorrelationId`, `SourceContext`, `MachineName`, `ProcessId`, `ThreadId`, `Application`, `Service`, e campos de request HTTP (`RequestMethod`, `RequestPath`, `StatusCode`, `Elapsed`) via `UseSerilogRequestLogging`.
+  - **Correlação entre serviços:** middleware `CorrelationId` lê/gera o header `X-Correlation-ID` (presente na resposta HTTP). No BFF, `AddCorrelationIdForwarding` propaga o header em chamadas `HttpClient` outbound para os serviços backend. O mesmo `CorrelationId` atravessa BFF → serviço backend → log, permitindo rastrear uma requisição ponta-a-ponta.
+  - **Logs no Kubernetes:** o sink File é neutralizado via env vars no `k8s/configmap.yaml` (`Serilog__WriteTo__1__Args__path=/dev/null`), de modo que **apenas o sink Console** grava em **stdout** do pod — consumido via `kubectl logs -n plataforma-educacao <pod>`. No docker-compose o File sink permanece ativo (`logs/log-YYYYMMDD.json`, 7 dias).
 - **Health Checks:** Endpoints `/health` de todas as APIs
 
 ## 12. Avaliação

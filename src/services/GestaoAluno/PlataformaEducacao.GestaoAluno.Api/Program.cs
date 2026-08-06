@@ -1,5 +1,6 @@
 using QuestPDF.Infrastructure;
 using PlataformaEducacao.GestaoAluno.Api.Configurations;
+using PlataformaEducacao.WebApi.Core.Extensions;
 using PlataformaEducacao.WebApi.Core.Identidade;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Host.ConfigureAppSettings();
+builder.Host.AddLoggingConfiguration(builder.Configuration, "GestaoAluno");
+builder.Services.AddCorrelationIdConfiguration(builder.Configuration);
 
 builder.Services
     .AddApiConfiguration()
@@ -19,7 +22,8 @@ builder.Services
 
 var app = builder.Build();
 
-app.UseSwaggerConfiguration()
+app.UseLoggingConfiguration()
+   .UseSwaggerConfiguration()
    .UseApiConfiguration(app.Environment);
 
 app.UseDbMigrationHelper();

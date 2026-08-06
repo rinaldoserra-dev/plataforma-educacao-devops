@@ -29,7 +29,16 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
                     ["GestaoConteudoUrl"] = "https://localhost:5441",
                     ["GestaoAlunosUrl"] = "https://localhost:5461",
                     ["GestaoFinanceiraUrl"] = "https://localhost:5273",
-                    ["MessageQueueConnection:MessageBus"] = "host=localhost:5672;publisherConfirms=true;timeout=10"
+                    ["MessageQueueConnection:MessageBus"] = "host=localhost:5672;publisherConfirms=true;timeout=10",
+                    ["CorrelationIdOptions:RequestHeader"] = "X-Correlation-ID",
+                    ["CorrelationIdOptions:IncludeInResponse"] = "true",
+                    ["CorrelationIdOptions:AddToLoggingScope"] = "false",
+                    ["Serilog:MinimumLevel:Default"] = "Error",
+                    ["Serilog:MinimumLevel:Override:Microsoft"] = "Error",
+                    ["Serilog:MinimumLevel:Override:Microsoft.Hosting.Lifetime"] = "Error",
+                    ["Serilog:MinimumLevel:Override:System"] = "Error",
+                    ["Serilog:WriteTo:0:Name"] = "Debug",
+                    ["Serilog:WriteTo:1:Name"] = "Debug"
                 });
             });
             builder.ConfigureServices(services =>

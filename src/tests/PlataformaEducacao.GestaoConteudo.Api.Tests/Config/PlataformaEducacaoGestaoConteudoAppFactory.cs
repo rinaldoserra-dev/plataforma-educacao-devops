@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlataformaEducacao.GestaoConteudo.Data;
@@ -21,6 +22,21 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Tests.Config
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            builder.ConfigureAppConfiguration((_, configBuilder) =>
+            {
+                configBuilder.AddInMemoryCollection(new Dictionary<string, string?>
+                {
+                    ["CorrelationIdOptions:RequestHeader"] = "X-Correlation-ID",
+                    ["CorrelationIdOptions:IncludeInResponse"] = "true",
+                    ["CorrelationIdOptions:AddToLoggingScope"] = "false",
+                    ["Serilog:MinimumLevel:Default"] = "Error",
+                    ["Serilog:MinimumLevel:Override:Microsoft"] = "Error",
+                    ["Serilog:MinimumLevel:Override:Microsoft.Hosting.Lifetime"] = "Error",
+                    ["Serilog:MinimumLevel:Override:System"] = "Error",
+                    ["Serilog:WriteTo:0:Name"] = "Debug",
+                    ["Serilog:WriteTo:1:Name"] = "Debug"
+                });
+            });
             builder.ConfigureServices(services =>
             {
                 var dbContextTypes = new[]
