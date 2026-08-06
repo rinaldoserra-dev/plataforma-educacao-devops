@@ -7,6 +7,13 @@ data:
   ASPNETCORE_ENVIRONMENT: "Docker"
   ASPNETCORE_URLS: "http://0.0.0.0:8080"
 
+  # Observabilidade (Serilog): no k8s usamos apenas Console (stdout -> kubectl logs).
+  # O File sink do appsettings.json base (logs/log-.txt) é neutralizado aqui apontando
+  # o path para /dev/null, evitando gravação efêmera na camada gravável do pod.
+  # No docker-compose (que não define estas env vars) o File sink permanece ativo.
+  Serilog__WriteTo__1__Args__path: "/dev/null"
+  Serilog__WriteTo__1__Args__shared: "false"
+
   MessageQueueConnection__MessageBus: "host=rabbitmq:5672;publisherConfirms=true;timeout=10"
 
   IdentidadeUrl: "http://gestao-identidade-api:8080"
