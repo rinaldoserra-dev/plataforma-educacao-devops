@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestao-conteudo-api
+  namespace: plataforma-educacao
+spec:
+  type: ClusterIP
+  selector:
+    app: gestao-conteudo-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestao-conteudo-api
+  namespace: plataforma-educacao
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gestao-conteudo-api
+  template:
+    metadata:
+      labels:
+        app: gestao-conteudo-api
+    spec:
+      initContainers:
+        - name: wait-sqlserver
+          image: busybox:1.36
+          command: ['sh', '-c', 'until nc -z sqlserver 1433; do echo "waiting for sqlserver"; sleep 2; done']
+        - name: wait-rabbitmq
+          image: busybox:1.36
+          command: ['sh', '-c', 'until nc -z rabbitmq 5672; do echo "waiting for rabbitmq"; sleep 2; done']
+      containers:
+        - name: gestao-conteudo-api
+          image: rinaldoserra/plataforma-educacao-gestao-conteudo-api:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: plataforma-config
+            - secretRef:
+                name: plataforma-secret
+          env:
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: plataforma-secret
+                  key: ConnectionStrings__GestaoConteudo
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 15
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            failureThreshold: 15
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "300m"
