@@ -33,6 +33,15 @@ namespace PlataformaEducacao.Bff.Api.Tests
             retorno.Sucesso.Should().BeTrue();
         }
 
+        [Fact(DisplayName = nameof(Resposta_DeveConterCorrelationIdHeader))]
+        [Trait("Categoria", "Integracao API - BFF")]
+        public async Task Resposta_DeveConterCorrelationIdHeader()
+        {
+            var response = await _client.GetAsync("/health");
+
+            response.Headers.Contains("X-Correlation-ID").Should().BeTrue();
+        }
+
         [Fact(DisplayName = nameof(Autenticar_DeveRetornarComSucesso))]
         [Trait("Categoria", "Integracao API - BFF")]
         public async Task Autenticar_DeveRetornarComSucesso()
