@@ -371,3 +371,10 @@ MigrationBackup/
 **/*.[Cc]overage.*
 **/coverage.cobertura.xml
 **/coverage.opencover.xml
+
+#########################################################################
+# Serilog file logs
+#########################################################################
+# Logs estruturados gerados pelo Serilog (Console + arquivo rotativo logs/log-*.txt)
+logs/
+**/logs/
