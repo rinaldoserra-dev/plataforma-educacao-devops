@@ -1,4 +1,5 @@
 ﻿using PlataformaEducacao.Bff.Api.Extensions;
+using PlataformaEducacao.WebApi.Core.Extensions;
 using PlataformaEducacao.WebApi.Core.Identidade;
 
 namespace PlataformaEducacao.Bff.Api.Configurations
@@ -25,15 +26,7 @@ namespace PlataformaEducacao.Bff.Api.Configurations
 
             services.Configure<AppServicesSettings>(configuration);
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("Total",
-                    builder =>
-                        builder
-                            .AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader());
-            });
+            services.AddCorsConfiguration(configuration);
             services.AddHealthChecks();
             return services;
         }
@@ -49,7 +42,7 @@ namespace PlataformaEducacao.Bff.Api.Configurations
 
             app.UseRouting();
 
-            app.UseCors("Total");
+            app.UseCors("Frontend");
 
             app.UseAuthConfiguration();
 
