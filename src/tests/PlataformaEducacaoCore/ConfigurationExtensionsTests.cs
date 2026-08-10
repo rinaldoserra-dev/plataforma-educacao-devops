@@ -11,7 +11,7 @@ namespace PlataformaEducacao.Core.Tests
         {
             IConfiguration? configuration = null;
 
-            var result = configuration.GetMessageQueueConnection("AnyName");
+            var result = configuration!.GetMessageQueueConnection("AnyName");
 
             Assert.Equal(string.Empty, result);
         }
