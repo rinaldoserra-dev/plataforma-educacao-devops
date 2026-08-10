@@ -10,7 +10,7 @@ builder.Host.AddLoggingConfiguration(builder.Configuration, "GestaoFinanceira");
 builder.Services.AddCorrelationIdConfiguration(builder.Configuration);
 
 builder.Services
-    .AddApiConfiguration()
+    .AddApiConfiguration(builder.Configuration)
     .AddSwaggerConfiguration()
     .AddDbContextConfig(builder.Configuration, builder.Environment)
     .AddJwtConfiguration(builder.Configuration)
