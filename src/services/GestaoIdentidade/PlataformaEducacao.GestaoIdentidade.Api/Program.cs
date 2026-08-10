@@ -8,7 +8,7 @@ builder.Host.AddLoggingConfiguration(builder.Configuration, "GestaoIdentidade");
 builder.Services.AddCorrelationIdConfiguration(builder.Configuration);
 
 builder.Services
-    .AddApiConfig()
+    .AddApiConfig(builder.Configuration)
     .AddSwaggerConfiguration()
     .AddDbContextConfig(builder.Configuration, builder.Environment)
     .AddIdentityConfig(builder.Configuration)

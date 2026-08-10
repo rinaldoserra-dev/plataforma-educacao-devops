@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.HttpOverrides;
+using PlataformaEducacao.WebApi.Core.Extensions;
 using PlataformaEducacao.WebApi.Core.Identidade;
 using System.Text.Json.Serialization;
 
@@ -20,7 +21,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
 
             return host;
         }
-        public static IServiceCollection AddApiConfig(this IServiceCollection services)
+        public static IServiceCollection AddApiConfig(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(opt => opt.SuppressModelStateInvalidFilter = true)
@@ -33,6 +34,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
             {
                 options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
             });
+            services.AddCorsConfiguration(configuration);
             services.AddHealthChecks();
 
             return services;
@@ -49,6 +51,8 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
                 app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("Frontend");
 
             app.UseAuthConfiguration();
 

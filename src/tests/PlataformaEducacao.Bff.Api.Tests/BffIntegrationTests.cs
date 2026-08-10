@@ -42,6 +42,31 @@ namespace PlataformaEducacao.Bff.Api.Tests
             response.Headers.Contains("X-Correlation-ID").Should().BeTrue();
         }
 
+        [Fact(DisplayName = nameof(Cors_DevePermitirSomenteOrigemConfigurada))]
+        [Trait("Categoria", "Integracao API - BFF")]
+        public async Task Cors_DevePermitirSomenteOrigemConfigurada()
+        {
+            using var allowedRequest = new HttpRequestMessage(HttpMethod.Options, "/health");
+            allowedRequest.Headers.Add("Origin", "https://frontend.example.com");
+            allowedRequest.Headers.Add("Access-Control-Request-Method", "GET");
+
+            var allowedResponse = await _client.SendAsync(allowedRequest);
+
+            allowedResponse.Headers
+                .GetValues("Access-Control-Allow-Origin")
+                .Single()
+                .Should()
+                .Be("https://frontend.example.com");
+
+            using var deniedRequest = new HttpRequestMessage(HttpMethod.Options, "/health");
+            deniedRequest.Headers.Add("Origin", "https://untrusted.example.com");
+            deniedRequest.Headers.Add("Access-Control-Request-Method", "GET");
+
+            var deniedResponse = await _client.SendAsync(deniedRequest);
+
+            deniedResponse.Headers.Contains("Access-Control-Allow-Origin").Should().BeFalse();
+        }
+
         [Fact(DisplayName = nameof(Autenticar_DeveRetornarComSucesso))]
         [Trait("Categoria", "Integracao API - BFF")]
         public async Task Autenticar_DeveRetornarComSucesso()
