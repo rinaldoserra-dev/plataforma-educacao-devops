@@ -2,6 +2,7 @@ services:
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: plataforma-sqlserver
+    restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Plataforma@2026
@@ -21,6 +22,7 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     container_name: plataforma-rabbitmq
+    restart: unless-stopped
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -37,6 +39,7 @@ services:
       context: .
       dockerfile: src/services/GestaoIdentidade/PlataformaEducacao.GestaoIdentidade.Api/Dockerfile
     container_name: plataforma-identidade
+    restart: unless-stopped
     ports:
       - "5430:8080"
     environment:
@@ -58,6 +61,7 @@ services:
       context: .
       dockerfile: src/services/GestaoFinanceira/PlataformaEducacao.GestaoFinanceira.Api/Dockerfile
     container_name: plataforma-financeira
+    restart: unless-stopped
     ports:
       - "7083:8080"
     environment:
@@ -79,6 +83,7 @@ services:
       context: .
       dockerfile: src/services/GestaoAluno/PlataformaEducacao.GestaoAluno.Api/Dockerfile
     container_name: plataforma-aluno
+    restart: unless-stopped
     ports:
       - "5460:8080"
     environment:
@@ -100,6 +105,7 @@ services:
       context: .
       dockerfile: src/services/GestaoConteudo/PlataformaEducacao.GestaoConteudo.Api/Dockerfile
     container_name: plataforma-conteudo
+    restart: unless-stopped
     ports:
       - "5440:8080"
     environment:
@@ -121,6 +127,7 @@ services:
       context: .
       dockerfile: src/api-gateways/PlataformaEducacao.Bff.Api/Dockerfile
     container_name: plataforma-bff
+    restart: unless-stopped
     ports:
       - "5000:8080"
     environment:

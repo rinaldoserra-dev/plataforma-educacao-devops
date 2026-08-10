@@ -70,7 +70,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Controllers
             {
                 Sucesso = false,
                 Status = StatusCodes.Status500InternalServerError,
-                Erros = new ResponseErrorMessages { Mensagens = new System.Collections.Generic.List<string> { "erro" } }
+                Erros = new ResponseErrorMessages { Mensagens = ["erro"] }
             };
 
             // Act
