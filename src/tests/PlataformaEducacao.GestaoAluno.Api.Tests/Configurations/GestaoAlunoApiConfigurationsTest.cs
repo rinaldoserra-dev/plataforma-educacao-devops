@@ -103,9 +103,9 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Configurations
             Assert.NotNull(context);
         }
 
-        [Fact(DisplayName = "CORS policy deve estar configurada")]
+        [Fact(DisplayName = "CORS nao deve permitir origem nao configurada")]
         [Trait("Categoria", "GestaoAluno.Api - Configurations - ApiConfig")]
-        public async Task CORS_DeveEstarConfigurada()
+        public async Task CORS_NaoDevePermitirOrigemNaoConfigurada()
         {
             var request = new HttpRequestMessage(HttpMethod.Options, "/api/alunos/matriculas-ativas");
             request.Headers.Add("Origin", "http://example.com");
@@ -113,8 +113,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Configurations
 
             var response = await _client.SendAsync(request);
 
-            // Should not return 405 Method Not Allowed — CORS is configured
-            Assert.NotEqual(HttpStatusCode.MethodNotAllowed, response.StatusCode);
+            Assert.False(response.Headers.Contains("Access-Control-Allow-Origin"));
         }
 
         [Fact(DisplayName = "Rota inexistente deve retornar NotFound")]
