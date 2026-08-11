@@ -135,3 +135,12 @@ dotnet_diagnostic.SA1100.severity = suggestion
 
 # CA1707: Identificadores não devem conter sublinhados
 dotnet_diagnostic.CA1707.severity = none
+
+# IDE0022: Usar o corpo do bloco para método
+dotnet_diagnostic.IDE0022.severity = none
+
+# IDE0301: Simplificar a inicialização de coleção
+dotnet_diagnostic.IDE0301.severity = suggestion
+
+# CA1305: Especificar IFormatProvider
+dotnet_diagnostic.CA1305.severity = suggestion
