@@ -7,7 +7,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
         public void SituacaoCurso_ValoresEsperados()
         {
             // Arrange & Act
-            var names = Enum.GetNames(typeof(SituacaoCurso));
+            var names = Enum.GetNames<SituacaoCurso>();
 
             // Assert
             Assert.Contains("NaoIniciado", names);
@@ -31,7 +31,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
         {
             // Act
             var parsed = Enum.Parse<SituacaoCurso>("Concluido");
-            var fromString = (SituacaoCurso)Enum.Parse(typeof(SituacaoCurso), "EmAndamento");
+            var fromString = Enum.Parse<SituacaoCurso>("EmAndamento");
 
             // Assert
             Assert.Equal(SituacaoCurso.Concluido, parsed);
