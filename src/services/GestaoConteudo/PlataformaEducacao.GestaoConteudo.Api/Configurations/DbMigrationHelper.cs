@@ -19,6 +19,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
                 var service = application.Services.CreateScope().ServiceProvider;
                 await EnsureSeedData(service);
             }
+
             public static async Task EnsureSeedData(IServiceProvider serviceProvider)
             {
                 using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -31,7 +32,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
                     await conteudoContext.Database.EnsureCreatedAsync();
                     await SeedTablesGestaoConteudo(conteudoContext);
                 }
-                else if (env.EnvironmentName == "Development" || env.EnvironmentName == "Docker")
+                else if (env.EnvironmentName is "Development" or "Docker")
                 {
                     await conteudoContext.Database.MigrateAsync();
                     await SeedTablesGestaoConteudo(conteudoContext);
@@ -69,21 +70,23 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
 
                     curso = new Curso(".NET Core", new ConteudoProgramatico("Conteudo do Curso de .NET Core", 30), 500, true);
                     curso.DefinirId(Guid.Parse("2194EB04-6C17-4379-8F07-C847C899466F"));
-                    for (int i = 1; i <= 1; i++)
+                    for (var i = 1; i <= 1; i++)
                     {
                         var aula = new Aula($"Aula {i}", $"Conteudo da Aula {i}", i, $"Segue link dos materiais da aula {i}");
                         curso.AdicionarAula(aula);
                     }
+
                     await conteudoContext.Cursos.AddAsync(curso);
 
                     curso = new Curso("Dominios Ricos", new ConteudoProgramatico("Conteudo do Curso de Dominios Ricos", 30), 500, true);
                     curso.DefinirId(Guid.Parse("12E04CBC-6ACF-4582-9345-C74B12C8183C"));
-                    for (int i = 1; i <= 1; i++)
+                    for (var i = 1; i <= 1; i++)
                     {
                         var aula = new Aula($"Aula {i}", $"Conteudo da Aula {i}", i, $"Segue link dos materiais da aula {i}");
                         aula.DefinirId(Guid.Parse("AB514ABA-7F82-4B3C-AB3E-3B311A516DE9"));
                         curso.AdicionarAula(aula);
                     }
+
                     await conteudoContext.Cursos.AddAsync(curso);
 
                     await conteudoContext.SaveChangesAsync();

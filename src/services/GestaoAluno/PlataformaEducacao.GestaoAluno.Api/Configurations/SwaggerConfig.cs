@@ -32,11 +32,11 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
                         {
                             Reference = new OpenApiReference
                             {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
                             }
                         },
-                        new string[]{}
+                        Array.Empty<string>()
                     }
                 });
             });
@@ -51,7 +51,6 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
             {
                 o.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
-
 
             return app;
         }

@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.HttpOverrides;
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.HttpOverrides;
 using PlataformaEducacao.WebApi.Core.Extensions;
 using PlataformaEducacao.WebApi.Core.Identidade;
-using System.Text.Json.Serialization;
 
 namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
 {
@@ -21,6 +21,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
 
             return host;
         }
+
         public static IServiceCollection AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers()

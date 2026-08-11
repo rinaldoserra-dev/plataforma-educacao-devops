@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlataformaEducacao.Core.Mediator;
 using PlataformaEducacao.GestaoConteudo.Api.Requests;
@@ -6,7 +7,6 @@ using PlataformaEducacao.GestaoConteudo.Application.Commands;
 using PlataformaEducacao.GestaoConteudo.Application.Queries;
 using PlataformaEducacao.GestaoConteudo.Application.Queries.ViewModels;
 using PlataformaEducacao.WebApi.Core.Controllers;
-using System.Net;
 
 namespace PlataformaEducacao.GestaoConteudo.Api.Controllers
 {
@@ -15,12 +15,15 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Controllers
     {
         private readonly ICursoQueries _cursoQueries;
         private readonly IMediatorHandler _mediatorHandler;
-        public CursosController(ICursoQueries cursoQueries,
-                                IMediatorHandler mediatorHandler)
+
+        public CursosController(
+            ICursoQueries cursoQueries,
+            IMediatorHandler mediatorHandler)
         {
             _cursoQueries = cursoQueries;
             _mediatorHandler = mediatorHandler;
         }
+
         [AllowAnonymous]
         [HttpGet("listar-cursos-disponiveis")]
         public async Task<ActionResult<IEnumerable<CursoViewModel>>> ListarCursosDisponiveisParaMatricula(CancellationToken cancellationToken)
@@ -53,8 +56,8 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Controllers
             {
                 return CustomResponse(ModelState);
             }
-            var command = new AdicionarCursoCommand(request.Nome, request.DescricaoConteudo, request.CargaHoraria, request.Valor, request.Disponivel);
 
+            var command = new AdicionarCursoCommand(request.Nome, request.DescricaoConteudo, request.CargaHoraria, request.Valor, request.Disponivel);
 
             return CustomResponse(await _mediatorHandler.SendCommand(command));
         }
@@ -68,6 +71,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Controllers
                 AdicionarErroProcessamento("O id informado não é o mesmo que foi passado no body");
                 return CustomResponse();
             }
+
             if (!ModelState.IsValid)
             {
                 return CustomResponse(ModelState);
@@ -86,6 +90,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Controllers
             {
                 return CustomResponse(ModelState);
             }
+
             var command = new AdicionarAulaCommand(request.Titulo, request.Conteudo, request.Ordem, request.Material, request.CursoId);
 
             return CustomResponse(await _mediatorHandler.SendCommand(command));

@@ -23,6 +23,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
                     opt.EnableSensitiveDataLogging();
                 });
             }
+
             return services;
         }
     }
