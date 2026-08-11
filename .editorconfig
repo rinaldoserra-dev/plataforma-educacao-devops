@@ -89,7 +89,7 @@ dotnet_diagnostic.IDE0041.severity = suggestion
 dotnet_diagnostic.SA1503.severity = suggestion
 
 # IDE0011: Adicionar chaves
-dotnet_diagnostic.IDE0011.severity = suggestion
+dotnet_diagnostic.IDE0011.severity = none
 
 # IDE0028: Simplificar a inicialização de coleção
 dotnet_diagnostic.IDE0028.severity = suggestion
@@ -108,3 +108,30 @@ dotnet_diagnostic.CA1720.severity = none
 
 # Desabilita SA1633 (cabeçalho de arquivo) globalmente para arquivos C#
 dotnet_diagnostic.SA1633.severity = none
+
+# SA1413: Use trailing comma in multi-line initializers
+dotnet_diagnostic.SA1413.severity = suggestion
+
+# IDE0100: Remover a igualdade redundante
+dotnet_diagnostic.IDE0100.severity = none
+
+# CA1816: Os métodos Dispose devem chamar SuppressFinalize
+dotnet_diagnostic.CA1816.severity = suggestion
+
+# IDE0052: Remover membros particulares não lidos
+dotnet_diagnostic.IDE0052.severity = suggestion
+
+# CA1051: Não declarar campos de instância visíveis
+dotnet_diagnostic.CA1051.severity = suggestion
+
+# SA1401: Fields should be private
+dotnet_diagnostic.SA1401.severity = suggestion
+
+# SA1306: Field names should begin with lower-case letter
+dotnet_diagnostic.SA1306.severity = suggestion
+
+# SA1100: Do not prefix calls with base unless local implementation exists
+dotnet_diagnostic.SA1100.severity = suggestion
+
+# CA1707: Identificadores não devem conter sublinhados
+dotnet_diagnostic.CA1707.severity = none
