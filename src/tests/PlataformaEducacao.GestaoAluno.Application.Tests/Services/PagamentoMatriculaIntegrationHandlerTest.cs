@@ -11,11 +11,11 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Services
 {
     public class PagamentoMatriculaIntegrationHandlerTest
     {
-        Matricula? _matricula;
-        readonly Mock<IAlunoRepository>? _alunoRepositoryMock = new();
-        readonly Mock<IUnitOfWork>? _uowMock = new();
-        readonly Mock<IServiceProvider>? _rootServiceProviderMock = new();
-        readonly Mock<IMessageBus> _messageBusMock = new();
+        private readonly Mock<IAlunoRepository>? _alunoRepositoryMock = new();
+        private readonly Mock<IUnitOfWork>? _uowMock = new();
+        private readonly Mock<IServiceProvider>? _rootServiceProviderMock = new();
+        private readonly Mock<IMessageBus> _messageBusMock = new();
+        private Matricula? _matricula;
 
         [Fact(DisplayName = "Recusar matrícula ao receber evento deve recusar e commitar")]
         [Trait("Categoria", "Gestão Aluno - Application - Services - PagamentoMatriculaIntegrationHandler")]
@@ -29,11 +29,11 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Services
 
             Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>? acaoRecusar = null;
 
-            _messageBusMock.Setup(b => b.SubscribeAsync<MatriculaPagamentoRecusadoIntegrationEvent>(
+            _messageBusMock.Setup(b => b.SubscribeAsync(
                 It.IsAny<string>(), It.IsAny<Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>>()))
                 .Callback<string, Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>>((_, f) => acaoRecusar = f);
 
-            _messageBusMock.Setup(b => b.SubscribeAsync<MatriculaPagamentoRealizadoIntegrationEvent>(
+            _messageBusMock.Setup(b => b.SubscribeAsync(
                 It.IsAny<string>(), It.IsAny<Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>>()));
 
             var handler = new PagamentoMatriculaIntegrationHandler(_messageBusMock.Object, _rootServiceProviderMock!.Object);
@@ -60,10 +60,10 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Services
 
             Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>? acaoFinalizar = null;
 
-            _messageBusMock.Setup(b => b.SubscribeAsync<MatriculaPagamentoRecusadoIntegrationEvent>(
+            _messageBusMock.Setup(b => b.SubscribeAsync(
                 It.IsAny<string>(), It.IsAny<Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>>()));
 
-            _messageBusMock.Setup(b => b.SubscribeAsync<MatriculaPagamentoRealizadoIntegrationEvent>(
+            _messageBusMock.Setup(b => b.SubscribeAsync(
                 It.IsAny<string>(), It.IsAny<Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>>()))
                 .Callback<string, Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>>((_, f) => acaoFinalizar = f);
 

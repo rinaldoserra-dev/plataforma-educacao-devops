@@ -9,12 +9,19 @@ namespace PlataformaEducacao.Bff.Api.Services
     public interface IAlunosService
     {
         Task<ResponseResult> Matricular(MatricularDTO solicitarMatricula);
+
         Task<ResponseResult> ObterMatriculasPendentesPagamento();
+
         Task<ResponseResult> ObterMatriculasAtivas();
+
         Task<ResponseResult> ValidarCertificado(string codigoVerificacao);
+
         Task<ResponseResult> RealizarAula(RealizarAulaDTO realizarAula);
+
         Task<ResponseResult> FinalizarCurso(FinalizarCursoDTO finalizarCurso);
+
         Task<ResponseResult> ObterHistorico(Guid alunoId);
+
         Task<HttpResponseMessage> BaixarCertificado(Guid certificadoId);
     }
 
@@ -23,9 +30,10 @@ namespace PlataformaEducacao.Bff.Api.Services
         private readonly HttpClient _httpClient;
         private readonly ICursosService _cursosService;
 
-        public AlunosService(HttpClient httpClient,
-                             ICursosService cursosService,
-                             IOptions<AppServicesSettings> settings)
+        public AlunosService(
+            HttpClient httpClient,
+            ICursosService cursosService,
+            IOptions<AppServicesSettings> settings)
         {
             _httpClient = httpClient;
             _cursosService = cursosService;
@@ -37,7 +45,7 @@ namespace PlataformaEducacao.Bff.Api.Services
             if (DadosCursoPreenchidos(solicitarMatricula) is false)
             {
                 var cursoResponse = await _cursosService.ObterCursoComAulasPorCursoId(solicitarMatricula.CursoId);
-                if (cursoResponse.Sucesso is false || cursoResponse.Erros.Mensagens.Any())
+                if (cursoResponse.Sucesso is false || cursoResponse.Erros.Mensagens.Count != 0)
                 {
                     return cursoResponse;
                 }
