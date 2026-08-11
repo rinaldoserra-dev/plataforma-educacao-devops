@@ -76,14 +76,14 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
             // Arrange
             var transaction = new Transaction(new EduPagService("key32caracteres_abcdefghijklm", "iv16caracteres__"))
             {
-                AuthorizationCode = "",
-                CardBrand = "",
+                AuthorizationCode = string.Empty,
+                CardBrand = string.Empty,
                 TransactionDate = DateTime.UtcNow,
                 Cost = 0,
                 Amount = 0,
                 Status = TransactionStatus.Refused,
-                Tid = "",
-                Nsu = ""
+                Tid = string.Empty,
+                Nsu = string.Empty
             };
 
             // Act
@@ -100,7 +100,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
             // Arrange
             var transaction = new Transaction(new EduPagService("key32caracteres_abcdefghijklm", "iv16caracteres__"))
             {
-                AuthorizationCode = "",
+                AuthorizationCode = string.Empty,
                 CardBrand = "Visa",
                 TransactionDate = DateTime.UtcNow,
                 Cost = 0,
@@ -143,7 +143,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Facade
 
             // Assert
             Assert.NotNull(result);
-            Assert.True(result.Status == StatusTransacao.Autorizado || result.Status == StatusTransacao.Negado);
+            Assert.True(result.Status is StatusTransacao.Autorizado or StatusTransacao.Negado);
         }
 
         [Fact(DisplayName = "CapturarPagamento deve retornar transacao com status Pago")]

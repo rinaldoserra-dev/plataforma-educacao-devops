@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using PlataformaEducacao.Core.Mediator;
 using PlataformaEducacao.GestaoAluno.Api.Tests.Config;
@@ -6,7 +7,6 @@ using PlataformaEducacao.GestaoAluno.Data;
 using PlataformaEducacao.GestaoAluno.Domain.Repositories;
 using PlataformaEducacao.GestaoAluno.Domain.Services;
 using PlataformaEducacao.WebApi.Core.Usuario;
-using System.Net;
 
 namespace PlataformaEducacao.GestaoAluno.Api.Tests.Configurations
 {

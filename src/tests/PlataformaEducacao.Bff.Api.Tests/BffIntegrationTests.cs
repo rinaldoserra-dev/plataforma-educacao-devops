@@ -1,19 +1,19 @@
+using System.Net;
+using System.Net.Http.Json;
 using FluentAssertions;
 using PlataformaEducacao.Bff.Api.Models.GestaoAlunos;
 using PlataformaEducacao.Bff.Api.Models.GestaoFinanceira;
 using PlataformaEducacao.Bff.Api.Tests.Config;
-using System.Net;
-using System.Net.Http.Json;
 
 namespace PlataformaEducacao.Bff.Api.Tests
 {
     [Collection(nameof(IntegrationApiTestsCollectionFixture))]
-    public class BffIntegrationTests : IClassFixture<IntegrationTestsFixture<PlataformaEducacao.Bff.Api.BffApiAssemblyMarker>>
+    public class BffIntegrationTests : IClassFixture<IntegrationTestsFixture<BffApiAssemblyMarker>>
     {
-        private readonly IntegrationTestsFixture<PlataformaEducacao.Bff.Api.BffApiAssemblyMarker> _fixture;
+        private readonly IntegrationTestsFixture<BffApiAssemblyMarker> _fixture;
         private readonly HttpClient _client;
 
-        public BffIntegrationTests(IntegrationTestsFixture<PlataformaEducacao.Bff.Api.BffApiAssemblyMarker> fixture)
+        public BffIntegrationTests(IntegrationTestsFixture<BffApiAssemblyMarker> fixture)
         {
             _fixture = fixture;
             _client = fixture.Client;

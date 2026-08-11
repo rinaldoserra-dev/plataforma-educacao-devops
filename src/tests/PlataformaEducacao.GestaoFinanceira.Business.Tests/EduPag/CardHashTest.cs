@@ -2,7 +2,6 @@
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
 {
-
     public class CardHashTest
     {
         [Fact(DisplayName = "CardHash.Generate deve retornar string não vazia")]

@@ -19,7 +19,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
                     Email = "user@teste.com",
                     Claims = new List<UsuarioClaim>
                     {
-                        new UsuarioClaim { Type = "role", Value = "ALUNO" }
+                        new() { Type = "role", Value = "ALUNO" }
                     }
                 }
             };

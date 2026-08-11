@@ -5,10 +5,11 @@ using PlataformaEducacao.Bff.Api;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-
-    public class IntegrationTestsFixture<TProgram> : IDisposable where TProgram : class
+    public class IntegrationTestsFixture<TProgram> : IDisposable
+        where TProgram : class
     {
         public readonly PlataformaEducacaoBffAppFactory<TProgram> Factory;
+
         public HttpClient Client { get; }
 
         public IntegrationTestsFixture()
@@ -25,19 +26,13 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
         public async Task<T> DeserializeResponse<T>(HttpResponseMessage response)
         {
             var content = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(content,
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true,
-                    Converters = { new JsonStringEnumConverter() }
-                }) ?? throw new InvalidOperationException("Deserialization returned null");
+            return JsonSerializer.Deserialize<T>(content, PropertyNameCaseInsensitiveComConvertersOptions) ?? throw new InvalidOperationException("Deserialization returned null");
         }
 
         public IEnumerable<string> GetErrors(string jsonResponse)
         {
             var response = JsonSerializer.Deserialize<ResponseResult>(
-                jsonResponse,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                jsonResponse, PropertyNameCaseInsensitiveOptions);
 
             return response?.Erros?.Mensagens ?? Enumerable.Empty<string>();
         }
@@ -47,5 +42,16 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
             Client.Dispose();
             Factory.Dispose();
         }
+
+        private static readonly JsonSerializerOptions PropertyNameCaseInsensitiveOptions = new()
+        {
+            PropertyNameCaseInsensitive = true,
+        };
+
+        private static readonly JsonSerializerOptions PropertyNameCaseInsensitiveComConvertersOptions = new()
+        {
+            PropertyNameCaseInsensitive = true,
+            Converters = { new JsonStringEnumConverter() }
+        };
     }
 }

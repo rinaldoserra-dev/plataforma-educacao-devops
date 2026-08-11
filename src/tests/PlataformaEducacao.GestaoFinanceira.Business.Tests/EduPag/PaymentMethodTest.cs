@@ -2,7 +2,6 @@
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
 {
-
     public class PaymentMethodTest
     {
         [Fact(DisplayName = "PaymentMethod deve conter valores esperados")]

@@ -5,7 +5,6 @@ using PlataformaEducacao.Bff.Api;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-
     public class ResponseErrorMessages
     {
         public List<string> Mensagens { get; set; } = new();

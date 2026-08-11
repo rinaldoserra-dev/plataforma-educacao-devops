@@ -1,7 +1,7 @@
-using FluentAssertions;
-using PlataformaEducacao.Bff.Api.Tests.Config;
 using System.Net;
 using System.Net.Http.Json;
+using FluentAssertions;
+using PlataformaEducacao.Bff.Api.Tests.Config;
 
 namespace PlataformaEducacao.Bff.Api.Tests
 {

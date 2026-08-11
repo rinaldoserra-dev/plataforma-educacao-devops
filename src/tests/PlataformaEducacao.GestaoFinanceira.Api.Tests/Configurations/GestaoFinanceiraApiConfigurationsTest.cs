@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using System.Net;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using PlataformaEducacao.GestaoFinanceira.Api.Data;
 using PlataformaEducacao.GestaoFinanceira.Api.Services;
@@ -6,7 +7,6 @@ using PlataformaEducacao.GestaoFinanceira.Api.Tests.Config;
 using PlataformaEducacao.GestaoFinanceira.Business.Facade;
 using PlataformaEducacao.GestaoFinanceira.Business.Models;
 using PlataformaEducacao.WebApi.Core.Usuario;
-using System.Net;
 
 namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Configurations
 {

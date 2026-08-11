@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using PlataformaEducacao.Bff.Api.Models.GestaoAlunos;
+using PlataformaEducacao.Bff.Api.Models.Request.Identidade;
 using PlataformaEducacao.Bff.Api.Services;
 using CoreResponseResult = PlataformaEducacao.Core.Communication.ResponseResult;
-using PlataformaEducacao.Bff.Api.Models.Request.Identidade;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-
     internal class FakeAlunosService : IAlunosService
     {
         public Task<HttpResponseMessage> BaixarCertificado(Guid certificadoId)
@@ -29,10 +29,10 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
             return Task.FromResult(response);
         }
 
-        public Task<CoreResponseResult> FinalizarCurso(PlataformaEducacao.Bff.Api.Models.GestaoAlunos.FinalizarCursoDTO finalizarCurso)
+        public Task<CoreResponseResult> FinalizarCurso(FinalizarCursoDTO finalizarCurso)
             => Ok(new { finalizarCurso.MatriculaId });
 
-        public Task<CoreResponseResult> Matricular(PlataformaEducacao.Bff.Api.Models.GestaoAlunos.MatricularDTO solicitarMatricula)
+        public Task<CoreResponseResult> Matricular(MatricularDTO solicitarMatricula)
         {
             if (string.IsNullOrWhiteSpace(solicitarMatricula.NomeCurso))
             {
@@ -59,7 +59,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
         public Task<CoreResponseResult> ObterMatriculasPendentesPagamento()
             => Ok(new[] { new { MatriculaId = Guid.NewGuid(), Status = "PendentePagamento" } });
 
-        public Task<CoreResponseResult> RealizarAula(PlataformaEducacao.Bff.Api.Models.GestaoAlunos.RealizarAulaDTO realizarAula)
+        public Task<CoreResponseResult> RealizarAula(RealizarAulaDTO realizarAula)
             => Ok(new { realizarAula.MatriculaId, realizarAula.AulaId });
 
         public Task<CoreResponseResult> ValidarCertificado(string codigoVerificacao)

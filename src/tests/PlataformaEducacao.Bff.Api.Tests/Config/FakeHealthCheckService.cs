@@ -5,13 +5,12 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using PlataformaEducacao.Bff.Api.Models.Request.Identidade;
 using PlataformaEducacao.Bff.Api.Services;
 using CoreResponseResult = PlataformaEducacao.Core.Communication.ResponseResult;
-using PlataformaEducacao.Bff.Api.Models.Request.Identidade;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-
     internal class FakeHealthCheckService : IHealthCheckService
     {
         public Task<CoreResponseResult> VerificarSaude()
