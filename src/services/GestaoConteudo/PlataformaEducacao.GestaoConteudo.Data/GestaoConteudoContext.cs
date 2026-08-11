@@ -17,7 +17,7 @@ namespace PlataformaEducacao.GestaoConteudo.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GestaoConteudoContext).Assembly);
 
-            modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<Evento>();
             //modelBuilder.Ignore<ValidationResult>();
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()

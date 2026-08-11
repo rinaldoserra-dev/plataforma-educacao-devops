@@ -21,7 +21,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             _connection.Open();
 
             _mediatorMock = new Mock<IMediatorHandler>();
-            _mediatorMock.Setup(m => m.PublishEvent(It.IsAny<Event>())).Returns(Task.CompletedTask);
+            _mediatorMock.Setup(m => m.PublishEvent(It.IsAny<Evento>())).Returns(Task.CompletedTask);
 
             var options = new DbContextOptionsBuilder<GestaoAlunoContext>()
                 .UseSqlite(_connection)
@@ -337,7 +337,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.True(result);
-            _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Event>()), Times.Never);
+            _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Evento>()), Times.Never);
         }
 
         [Fact(DisplayName = "UnitOfWork deve retornar o contexto")]

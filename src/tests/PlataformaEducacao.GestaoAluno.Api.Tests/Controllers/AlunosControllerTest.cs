@@ -424,7 +424,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Controllers
         {
             public ValidationResult SendCommandResult { get; set; } = new ValidationResult();
 
-            public Task PublishEvent<T>(T evento) where T : Event => Task.CompletedTask;
+            public Task PublishEvent<T>(T evento) where T : Evento => Task.CompletedTask;
 
             public Task<ValidationResult> SendCommand<T>(T comando) where T : Command
             {

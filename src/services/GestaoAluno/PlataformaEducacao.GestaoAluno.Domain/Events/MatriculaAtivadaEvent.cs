@@ -2,7 +2,7 @@
 
 namespace PlataformaEducacao.GestaoAluno.Domain.Events
 {
-    public class MatriculaAtivadaEvent : Event
+    public class MatriculaAtivadaEvent : Evento
     {
         public Guid MatriculaId { get; private set; }
 

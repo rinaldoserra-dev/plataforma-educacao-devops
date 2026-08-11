@@ -10,7 +10,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
 
         private class OutraEntidadeDeTeste : Entity { }
 
-        private class EventoDeTeste : Event
+        private class EventoDeTeste : Evento
         {
             public EventoDeTeste() : base() { }
         }

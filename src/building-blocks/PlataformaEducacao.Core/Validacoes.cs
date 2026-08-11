@@ -6,7 +6,7 @@ namespace PlataformaEducacao.Core
     {
         public static void ValidarSeVazio(string? valor, string mensagem)
         {
-            if (String.IsNullOrWhiteSpace(valor))
+            if (string.IsNullOrWhiteSpace(valor))
             {
                 throw new DomainException(mensagem);
             }

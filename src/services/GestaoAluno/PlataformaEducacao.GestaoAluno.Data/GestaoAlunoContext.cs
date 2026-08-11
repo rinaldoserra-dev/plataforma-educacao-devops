@@ -28,7 +28,7 @@ namespace PlataformaEducacao.GestaoAluno.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GestaoAlunoContext).Assembly);
 
-            modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<Evento>();
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientCascade;

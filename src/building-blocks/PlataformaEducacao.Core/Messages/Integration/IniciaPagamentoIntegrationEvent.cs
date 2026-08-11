@@ -16,12 +16,19 @@
         }
 
         public Guid MatriculaId { get; private set; }
+
         public Guid AlunoId { get; private set; }
+
         public decimal Valor { get; private set; }
+
         public int TipoPagamento { get; set; }
+
         public string NomeCartao { get; private set; }
+
         public string NumeroCartao { get; private set; }
+
         public string ExpiracaoCartao { get; private set; }
+
         public string CvvCartao { get; private set; }
     }
 }

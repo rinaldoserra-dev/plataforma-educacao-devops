@@ -19,7 +19,7 @@ public sealed class GestaoAlunoContextFactory : IDesignTimeDbContextFactory<Gest
 
     private sealed class DesignTimeMediatorHandler : IMediatorHandler
     {
-        public Task PublishEvent<T>(T evento) where T : Event => Task.CompletedTask;
+        public Task PublishEvent<T>(T evento) where T : Evento => Task.CompletedTask;
 
         public Task<ValidationResult> SendCommand<T>(T comando) where T : Command =>
             Task.FromResult(new ValidationResult());

@@ -19,7 +19,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             _connection.Open();
 
             _mediatorMock = new Mock<IMediatorHandler>();
-            _mediatorMock.Setup(m => m.PublishEvent(It.IsAny<Event>())).Returns(Task.CompletedTask);
+            _mediatorMock.Setup(m => m.PublishEvent(It.IsAny<Evento>())).Returns(Task.CompletedTask);
 
             var options = new DbContextOptionsBuilder<GestaoAlunoContext>()
                 .UseSqlite(_connection)
@@ -52,7 +52,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             await _mediatorMock.Object.PublicarEventos(_context);
 
             // Assert
-            _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Event>()), Times.AtLeastOnce);
+            _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Evento>()), Times.AtLeastOnce);
         }
 
         [Fact(DisplayName = "PublicarEventos sem eventos não deve chamar PublishEvent")]
@@ -71,7 +71,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             await _mediatorMock.Object.PublicarEventos(_context);
 
             // Assert
-            _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Event>()), Times.Never);
+            _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Evento>()), Times.Never);
         }
 
         public void Dispose()

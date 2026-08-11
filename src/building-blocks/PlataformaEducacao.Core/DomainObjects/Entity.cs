@@ -4,27 +4,42 @@ namespace PlataformaEducacao.Core.DomainObjects
 {
     public abstract class Entity
     {
-        public Guid Id { get; set; }
+        private List<Evento> _notificacoes;
 
         protected Entity()
         {
             Id = Guid.NewGuid();
-            _notificacoes = new List<Event>();
+            _notificacoes = [];
         }
 
-        private List<Event> _notificacoes;
-        public IReadOnlyCollection<Event> Notificacoes => _notificacoes.AsReadOnly();
-        public void AdicionarEvento(Event evento)
+        public Guid Id { get; set; }
+
+        public static bool operator ==(
+            Entity? a, Entity? b)
         {
-            _notificacoes = _notificacoes ?? new List<Event>();
+            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+                return true;
+
+            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+                return false;
+
+            return a.Equals(b);
+        }
+
+        public IReadOnlyCollection<Evento> Notificacoes => _notificacoes.AsReadOnly();
+
+        public void AdicionarEvento(Evento evento)
+        {
+            _notificacoes ??= [];
             _notificacoes.Add(evento);
         }
+
         public void DefinirId(Guid id)
         {
             Id = id;
         }
 
-        public void RemoverEvento(Event eventItem)
+        public void RemoverEvento(Evento eventItem)
         {
             _notificacoes?.Remove(eventItem);
         }
@@ -38,21 +53,17 @@ namespace PlataformaEducacao.Core.DomainObjects
         {
             var compareTo = obj as Entity;
 
-            if (ReferenceEquals(this, compareTo)) return true;
-            if (ReferenceEquals(null, compareTo)) return false;
+            if (ReferenceEquals(this, compareTo))
+            {
+                return true;
+            }
+
+            if (compareTo is null)
+            {
+                return false;
+            }
 
             return Id.Equals(compareTo.Id);
-        }
-
-        public static bool operator ==(Entity? a, Entity? b)
-        {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
-                return true;
-
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
-                return false;
-
-            return a.Equals(b);
         }
 
         public static bool operator !=(Entity? a, Entity? b)
@@ -69,6 +80,7 @@ namespace PlataformaEducacao.Core.DomainObjects
         {
             return $"{GetType().Name} [Id={Id}]";
         }
+
         public virtual bool EhValido()
         {
             throw new NotImplementedException();

@@ -21,7 +21,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<ValidationResult>();
-            modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<Evento>();
 
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                 e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
