@@ -144,3 +144,12 @@ dotnet_diagnostic.IDE0301.severity = suggestion
 
 # CA1305: Especificar IFormatProvider
 dotnet_diagnostic.CA1305.severity = suggestion
+
+# IDE0059: Atribuição desnecessária de um valor
+dotnet_diagnostic.IDE0059.severity = suggestion
+
+# CS8604: Possível argumento de referência nula.
+dotnet_diagnostic.CS8604.severity = suggestion
+
+# CA1827: Não usar Count() ou LongCount() quando Any() puder ser usado
+dotnet_diagnostic.CA1827.severity = suggestion
