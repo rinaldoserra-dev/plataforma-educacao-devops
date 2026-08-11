@@ -1,6 +1,6 @@
-﻿using PlataformaEducacao.Core.Communication;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
+using PlataformaEducacao.Core.Communication;
 
 namespace PlataformaEducacao.Bff.Api.Services
 {
@@ -15,6 +15,7 @@ namespace PlataformaEducacao.Bff.Api.Services
                 Encoding.UTF8,
                 "application/json");
         }
+
         protected async Task<ResponseResult> DeserializarObjetoResponse(HttpResponseMessage responseMessage)
         {
             var stringContent = await responseMessage.Content.ReadAsStringAsync();
@@ -30,7 +31,9 @@ namespace PlataformaEducacao.Bff.Api.Services
                         return result;
                     }
                 }
-                catch (JsonException) { }
+                catch (JsonException)
+                {
+                }
             }
 
             return new ResponseResult
@@ -59,22 +62,20 @@ namespace PlataformaEducacao.Bff.Api.Services
             return default;
         }
 
-        //protected async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
-        //{
+        // protected async Task<T> DeserializarObjetoResponse<T>(HttpResponseMessage responseMessage)
+        // {
         //    var options = new JsonSerializerOptions
         //    {
         //        PropertyNameCaseInsensitive = true
         //    };
-
         //    return JsonSerializer.Deserialize<T>(await responseMessage.Content.ReadAsStringAsync(), options);
-        //}
+        // }
 
-        //protected bool TratarErrosResponse(HttpResponseMessage response)
-        //{
+        // protected bool TratarErrosResponse(HttpResponseMessage response)
+        // {
         //    if (response.StatusCode == HttpStatusCode.BadRequest) return false;
-
         //    response.EnsureSuccessStatusCode();
         //    return true;
-        //}
+        // }
     }
 }

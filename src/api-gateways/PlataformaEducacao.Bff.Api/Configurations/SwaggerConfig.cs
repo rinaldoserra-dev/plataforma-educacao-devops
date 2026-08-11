@@ -16,7 +16,6 @@ namespace PlataformaEducacao.Bff.Api.Configurations
                     License = new OpenApiLicense { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
                 });
 
-
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -38,10 +37,9 @@ namespace PlataformaEducacao.Bff.Api.Configurations
                                 Id = "Bearer"
                             }
                         },
-                        new string[] {}
+                        Array.Empty<string>()
                     }
                 });
-
             });
 
             return services;

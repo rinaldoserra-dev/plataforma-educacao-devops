@@ -65,6 +65,8 @@ namespace PlataformaEducacao.MessageBus.Tests
             mockBus.Verify(b => b.Dispose(), Times.Once);
         }
 
-        private class EventoTeste : IntegrationEvent { }
+        private class EventoTeste : IntegrationEvent
+        {
+        }
     }
 }

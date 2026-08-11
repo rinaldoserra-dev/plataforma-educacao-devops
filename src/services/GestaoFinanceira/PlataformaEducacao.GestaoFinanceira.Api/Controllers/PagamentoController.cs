@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlataformaEducacao.GestaoFinanceira.Api.Models.Requests;
 using PlataformaEducacao.GestaoFinanceira.Api.Models.Response;
@@ -6,7 +7,6 @@ using PlataformaEducacao.GestaoFinanceira.Api.Services;
 using PlataformaEducacao.GestaoFinanceira.Business.Models;
 using PlataformaEducacao.WebApi.Core.Controllers;
 using PlataformaEducacao.WebApi.Core.Usuario;
-using System.Net;
 
 namespace PlataformaEducacao.GestaoFinanceira.Api.Controllers
 {
@@ -43,8 +43,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Controllers
 
             if (ObterStatus(dadosPagamento.MatriculaId, cancellationToken).Result is OkObjectResult statusResult)
             {
-                var status = statusResult.Value as PagamentoStatusResponse;
-                if (status != null && (status.Status == "Pago" || status.Status == "Autorizado"))
+                if (statusResult.Value is PagamentoStatusResponse status && (
+                    status.Status == "Pago" || status.Status == "Autorizado"))
                 {
                     AdicionarErroProcessamento("Matrícula já está paga.");
                     return CustomResponse();
@@ -71,9 +71,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Controllers
             }
 
             return CustomResponse(HttpStatusCode.OK, "Pagamento autorizado com sucesso");
-
         }
-
 
         [HttpGet("{matriculaId:guid}/status")]
         [Authorize]
@@ -82,21 +80,10 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Controllers
             var usuarioId = _user.ObterUserId();
             var isAdm = _user.PossuiRole("ADMIN");
 
-            var result = await _pagamentoService.ObterStatusPorMatricula(matriculaId, usuarioId, isAdm);
-
-            if (result == null)
-            {
-                result = new PagamentoStatusResponse
-                {
-                    MatriculaId = matriculaId,
-                    Status = "Pagamento Pendente"
-                };
-            }
-
+            var result = await _pagamentoService.ObterStatusPorMatricula(matriculaId, usuarioId, isAdm)
+                ?? new PagamentoStatusResponse { MatriculaId = matriculaId, Status = "Pagamento Pendente" };
 
             return CustomResponse(HttpStatusCode.OK, result);
         }
-
-
     }
 }

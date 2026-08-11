@@ -19,18 +19,18 @@ namespace PlataformaEducacao.GestaoAluno.Application.Services
             _serviceProvider = serviceProvider;
         }
 
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            SetResponder();
+            return Task.CompletedTask;
+        }
+
         private void SetResponder()
         {
             _bus.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(async request =>
                 await RegistrarCliente(request));
 
             _bus.AdvancedBus.Connected += OnConnect!;
-        }
-
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            SetResponder();
-            return Task.CompletedTask;
         }
 
         private void OnConnect(object s, EventArgs e)

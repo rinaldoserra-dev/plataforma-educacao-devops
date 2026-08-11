@@ -16,7 +16,6 @@ namespace PlataformaEducacao.GestaoAluno.Data.Mappings
             builder.Property(a => a.Nome)
                 .IsRequired();
 
-
             builder.OwnsOne(c => c.Email, tf =>
             {
                 tf.Property(c => c.Endereco)
@@ -24,7 +23,6 @@ namespace PlataformaEducacao.GestaoAluno.Data.Mappings
                     .HasColumnName("Email")
                     .HasColumnType($"varchar({Email.EnderecoMaxLength})");
             });
-
         }
     }
 }

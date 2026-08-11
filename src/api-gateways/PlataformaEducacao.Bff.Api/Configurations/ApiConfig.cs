@@ -20,6 +20,7 @@ namespace PlataformaEducacao.Bff.Api.Configurations
 
             return host;
         }
+
         public static IServiceCollection AddApiConfig(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();

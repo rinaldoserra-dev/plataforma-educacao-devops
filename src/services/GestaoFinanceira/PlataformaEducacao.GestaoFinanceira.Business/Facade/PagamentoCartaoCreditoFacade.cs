@@ -15,57 +15,6 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Facade
             _pagamentoConfig = pagamentoConfig.Value;
         }
 
-
-        public async Task<Transacao> AutorizarPagamento(Pagamento pagamento)
-        {
-            var eduPagSvc = new EduPagService(_pagamentoConfig.DefaultApiKey,
-               _pagamentoConfig.DefaultEncryptionKey);
-
-            var cardHashGen = new CardHash(eduPagSvc)
-            {
-                CardNumber = pagamento.DadosCartao.NumeroCartao,
-                CardHolderName = pagamento.DadosCartao.NomeCartao,
-                CardExpirationDate = pagamento.DadosCartao.ExpiracaoCartao,
-                CardCvv = pagamento.DadosCartao.CvvCartao
-            };
-            var cardHash = cardHashGen.Generate();
-
-            var transacao = new Transaction(eduPagSvc)
-            {
-                CardHash = cardHash,
-                CardNumber = pagamento.DadosCartao.NumeroCartao,
-                CardHolderName = pagamento.DadosCartao.NomeCartao,
-                CardExpirationDate = pagamento.DadosCartao.ExpiracaoCartao,
-                CardCvv = pagamento.DadosCartao.CvvCartao,
-                PaymentMethod = PaymentMethod.CreditCard,
-                Amount = pagamento.Valor
-            };
-
-            return ParaTransacao(await transacao.AuthorizeCardTransaction());
-        }
-
-
-        public async Task<Transacao> CapturarPagamento(Transacao transacao)
-        {
-            var eduPagSvc = new EduPagService(_pagamentoConfig.DefaultApiKey,
-                _pagamentoConfig.DefaultEncryptionKey);
-
-            var transaction = ParaTransaction(transacao, eduPagSvc);
-
-            return ParaTransacao(await transaction.CaptureCardTransaction());
-        }
-
-
-        public async Task<Transacao> CancelarAutorizacao(Transacao transacao)
-        {
-            var eduPagSvc = new EduPagService(_pagamentoConfig.DefaultApiKey,
-                   _pagamentoConfig.DefaultEncryptionKey);
-
-            var transaction = ParaTransaction(transacao, eduPagSvc);
-
-            return ParaTransacao(await transaction.CancelAuthorization());
-        }
-
         public static Transacao ParaTransacao(Transaction transaction)
         {
             return new Transacao
@@ -94,6 +43,54 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Facade
                 Nsu = transacao.NSU,
                 Tid = transacao.TID
             };
+        }
+
+        public async Task<Transacao> AutorizarPagamento(Pagamento pagamento)
+        {
+            var eduPagSvc = new EduPagService(
+                _pagamentoConfig.DefaultApiKey, _pagamentoConfig.DefaultEncryptionKey);
+
+            var cardHashGen = new CardHash(eduPagSvc)
+            {
+                CardNumber = pagamento.DadosCartao.NumeroCartao,
+                CardHolderName = pagamento.DadosCartao.NomeCartao,
+                CardExpirationDate = pagamento.DadosCartao.ExpiracaoCartao,
+                CardCvv = pagamento.DadosCartao.CvvCartao
+            };
+            var cardHash = cardHashGen.Generate();
+
+            var transacao = new Transaction(eduPagSvc)
+            {
+                CardHash = cardHash,
+                CardNumber = pagamento.DadosCartao.NumeroCartao,
+                CardHolderName = pagamento.DadosCartao.NomeCartao,
+                CardExpirationDate = pagamento.DadosCartao.ExpiracaoCartao,
+                CardCvv = pagamento.DadosCartao.CvvCartao,
+                PaymentMethod = PaymentMethod.CreditCard,
+                Amount = pagamento.Valor
+            };
+
+            return ParaTransacao(await transacao.AuthorizeCardTransaction());
+        }
+
+        public async Task<Transacao> CapturarPagamento(Transacao transacao)
+        {
+            var eduPagSvc = new EduPagService(
+                _pagamentoConfig.DefaultApiKey, _pagamentoConfig.DefaultEncryptionKey);
+
+            var transaction = ParaTransaction(transacao, eduPagSvc);
+
+            return ParaTransacao(await transaction.CaptureCardTransaction());
+        }
+
+        public async Task<Transacao> CancelarAutorizacao(Transacao transacao)
+        {
+            var eduPagSvc = new EduPagService(
+                _pagamentoConfig.DefaultApiKey, _pagamentoConfig.DefaultEncryptionKey);
+
+            var transaction = ParaTransaction(transacao, eduPagSvc);
+
+            return ParaTransacao(await transaction.CancelAuthorization());
         }
     }
 }

@@ -3,7 +3,6 @@ using PlataformaEducacao.Core.Messages;
 
 namespace PlataformaEducacao.GestaoConteudo.Application.Commands
 {
-
     public class AdicionarCursoCommandValidation : AbstractValidator<AdicionarCursoCommand>
     {
         public AdicionarCursoCommandValidation()

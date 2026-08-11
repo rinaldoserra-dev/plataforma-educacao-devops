@@ -8,14 +8,18 @@ namespace PlataformaEducacao.Bff.Api.Services
     public interface ICursosService
     {
         Task<ResponseResult> AdicionarCurso(AdicionarCursoRequest cursoRequest);
+
         Task<ResponseResult> AtualizarCurso(Guid cursoId, AtualizarCursoRequest cursoRequest);
+
         Task<ResponseResult> AdicionarAula(AdicionarAulaRequest aulaRequest);
+
         Task<ResponseResult> ObterCursosDisponiveisComAula();
+
         Task<ResponseResult> ObterCursoComAulasPorCursoId(Guid cursoId);
+
         Task<ResponseResult> ObterTodos();
-
-
     }
+
     public class CursosService : Service, ICursosService
     {
         private readonly HttpClient _httpClient;

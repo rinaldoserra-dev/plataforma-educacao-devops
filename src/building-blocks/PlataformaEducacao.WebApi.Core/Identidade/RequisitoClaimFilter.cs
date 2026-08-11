@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace PlataformaEducacao.WebApi.Core.Identidade
 {
-
     public class RequisitoClaimFilter : IAuthorizationFilter
     {
         private readonly Claim _claim;

@@ -18,6 +18,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
                 var service = application.Services.CreateScope().ServiceProvider;
                 await EnsureSeedData(service);
             }
+
             public static async Task EnsureSeedData(IServiceProvider serviceProvider)
             {
                 using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -30,13 +31,12 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
                     await financeiroContext.Database.EnsureCreatedAsync();
                     await SeedTablesGestaoFinanceira(financeiroContext);
                 }
-                else if (env.EnvironmentName == "Development" || env.EnvironmentName == "Docker")
+                else if (env.EnvironmentName is "Development" or "Docker")
                 {
                     await financeiroContext.Database.MigrateAsync();
                     await SeedTablesGestaoFinanceira(financeiroContext);
                 }
             }
-
         }
 
         private static async Task SeedTablesGestaoFinanceira(PagamentosContext pagamentosContext)
@@ -52,21 +52,19 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
                     TipoPagamento = TipoPagamento.CartaoCredito,
                     Valor = valor,
                     DadosCartao = new DadosCartao("Fulano de Tal", "4916573380937962", "12/28", "123")
-
                 };
 
                 pagamento.AdicionarTransacao(new Transacao
                 {
-                    CodigoAutorizacao = "",
+                    CodigoAutorizacao = string.Empty,
                     BandeiraCartao = "MasterCard",
                     DataTransacao = DateTime.UtcNow,
                     ValorTotal = valor,
-                    CustoTransacao = valor * (decimal)0.03,
+                    CustoTransacao = valor * 0.03M,
                     Status = StatusTransacao.Pago,
                     TID = GetGenericCode(),
                     NSU = GetGenericCode()
                 });
-
 
                 await pagamentosContext.Pagamentos.AddAsync(pagamento);
 

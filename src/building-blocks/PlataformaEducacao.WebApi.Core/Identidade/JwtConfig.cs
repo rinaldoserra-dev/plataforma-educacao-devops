@@ -1,16 +1,16 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace PlataformaEducacao.WebApi.Core.Identidade
 {
     public static class JwtConfig
     {
-        public static IServiceCollection AddJwtConfiguration(this IServiceCollection services,
-            IConfiguration configuration)
+        public static IServiceCollection AddJwtConfiguration(
+            this IServiceCollection services, IConfiguration configuration)
         {
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);

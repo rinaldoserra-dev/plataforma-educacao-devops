@@ -10,7 +10,7 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
         public void Criar_ConteudoProgramatico_DeveRetornarException_QuandoDescricaoEhVazia()
         {
             // Arrange Act Assert
-            Assert.Throws<DomainException>(() => new ConteudoProgramatico("", 150));
+            Assert.Throws<DomainException>(() => new ConteudoProgramatico(string.Empty, 150));
         }
 
         [Fact(DisplayName = "Criar Conteudo Programatico Com Duracao Invalida")]

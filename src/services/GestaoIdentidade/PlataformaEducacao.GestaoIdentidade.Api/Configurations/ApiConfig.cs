@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.HttpOverrides;
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.HttpOverrides;
 using PlataformaEducacao.WebApi.Core.Extensions;
 using PlataformaEducacao.WebApi.Core.Identidade;
-using System.Text.Json.Serialization;
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
 {
@@ -21,6 +21,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
 
             return host;
         }
+
         public static IServiceCollection AddApiConfig(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers()
@@ -39,6 +40,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
 
             return services;
         }
+
         public static IApplicationBuilder UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment environment)
         {
             app.UseForwardedHeaders();

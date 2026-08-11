@@ -5,13 +5,12 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace PlataformaEducacao.WebApi.Core.Identidade
 {
-
     public class ClaimsAuthorizeAttribute : TypeFilterAttribute
     {
         public ClaimsAuthorizeAttribute(string claimName, string claimValue)
             : base(typeof(RequisitoClaimFilter))
         {
-            Arguments = new object[] { new Claim(claimName, claimValue) };
+            Arguments = [new Claim(claimName, claimValue)];
         }
     }
 }

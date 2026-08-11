@@ -8,7 +8,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Queries.ViewModels
 
         public IEnumerable<CursoConcluidoViewModel> CursosConcluidos { get; set; } = new List<CursoConcluidoViewModel>();
 
-        public HistoricoAlunoViewModel(String nomeAluno, IEnumerable<CursoConcluidoViewModel> cursosConcluidos)
+        public HistoricoAlunoViewModel(string nomeAluno, IEnumerable<CursoConcluidoViewModel> cursosConcluidos)
         {
             NomeAluno = nomeAluno;
             CursosConcluidos = cursosConcluidos;

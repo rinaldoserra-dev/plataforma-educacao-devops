@@ -40,7 +40,7 @@ namespace PlataformaEducacao.GestaoAluno.Data.Services
                                 .Text(text =>
                                 {
                                     text.Span("A Escola PlataformaEducacao certifica para os devidos fins que ").FontSize(18);
-                                    text.Span($"{certificado.Matricula.Aluno?.Nome?.ToUpper()}").Bold().FontSize(18);
+                                    text.Span($"{certificado.Matricula.Aluno?.Nome?.ToUpper(System.Globalization.CultureInfo.CurrentCulture)}").Bold().FontSize(18);
                                     text.Span($" concluiu o curso {certificado.Matricula.NomeCurso}").FontSize(18);
                                     text.Span($" na data {certificado.Matricula.HistoricoAprendizado?.DataConclusao:dd/MM/yyyy}.").FontSize(18);
                                 });

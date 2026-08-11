@@ -60,7 +60,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.GerarCertifi
             Assert.True(resultado.IsValid);
             repositorioMock.Verify(r => r.GerarCertificado(It.IsAny<Certificado>(), It.IsAny<CancellationToken>()), Times.Once);
             Assert.NotNull(certificadoGerado);
-            Assert.Equal(matricula.Id, certificadoGerado!.MatriculaId);
+            Assert.Equal(matricula.Id, certificadoGerado.MatriculaId);
             uowMock.Verify(u => u.Commit(), Times.Once);
         }
     }

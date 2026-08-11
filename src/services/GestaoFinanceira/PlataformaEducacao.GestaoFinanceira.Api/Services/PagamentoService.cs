@@ -14,9 +14,10 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
         private readonly IPagamentoRepository _pagamentoRepository;
         private readonly IMessageBus _bus;
 
-        public PagamentoService(IPagamentoCartaoCreditoFacade pagamentoFacade,
-                                IPagamentoRepository pagamentoRepository,
-                                IMessageBus bus)
+        public PagamentoService(
+            IPagamentoCartaoCreditoFacade pagamentoFacade,
+            IPagamentoRepository pagamentoRepository,
+            IMessageBus bus)
         {
             _pagamentoFacade = pagamentoFacade;
             _pagamentoRepository = pagamentoRepository;
@@ -30,9 +31,9 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
 
             if (transacao.Status != StatusTransacao.Autorizado)
             {
-
-                validationResult.Errors.Add(new ValidationFailure("Pagamento",
-                        "Pagamento recusado, entre em contato com a sua operadora de cartão"));
+                validationResult.Errors.Add(new ValidationFailure(
+                    "Pagamento",
+                    "Pagamento recusado, entre em contato com a sua operadora de cartão"));
 
                 await _bus.PublishAsync(new MatriculaPagamentoRecusadoIntegrationEvent(pagamento.MatriculaId));
 
@@ -44,7 +45,9 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
 
             if (!await _pagamentoRepository.UnitOfWork.Commit())
             {
-                validationResult.Errors.Add(new ValidationFailure("Pagamento", "Houve um erro ao realizar o pagamento."));
+                validationResult.Errors.Add(new ValidationFailure(
+                    "Pagamento",
+                    "Houve um erro ao realizar o pagamento."));
 
                 // Cancelar pagamento no gateway
                 await CancelarPagamento(pagamento.MatriculaId);
@@ -58,7 +61,9 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
             }
             catch (Exception)
             {
-                validationResult.Errors.Add(new ValidationFailure("Pagamento", "Pagamento autorizado, mas houve falha ao notificar os demais serviços."));
+                validationResult.Errors.Add(new ValidationFailure(
+                    "Pagamento",
+                    "Pagamento autorizado, mas houve falha ao notificar os demais serviços."));
 
                 // Cancelar pagamento no gateway
                 await CancelarPagamento(pagamento.MatriculaId);
@@ -81,7 +86,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
 
             if (transacao.Status != StatusTransacao.Pago)
             {
-                validationResult.Errors.Add(new ValidationFailure("Pagamento",
+                validationResult.Errors.Add(new ValidationFailure(
+                    "Pagamento",
                     $"Não foi possível capturar o pagamento da matricula {pedidoId}"));
 
                 return new ResponseMessage(validationResult);
@@ -92,7 +98,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
 
             if (!await _pagamentoRepository.UnitOfWork.Commit())
             {
-                validationResult.Errors.Add(new ValidationFailure("Pagamento",
+                validationResult.Errors.Add(new ValidationFailure(
+                    "Pagamento",
                     $"Não foi possível persistir a captura do pagamento da matricula {pedidoId}"));
 
                 return new ResponseMessage(validationResult);
@@ -107,13 +114,15 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
             var transacaoAutorizada = transacoes?.FirstOrDefault(t => t.Status == StatusTransacao.Autorizado);
             var validationResult = new ValidationResult();
 
-            if (transacaoAutorizada == null) throw new DomainException($"Transação não encontrada para a matricula {pedidoId}");
+            if (transacaoAutorizada == null)
+                throw new DomainException($"Transação não encontrada para a matricula {pedidoId}");
 
             var transacao = await _pagamentoFacade.CancelarAutorizacao(transacaoAutorizada);
 
             if (transacao.Status != StatusTransacao.Cancelado)
             {
-                validationResult.Errors.Add(new ValidationFailure("Pagamento",
+                validationResult.Errors.Add(new ValidationFailure(
+                    "Pagamento",
                     $"Não foi possível cancelar o pagamento da matricula {pedidoId}"));
 
                 return new ResponseMessage(validationResult);
@@ -124,7 +133,8 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
 
             if (!await _pagamentoRepository.UnitOfWork.Commit())
             {
-                validationResult.Errors.Add(new ValidationFailure("Pagamento",
+                validationResult.Errors.Add(new ValidationFailure(
+                    "Pagamento",
                     $"Não foi possível persistir o cancelamento do pagamento da matricula {pedidoId}"));
 
                 return new ResponseMessage(validationResult);
@@ -150,6 +160,5 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
                 Status = ultimaTransacao?.Status.ToString() ?? "Sem transações"
             };
         }
-
     }
 }

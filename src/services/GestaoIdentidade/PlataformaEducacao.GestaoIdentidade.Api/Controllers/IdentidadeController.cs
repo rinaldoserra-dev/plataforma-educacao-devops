@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -8,10 +12,6 @@ using PlataformaEducacao.GestaoIdentidade.Api.Services;
 using PlataformaEducacao.MessageBus;
 using PlataformaEducacao.WebApi.Core.Controllers;
 using PlataformaEducacao.WebApi.Core.Identidade;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
 {
@@ -25,11 +25,12 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
 
         private readonly IMessageBus _bus;
 
-        public IdentidadeController(SignInManager<IdentityUser> signInManager,
-                              UserManager<IdentityUser> userManager,
-                              IAutenticacaoService autenticacaoService,
-                              IOptions<AppSettings> appSettings,
-                              IMessageBus bus)
+        public IdentidadeController(
+            SignInManager<IdentityUser> signInManager,
+            UserManager<IdentityUser> userManager,
+            IAutenticacaoService autenticacaoService,
+            IOptions<AppSettings> appSettings,
+            IMessageBus bus)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -66,6 +67,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
 
                 return CustomResponse(HttpStatusCode.Created, await GerarJwt(usuarioRegistro.Email));
             }
+
             foreach (var error in result.Errors)
             {
                 AdicionarErroProcessamento(error.Description);
@@ -79,8 +81,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha,
-                false, true);
+            var result = await _signInManager.PasswordSignInAsync(usuarioLogin.Email, usuarioLogin.Senha, false, true);
 
             if (result.Succeeded)
             {
@@ -100,7 +101,6 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
         [HttpPost("refresh-token")]
         public async Task<ActionResult> RefreshToken(UsuarioRefreshToken refreshToken)
         {
-
             if (refreshToken == null)
             {
                 AdicionarErroProcessamento("Refresh Token inválido");
@@ -123,10 +123,13 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
             return CustomResponse(HttpStatusCode.OK, await GerarJwt(token.UserName));
         }
 
+        private static long ToUnixEpochDate(DateTime date)
+            => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
+
         private async Task<UsuarioRespostaLogin> GerarJwt(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null) throw new ArgumentException("Usuário não encontrado", nameof(email));
+            var user = await _userManager.FindByEmailAsync(email)
+                ?? throw new ArgumentException("Usuário não encontrado", nameof(email));
 
             var claims = await _userManager.GetClaimsAsync(user);
 
@@ -190,9 +193,6 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
             };
         }
 
-        private static long ToUnixEpochDate(DateTime date)
-            => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
-
         private async Task<ResponseMessage> RegistrarAluno(UsuarioRegistro usuarioRegistro)
         {
             var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
@@ -209,6 +209,5 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
                 throw;
             }
         }
-
     }
 }

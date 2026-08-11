@@ -21,12 +21,10 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-
             // Mediator
             services.AddMediatR(
                typeof(AdicionarAlunoCommand).Assembly,
-               typeof(AdicionarAlunoCommandHandler).Assembly
-           );
+               typeof(AdicionarAlunoCommandHandler).Assembly);
 
             // API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

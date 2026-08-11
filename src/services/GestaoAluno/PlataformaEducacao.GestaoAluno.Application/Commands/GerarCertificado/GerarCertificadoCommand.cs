@@ -12,14 +12,4 @@ namespace PlataformaEducacao.GestaoAluno.Application.Commands.GerarCertificado
             MatriculaId = matriculaId;
         }
     }
-
-    public class GerarCertificadoCommandValidation : AbstractValidator<GerarCertificadoCommand>
-    {
-        public GerarCertificadoCommandValidation()
-        {
-            RuleFor(c => c.MatriculaId)
-                .NotEqual(Guid.Empty)
-                .WithMessage("Id da matrícula inválido.");
-        }
-    }
 }

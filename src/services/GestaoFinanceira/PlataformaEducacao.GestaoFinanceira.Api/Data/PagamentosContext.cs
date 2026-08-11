@@ -16,7 +16,13 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data
         }
 
         public DbSet<Pagamento> Pagamentos { get; set; }
+
         public DbSet<Transacao> Transacoes { get; set; }
+
+        public async Task<bool> Commit()
+        {
+            return await SaveChangesAsync() > 0;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,11 +37,6 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PagamentosContext).Assembly);
-        }
-
-        public async Task<bool> Commit()
-        {
-            return await SaveChangesAsync() > 0;
         }
     }
 }

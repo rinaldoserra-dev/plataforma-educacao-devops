@@ -18,6 +18,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
                 var service = application.Services.CreateScope().ServiceProvider;
                 await EnsureSeedData(service);
             }
+
             public static async Task EnsureSeedData(IServiceProvider serviceProvider)
             {
                 using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -30,7 +31,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
                     await identityContext.Database.EnsureCreatedAsync();
                     await SeedUserAndRoles(identityContext);
                 }
-                else if (env.EnvironmentName == "Development" || env.EnvironmentName == "Docker")
+                else if (env.EnvironmentName is "Development" or "Docker")
                 {
                     await identityContext.Database.MigrateAsync();
                     await SeedUserAndRoles(identityContext);

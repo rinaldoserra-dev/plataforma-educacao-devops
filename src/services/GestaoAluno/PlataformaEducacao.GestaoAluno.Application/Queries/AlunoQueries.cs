@@ -16,11 +16,11 @@ namespace PlataformaEducacao.GestaoAluno.Application.Queries
             _certificadoService = certificadoService;
         }
 
-        public async Task<IEnumerable<MatriculaPendentePagamentoDTO>> ListarMatriculasPendentesPagamentoPorAlunoId
-            (Guid alunoId, CancellationToken cancellationToken)
+        public async Task<IEnumerable<MatriculaPendentePagamentoDTO>> ListarMatriculasPendentesPagamentoPorAlunoId(
+            Guid alunoId, CancellationToken cancellationToken)
         {
-            var matriculas = await _alunoRepository.ListarMatriculasPendentesPagamentoPorAlunoId
-                (alunoId, cancellationToken);
+            var matriculas = await _alunoRepository.ListarMatriculasPendentesPagamentoPorAlunoId(
+                alunoId, cancellationToken);
 
             return matriculas.Select(m => MatriculaPendentePagamentoDTO.FromMatricula(m));
         }
@@ -68,7 +68,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Queries
             if (certificado is null)
                 return null;
 
-            var certificadoArquivo = await _certificadoService.GerarCertificado(certificado!);
+            var certificadoArquivo = await _certificadoService.GerarCertificado(certificado);
 
             return new ArquivoDTO
             {
