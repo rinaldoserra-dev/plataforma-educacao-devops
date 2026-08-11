@@ -69,20 +69,20 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
             return new ResponseMessage(validationResult);
         }
 
-        public async Task<ResponseMessage> CapturarPagamento(Guid matriculaId)
+        public async Task<ResponseMessage> CapturarPagamento(Guid pedidoId)
         {
-            var transacoes = await _pagamentoRepository.ObterTransacoesPorMatriculaId(matriculaId);
+            var transacoes = await _pagamentoRepository.ObterTransacoesPorMatriculaId(pedidoId);
             var transacaoAutorizada = transacoes?.FirstOrDefault(t => t.Status == StatusTransacao.Autorizado);
             var validationResult = new ValidationResult();
 
-            if (transacaoAutorizada == null) throw new DomainException($"Transação não encontrada para a matricula {matriculaId}");
+            if (transacaoAutorizada == null) throw new DomainException($"Transação não encontrada para a matricula {pedidoId}");
 
             var transacao = await _pagamentoFacade.CapturarPagamento(transacaoAutorizada);
 
             if (transacao.Status != StatusTransacao.Pago)
             {
                 validationResult.Errors.Add(new ValidationFailure("Pagamento",
-                    $"Não foi possível capturar o pagamento da matricula {matriculaId}"));
+                    $"Não foi possível capturar o pagamento da matricula {pedidoId}"));
 
                 return new ResponseMessage(validationResult);
             }
@@ -93,7 +93,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
             if (!await _pagamentoRepository.UnitOfWork.Commit())
             {
                 validationResult.Errors.Add(new ValidationFailure("Pagamento",
-                    $"Não foi possível persistir a captura do pagamento da matricula {matriculaId}"));
+                    $"Não foi possível persistir a captura do pagamento da matricula {pedidoId}"));
 
                 return new ResponseMessage(validationResult);
             }
@@ -101,20 +101,20 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
             return new ResponseMessage(validationResult);
         }
 
-        public async Task<ResponseMessage> CancelarPagamento(Guid matriculaId)
+        public async Task<ResponseMessage> CancelarPagamento(Guid pedidoId)
         {
-            var transacoes = await _pagamentoRepository.ObterTransacoesPorMatriculaId(matriculaId);
+            var transacoes = await _pagamentoRepository.ObterTransacoesPorMatriculaId(pedidoId);
             var transacaoAutorizada = transacoes?.FirstOrDefault(t => t.Status == StatusTransacao.Autorizado);
             var validationResult = new ValidationResult();
 
-            if (transacaoAutorizada == null) throw new DomainException($"Transação não encontrada para a matricula {matriculaId}");
+            if (transacaoAutorizada == null) throw new DomainException($"Transação não encontrada para a matricula {pedidoId}");
 
             var transacao = await _pagamentoFacade.CancelarAutorizacao(transacaoAutorizada);
 
             if (transacao.Status != StatusTransacao.Cancelado)
             {
                 validationResult.Errors.Add(new ValidationFailure("Pagamento",
-                    $"Não foi possível cancelar o pagamento da matricula {matriculaId}"));
+                    $"Não foi possível cancelar o pagamento da matricula {pedidoId}"));
 
                 return new ResponseMessage(validationResult);
             }
@@ -125,7 +125,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Services
             if (!await _pagamentoRepository.UnitOfWork.Commit())
             {
                 validationResult.Errors.Add(new ValidationFailure("Pagamento",
-                    $"Não foi possível persistir o cancelamento do pagamento da matricula {matriculaId}"));
+                    $"Não foi possível persistir o cancelamento do pagamento da matricula {pedidoId}"));
 
                 return new ResponseMessage(validationResult);
             }

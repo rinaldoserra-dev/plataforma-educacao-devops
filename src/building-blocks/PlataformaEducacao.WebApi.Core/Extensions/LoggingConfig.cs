@@ -7,52 +7,51 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-namespace PlataformaEducacao.WebApi.Core.Extensions;
-
-
-public static class LoggingConfig
+namespace PlataformaEducacao.WebApi.Core.Extensions
 {
-    public static IHostBuilder AddLoggingConfiguration(
-        this IHostBuilder hostBuilder,
-        IConfiguration configuration,
-        string serviceName)
+    public static class LoggingConfig
     {
-        hostBuilder.UseSerilog((context, _, loggerConfig) =>
+        public static IHostBuilder AddLoggingConfiguration(
+            this IHostBuilder hostBuilder,
+            IConfiguration configuration,
+            string serviceName)
         {
-            loggerConfig
-                .ReadFrom.Configuration(configuration)
-                .Enrich.FromLogContext()
-                .Enrich.WithMachineName()
-                .Enrich.WithProcessId()
-                .Enrich.WithThreadId()
-                .Enrich.WithProperty("Service", serviceName)
-                .Enrich.WithProperty("Application", serviceName);
-
-            var minimumLevel = context.Configuration["Serilog:MinimumLevel:Default"];
-            if (!string.IsNullOrWhiteSpace(minimumLevel)
-                && Enum.TryParse(minimumLevel, true, out LogEventLevel level))
+            hostBuilder.UseSerilog((context, _, loggerConfig) =>
             {
-                loggerConfig.MinimumLevel.Is(level);
-            }
-        });
+                loggerConfig
+                    .ReadFrom.Configuration(configuration)
+                    .Enrich.FromLogContext()
+                    .Enrich.WithMachineName()
+                    .Enrich.WithProcessId()
+                    .Enrich.WithThreadId()
+                    .Enrich.WithProperty("Service", serviceName)
+                    .Enrich.WithProperty("Application", serviceName);
 
-        return hostBuilder;
+                var minimumLevel = context.Configuration["Serilog:MinimumLevel:Default"];
+                if (!string.IsNullOrWhiteSpace(minimumLevel)
+                    && Enum.TryParse(minimumLevel, true, out LogEventLevel level))
+                {
+                    loggerConfig.MinimumLevel.Is(level);
+                }
+            });
+
+            return hostBuilder;
+        }
+
+        public static IServiceCollection AddCorrelationIdConfiguration(
+            this IServiceCollection services,
+            IConfiguration configuration)
+        {
+            services.AddDefaultCorrelationId();
+            services.Configure<CorrelationIdOptions>(configuration.GetSection("CorrelationIdOptions"));
+            return services;
+        }
+
+        public static IApplicationBuilder UseLoggingConfiguration(this IApplicationBuilder app)
+        {
+            app.UseCorrelationId();
+            app.UseSerilogRequestLogging();
+            return app;
+        }
     }
-
-    public static IServiceCollection AddCorrelationIdConfiguration(
-        this IServiceCollection services,
-        IConfiguration configuration)
-    {
-        services.AddDefaultCorrelationId();
-        services.Configure<CorrelationIdOptions>(configuration.GetSection("CorrelationIdOptions"));
-        return services;
-    }
-
-    public static IApplicationBuilder UseLoggingConfiguration(this IApplicationBuilder app)
-    {
-        app.UseCorrelationId();
-        app.UseSerilogRequestLogging();
-        return app;
-    }
-
 }

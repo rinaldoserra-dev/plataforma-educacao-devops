@@ -32,11 +32,11 @@ namespace PlataformaEducacao.Bff.Api.Services
             _httpClient.BaseAddress = new Uri(settings.Value.GestaoAlunosUrl);
         }
 
-        public async Task<ResponseResult> Matricular(MatricularDTO matricular)
+        public async Task<ResponseResult> Matricular(MatricularDTO solicitarMatricula)
         {
-            if (DadosCursoPreenchidos(matricular) is false)
+            if (DadosCursoPreenchidos(solicitarMatricula) is false)
             {
-                var cursoResponse = await _cursosService.ObterCursoComAulasPorCursoId(matricular.CursoId);
+                var cursoResponse = await _cursosService.ObterCursoComAulasPorCursoId(solicitarMatricula.CursoId);
                 if (cursoResponse.Sucesso is false || cursoResponse.Erros.Mensagens.Any())
                 {
                     return cursoResponse;
@@ -82,12 +82,12 @@ namespace PlataformaEducacao.Bff.Api.Services
                     };
                 }
 
-                matricular.NomeCurso = curso.Nome;
-                matricular.Valor = curso.Valor;
-                matricular.TotalAulasCurso = curso.Aulas.Count();
+                solicitarMatricula.NomeCurso = curso.Nome;
+                solicitarMatricula.Valor = curso.Valor;
+                solicitarMatricula.TotalAulasCurso = curso.Aulas.Count();
             }
 
-            var conteudoMatricular = ObterConteudo(matricular);
+            var conteudoMatricular = ObterConteudo(solicitarMatricula);
             var response = await _httpClient.PostAsync("/api/alunos/matricular", conteudoMatricular);
 
             return await DeserializarObjetoResponse(response);

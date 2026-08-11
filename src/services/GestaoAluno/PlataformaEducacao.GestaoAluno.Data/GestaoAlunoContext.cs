@@ -17,9 +17,20 @@ namespace PlataformaEducacao.GestaoAluno.Data
         }
 
         public DbSet<Aluno> Alunos { get; set; }
+
         public DbSet<Matricula> Matriculas { get; set; }
+
         public DbSet<Certificado> Certificados { get; set; }
+
         public DbSet<ProgressoAula> ProgressoAulas { get; set; }
+
+        public async Task<bool> Commit()
+        {
+            var sucesso = await base.SaveChangesAsync() > 0;
+            if (sucesso) await _mediatorHandler.PublicarEventos(this);
+
+            return sucesso;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,13 +45,6 @@ namespace PlataformaEducacao.GestaoAluno.Data
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientCascade;
 
             base.OnModelCreating(modelBuilder);
-        }
-        public async Task<bool> Commit()
-        {
-            var sucesso = await base.SaveChangesAsync() > 0;
-            if (sucesso) await _mediatorHandler.PublicarEventos(this);
-
-            return sucesso;
         }
     }
 }

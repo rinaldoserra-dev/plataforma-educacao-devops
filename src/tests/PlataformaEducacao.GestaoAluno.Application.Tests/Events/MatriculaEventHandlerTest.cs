@@ -19,7 +19,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Events
             var mediatorMock = new Mock<IMediatorHandler>();
             mediatorMock.Setup(m => m.SendCommand(It.IsAny<GerarCertificadoCommand>())).ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
-            var handler = new MatriculaEventHandler(mediatorMock.Object);
+            var handler = new MatriculaNotificationHandler(mediatorMock.Object);
 
             // Act
             await handler.Handle(evento, CancellationToken.None);
@@ -35,7 +35,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Events
             // Arrange
             var evento = new MatriculaAtivadaEvent(System.Guid.NewGuid());
             var mediatorMock = new Mock<IMediatorHandler>(MockBehavior.Strict);
-            var handler = new MatriculaEventHandler(mediatorMock.Object);
+            var handler = new MatriculaNotificationHandler(mediatorMock.Object);
 
             // Act
             await handler.Handle(evento, CancellationToken.None);

@@ -5,24 +5,27 @@ namespace PlataformaEducacao.GestaoFinanceira.EduPag
 {
     public class CardHash
     {
+        private readonly EduPagService _eduPagService;
+
         public CardHash(EduPagService eduPagService)
         {
-            EduPagService = eduPagService;
+            _eduPagService = eduPagService;
         }
 
-        private readonly EduPagService EduPagService;
-
         public string CardHolderName { get; set; } = string.Empty;
+
         public string CardNumber { get; set; } = string.Empty;
+
         public string CardExpirationDate { get; set; } = string.Empty;
+
         public string CardCvv { get; set; } = string.Empty;
 
         public string Generate()
         {
             using var aesAlg = Aes.Create();
 
-            aesAlg.IV = Encoding.Default.GetBytes(EduPagService.EncryptionKey);
-            aesAlg.Key = Encoding.Default.GetBytes(EduPagService.ApiKey);
+            aesAlg.IV = Encoding.Default.GetBytes(_eduPagService.EncryptionKey);
+            aesAlg.Key = Encoding.Default.GetBytes(_eduPagService.ApiKey);
 
             var encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
 

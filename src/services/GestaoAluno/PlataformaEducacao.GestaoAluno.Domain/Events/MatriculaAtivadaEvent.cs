@@ -10,7 +10,6 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Events
         {
             AggregateId = matriculaId;
             MatriculaId = matriculaId;
-
         }
     }
 }

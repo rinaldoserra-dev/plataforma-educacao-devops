@@ -16,18 +16,18 @@ namespace PlataformaEducacao.GestaoAluno.Application.Commands.MatricularAlunoCur
             _alunoRepository = alunoRepository;
         }
 
-        public async Task<ValidationResult> Handle(MatricularAlunoCursoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(MatricularAlunoCursoCommand request, CancellationToken cancellationToken)
         {
-            if (message.EhValido() is false) return message.ValidationResult;
+            if (request.EhValido() is false) return request.ValidationResult;
 
-            var aluno = await _alunoRepository.ObterComMatriculasPorId(message.AlunoId, cancellationToken);
+            var aluno = await _alunoRepository.ObterComMatriculasPorId(request.AlunoId, cancellationToken);
             if (aluno is null)
             {
                 AdicionarErro("Aluno não encontrado!");
                 return ValidationResult;
             }
 
-            var matricula = new Matricula(message.CursoId, message.NomeCurso, message.TotalAulasCurso, message.Valor);
+            var matricula = new Matricula(request.CursoId, request.NomeCurso, request.TotalAulasCurso, request.Valor);
             if (aluno.MatriculaExistente(matricula))
             {
                 AdicionarErro("Aluno já matriculado no curso!");

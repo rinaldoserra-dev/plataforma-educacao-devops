@@ -7,10 +7,9 @@ namespace PlataformaEducacao.MessageBus
 {
     public class MessageBus : IMessageBus
     {
+        private readonly string _connectionString;
         private IBus _bus = null!;
         private IAdvancedBus _advancedBus = null!;
-
-        private readonly string _connectionString;
 
         public MessageBus(string connectionString)
         {
@@ -19,33 +18,39 @@ namespace PlataformaEducacao.MessageBus
         }
 
         public bool IsConnected => _bus?.IsConnected ?? false;
+
         public IAdvancedBus AdvancedBus => _bus?.Advanced!;
 
-        public void Publish<T>(T message) where T : IntegrationEvent
+        public void Publish<T>(T message)
+            where T : IntegrationEvent
         {
             TryConnect();
             _bus.Publish(message);
         }
 
-        public async Task PublishAsync<T>(T message) where T : IntegrationEvent
+        public async Task PublishAsync<T>(T message)
+            where T : IntegrationEvent
         {
             TryConnect();
             await _bus.PublishAsync(message);
         }
 
-        public void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class
+        public void Subscribe<T>(string subscriptionId, Action<T> onMessage)
+            where T : class
         {
             TryConnect();
             _bus.Subscribe(subscriptionId, onMessage);
         }
 
-        public void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class
+        public void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage)
+            where T : class
         {
             TryConnect();
             _bus.SubscribeAsync(subscriptionId, onMessage);
         }
 
-        public TResponse Request<TRequest, TResponse>(TRequest request) where TRequest : IntegrationEvent
+        public TResponse Request<TRequest, TResponse>(TRequest request)
+            where TRequest : IntegrationEvent
             where TResponse : ResponseMessage
         {
             TryConnect();
@@ -53,24 +58,32 @@ namespace PlataformaEducacao.MessageBus
         }
 
         public async Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
-            where TRequest : IntegrationEvent where TResponse : ResponseMessage
+            where TRequest : IntegrationEvent
+            where TResponse : ResponseMessage
         {
             TryConnect();
             return await _bus.RequestAsync<TRequest, TResponse>(request);
         }
 
         public IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder)
-            where TRequest : IntegrationEvent where TResponse : ResponseMessage
+            where TRequest : IntegrationEvent
+            where TResponse : ResponseMessage
         {
             TryConnect();
             return _bus.Respond(responder);
         }
 
         public IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
-            where TRequest : IntegrationEvent where TResponse : ResponseMessage
+            where TRequest : IntegrationEvent
+            where TResponse : ResponseMessage
         {
             TryConnect();
             return _bus.RespondAsync(responder);
+        }
+
+        public void Dispose()
+        {
+            _bus.Dispose();
         }
 
         private void TryConnect()
@@ -97,11 +110,6 @@ namespace PlataformaEducacao.MessageBus
                 .RetryForever();
 
             policy.Execute(TryConnect);
-        }
-
-        public void Dispose()
-        {
-            _bus.Dispose();
         }
     }
 }

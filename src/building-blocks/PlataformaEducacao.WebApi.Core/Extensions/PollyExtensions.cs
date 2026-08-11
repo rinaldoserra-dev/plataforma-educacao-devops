@@ -10,12 +10,12 @@ namespace PlataformaEducacao.WebApi.Core.Extensions
         {
             var retry = HttpPolicyExtensions
                 .HandleTransientHttpError()
-                .WaitAndRetryAsync(new[]
-                {
+                .WaitAndRetryAsync(
+                [
                     TimeSpan.FromSeconds(1),
                     TimeSpan.FromSeconds(5),
                     TimeSpan.FromSeconds(10),
-                });
+                ]);
 
             return retry;
         }

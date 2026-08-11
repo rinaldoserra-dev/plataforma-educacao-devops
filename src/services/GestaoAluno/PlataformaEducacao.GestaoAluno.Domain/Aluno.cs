@@ -6,15 +6,12 @@ namespace PlataformaEducacao.GestaoAluno.Domain
     public class Aluno : Entity, IAggregateRoot
     {
         public string Nome { get; private set; } = null!;
+
         public Email Email { get; private set; } = null!;
 
         private readonly List<Matricula> _matriculas;
-        public IReadOnlyCollection<Matricula> Matriculas => _matriculas;
 
-        protected Aluno()
-        {
-            _matriculas = [];
-        }
+        public IReadOnlyCollection<Matricula> Matriculas => _matriculas;
 
         public Aluno(Guid alunoId, string nome, string email)
         {
@@ -26,10 +23,9 @@ namespace PlataformaEducacao.GestaoAluno.Domain
             Validar();
         }
 
-        protected void Validar()
+        protected Aluno()
         {
-            Validacoes.ValidarSeVazio(Id, "O id do aluno é obrigatório.");
-            Validacoes.ValidarSeVazio(Nome, "O nome do aluno é obrigatório.");
+            _matriculas = [];
         }
 
         public void RealizarMatricula(Matricula matricula)
@@ -64,6 +60,12 @@ namespace PlataformaEducacao.GestaoAluno.Domain
                 throw new DomainException($"Matricula {matricula.Id} não encontrada para o aluno {Id}.");
 
             matricula.Ativar();
+        }
+
+        protected void Validar()
+        {
+            Validacoes.ValidarSeVazio(Id, "O id do aluno é obrigatório.");
+            Validacoes.ValidarSeVazio(Nome, "O nome do aluno é obrigatório.");
         }
     }
 }
