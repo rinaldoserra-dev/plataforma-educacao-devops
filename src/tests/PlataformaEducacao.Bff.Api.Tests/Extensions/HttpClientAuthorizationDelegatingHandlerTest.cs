@@ -14,7 +14,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Extensions
         {
             // Arrange
             var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers["Authorization"] = "Bearer meu-token";
+            httpContext.Request.Headers.Authorization = "Bearer meu-token";
 
             var mockUser = new Mock<IAspNetUser>();
             mockUser.Setup(u => u.ObterHttpContext()).Returns(httpContext);

@@ -1,8 +1,8 @@
-﻿using PlataformaEducacao.Bff.Api.Services;
-using PlataformaEducacao.Core.Communication;
-using System.Net;
+﻿using System.Net;
 using System.Text;
 using System.Text.Json;
+using PlataformaEducacao.Bff.Api.Services;
+using PlataformaEducacao.Core.Communication;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Services
 {
@@ -74,7 +74,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             // Arrange
             var httpResponse = new HttpResponseMessage(HttpStatusCode.NoContent)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json"),
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json"),
                 ReasonPhrase = "No Content"
             };
 
@@ -92,7 +92,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             // Arrange
             var httpResponse = new HttpResponseMessage(HttpStatusCode.BadGateway)
             {
-                Content = new StringContent("", Encoding.UTF8, "application/json"),
+                Content = new StringContent(string.Empty, Encoding.UTF8, "application/json"),
                 ReasonPhrase = "Bad Gateway"
             };
 
@@ -119,7 +119,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("Curso", result!.Nome);
+            Assert.Equal("Curso", result.Nome);
             Assert.Equal(500, result.Valor);
         }
 
@@ -136,7 +136,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("Direto", result!.Nome);
+            Assert.Equal("Direto", result.Nome);
         }
 
         [Fact(DisplayName = "DeserializarData com null deve retornar default")]
@@ -156,13 +156,16 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
         public class TestDto
         {
             public string Nome { get; set; } = string.Empty;
+
             public int Valor { get; set; }
         }
 
         private class TestableService : Service
         {
             public StringContent TestObterConteudo(object dado) => ObterConteudo(dado);
+
             public Task<ResponseResult> TestDeserializarObjetoResponse(HttpResponseMessage msg) => DeserializarObjetoResponse(msg);
+
             public T? TestDeserializarData<T>(ResponseResult resp) => DeserializarData<T>(resp);
         }
     }

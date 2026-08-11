@@ -2,7 +2,6 @@
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Models
 {
-
     public class UsuarioLogin
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

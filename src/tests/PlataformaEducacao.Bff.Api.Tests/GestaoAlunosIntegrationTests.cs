@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 
 namespace PlataformaEducacao.Bff.Api.Tests
 {
-    [Collection(nameof(IntegrationApiTestsFixtureCollection))]
+    [Collection(nameof(IntegrationApiTestsCollectionFixture))]
     public class GestaoAlunosIntegrationTests : IClassFixture<IntegrationTestsFixture<BffApiAssemblyMarker>>
     {
         private readonly IntegrationTestsFixture<BffApiAssemblyMarker> _fixture;

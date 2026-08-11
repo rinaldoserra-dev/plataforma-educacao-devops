@@ -1,11 +1,11 @@
-using FluentAssertions;
-using PlataformaEducacao.Bff.Api.Tests.Config;
 using System.Net;
 using System.Net.Http.Json;
+using FluentAssertions;
+using PlataformaEducacao.Bff.Api.Tests.Config;
 
 namespace PlataformaEducacao.Bff.Api.Tests
 {
-    [Collection(nameof(IntegrationApiTestsFixtureCollection))]
+    [Collection(nameof(IntegrationApiTestsCollectionFixture))]
     public class PagamentosIntegrationTests : IClassFixture<IntegrationTestsFixture<BffApiAssemblyMarker>>
     {
         private readonly IntegrationTestsFixture<BffApiAssemblyMarker> _fixture;
@@ -56,10 +56,10 @@ namespace PlataformaEducacao.Bff.Api.Tests
             {
                 MatriculaId = Guid.NewGuid(),
                 Valor = 0,
-                NomeCartao = "",
-                NumeroCartao = "",
-                ExpiracaoCartao = "",
-                CvvCartao = ""
+                NomeCartao = string.Empty,
+                NumeroCartao = string.Empty,
+                ExpiracaoCartao = string.Empty,
+                CvvCartao = string.Empty
             });
 
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);

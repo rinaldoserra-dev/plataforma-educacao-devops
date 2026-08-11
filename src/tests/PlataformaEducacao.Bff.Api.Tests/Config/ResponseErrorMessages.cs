@@ -5,8 +5,9 @@ using PlataformaEducacao.Bff.Api;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-    [CollectionDefinition(nameof(IntegrationApiTestsCollectionFixture))]
-    public class IntegrationApiTestsCollectionFixture : ICollectionFixture<IntegrationTestsFixture<BffApiAssemblyMarker>>
+
+    public class ResponseErrorMessages
     {
+        public List<string> Mensagens { get; set; } = new();
     }
 }

@@ -12,7 +12,7 @@ using PlataformaEducacao.WebApi.Core.Usuario;
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Controllers
 {
-    public class PagamentoControllerTest
+    public class PagamentoControllerTest : IDisposable
     {
         private readonly Mock<IPagamentoService> _pagamentoServiceMock;
         private readonly Mock<IServiceProvider> _serviceProviderMock;
@@ -160,6 +160,11 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Controllers
 
             var pagamentoStatus = Assert.IsType<PagamentoStatusResponse>(responseResult.Data);
             Assert.Equal("Pagamento Pendente", pagamentoStatus.Status);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }

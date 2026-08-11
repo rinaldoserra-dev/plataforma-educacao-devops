@@ -2,7 +2,6 @@
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Models
 {
-
     public class UsuarioToken
     {
         public string Id { get; set; } = string.Empty;
