@@ -13,7 +13,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Events
         public async Task Handle_CursoFinalizadoEvent_EnviaGerarCertificadoCommand()
         {
             // Arrange
-            var matriculaId = System.Guid.NewGuid();
+            var matriculaId = Guid.NewGuid();
             var evento = new CursoFinalizadoEvent(matriculaId);
 
             var mediatorMock = new Mock<IMediatorHandler>();
@@ -33,7 +33,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Events
         public async Task Handle_MatriculaAtivadaEvent_NaoChamaMediator()
         {
             // Arrange
-            var evento = new MatriculaAtivadaEvent(System.Guid.NewGuid());
+            var evento = new MatriculaAtivadaEvent(Guid.NewGuid());
             var mediatorMock = new Mock<IMediatorHandler>(MockBehavior.Strict);
             var handler = new MatriculaNotificationHandler(mediatorMock.Object);
 

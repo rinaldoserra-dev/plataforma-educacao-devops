@@ -21,7 +21,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Commands
         [Trait("Categoria", "Gestao Conteudo - CursoCommandHandler")]
         public async Task AdicionarCurso_DeveRetornarFalso_QuandoOComandoEInvalido()
         {
-            var command = new AdicionarCursoCommand("Curso XX", "", 0, 0, true);
+            var command = new AdicionarCursoCommand("Curso XX", string.Empty, 0, 0, true);
 
             var result = await _handler.Handle(command, CancellationToken.None);
 

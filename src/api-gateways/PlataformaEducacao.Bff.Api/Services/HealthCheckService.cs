@@ -15,8 +15,9 @@ namespace PlataformaEducacao.Bff.Api.Services
         private readonly HttpClient _httpClient;
         private readonly AppServicesSettings _settings;
 
-        public HealthCheckService(HttpClient httpClient,
-                                  IOptions<AppServicesSettings> settings)
+        public HealthCheckService(
+            HttpClient httpClient,
+            IOptions<AppServicesSettings> settings)
         {
             _httpClient = httpClient;
             _settings = settings.Value;

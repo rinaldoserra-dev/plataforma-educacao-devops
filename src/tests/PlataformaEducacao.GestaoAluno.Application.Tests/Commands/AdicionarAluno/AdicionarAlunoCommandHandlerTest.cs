@@ -13,7 +13,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.AdicionarAlu
         public async Task Handle_CommandInvalido_RetornaCommandValidationResultENaoChamaRepositorio()
         {
             // Arrange
-            var comandoInvalido = new AdicionarAlunoCommand(Guid.Empty, "", "");
+            var comandoInvalido = new AdicionarAlunoCommand(Guid.Empty, string.Empty, string.Empty);
             var repositorioMock = new Mock<IAlunoRepository>(MockBehavior.Strict);
             var handler = new AdicionarAlunoCommandHandler(repositorioMock.Object);
 

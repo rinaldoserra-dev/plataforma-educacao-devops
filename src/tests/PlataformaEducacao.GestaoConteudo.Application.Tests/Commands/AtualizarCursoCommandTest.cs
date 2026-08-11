@@ -37,7 +37,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Commands
         public void AtualizarCursoCommand_DeveSerInvalido_QuandoNomeVazio()
         {
             // Arrange
-            var command = new AtualizarCursoCommand(Guid.NewGuid(), "", "Conteudo do curso", 5, 500, true);
+            var command = new AtualizarCursoCommand(Guid.NewGuid(), string.Empty, "Conteudo do curso", 5, 500, true);
 
             // Act
             var result = command.EhValido();
@@ -51,7 +51,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Commands
         public void AtualizarCursoCommand_DeveSerInvalido_QuandoDescricaoConteudoVazio()
         {
             // Arrange
-            var command = new AtualizarCursoCommand(Guid.NewGuid(), "Curso C#", "", 5, 500, true);
+            var command = new AtualizarCursoCommand(Guid.NewGuid(), "Curso C#", string.Empty, 5, 500, true);
 
             // Act
             var result = command.EhValido();

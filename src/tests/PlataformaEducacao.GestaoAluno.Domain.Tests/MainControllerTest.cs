@@ -1,8 +1,8 @@
-﻿using FluentValidation.Results;
+﻿using System.Net;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using PlataformaEducacao.Core.Communication;
 using PlataformaEducacao.WebApi.Core.Controllers;
-using System.Net;
 
 namespace PlataformaEducacao.GestaoAluno.Domain.Tests
 {
