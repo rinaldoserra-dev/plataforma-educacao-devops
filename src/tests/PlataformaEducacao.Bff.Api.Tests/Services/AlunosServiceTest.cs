@@ -229,7 +229,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _handler.Dispose();
         }
     }
 }

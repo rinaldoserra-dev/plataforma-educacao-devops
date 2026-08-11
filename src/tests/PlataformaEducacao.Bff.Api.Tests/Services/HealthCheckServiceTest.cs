@@ -103,7 +103,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             resultado.Data.Should().NotBeNull();
         }
 
-        private class ExceptionThrowingHandler : HttpMessageHandler
+        private sealed class ExceptionThrowingHandler : HttpMessageHandler
         {
             protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {

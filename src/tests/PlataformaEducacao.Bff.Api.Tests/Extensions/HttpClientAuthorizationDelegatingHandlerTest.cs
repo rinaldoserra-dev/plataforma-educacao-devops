@@ -68,7 +68,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Extensions
             innerHandler.CapturedRequest!.Headers.Contains("Authorization").Should().BeFalse();
         }
 
-        private class CaptureRequestHandler : HttpMessageHandler
+        private sealed class CaptureRequestHandler : HttpMessageHandler
         {
             public HttpRequestMessage? CapturedRequest { get; private set; }
 

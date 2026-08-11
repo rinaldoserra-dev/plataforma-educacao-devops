@@ -12,7 +12,7 @@ using CoreResponseResult = PlataformaEducacao.Core.Communication.ResponseResult;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-    internal class FakePagamentoService : IPagamentoService
+    internal sealed class FakePagamentoService : IPagamentoService
     {
         public Task<CoreResponseResult> HealthCheck()
             => Ok(new { });

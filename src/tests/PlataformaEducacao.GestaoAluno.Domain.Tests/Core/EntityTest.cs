@@ -6,15 +6,15 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
 {
     public class EntityTest
     {
-        private class EntidadeDeTeste : Entity
+        private sealed class EntidadeDeTeste : Entity
         {
         }
 
-        private class OutraEntidadeDeTeste : Entity
+        private sealed class OutraEntidadeDeTeste : Entity
         {
         }
 
-        private class EventoDeTeste : Evento
+        private sealed class EventoDeTeste : Evento
         {
             public EventoDeTeste()
                 : base()

@@ -12,7 +12,7 @@ using CoreResponseResult = PlataformaEducacao.Core.Communication.ResponseResult;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-    internal class FakeIdentidadeService : IIdentidadeService
+    internal sealed class FakeIdentidadeService : IIdentidadeService
     {
         public Task<CoreResponseResult> Login(LoginRequest login)
         {

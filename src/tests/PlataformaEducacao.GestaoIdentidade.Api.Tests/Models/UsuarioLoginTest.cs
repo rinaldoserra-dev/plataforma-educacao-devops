@@ -1,5 +1,5 @@
-﻿using PlataformaEducacao.GestaoIdentidade.Api.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using PlataformaEducacao.GestaoIdentidade.Api.Models;
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
 {
@@ -33,7 +33,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
             // Arrange
             var login = new UsuarioLogin
             {
-                Email = "",
+                Email = string.Empty,
                 Senha = "Teste@123"
             };
             var contexto = new ValidationContext(login);
@@ -74,7 +74,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
             var login = new UsuarioLogin
             {
                 Email = "aluno@teste.com",
-                Senha = ""
+                Senha = string.Empty
             };
             var contexto = new ValidationContext(login);
             var resultados = new List<ValidationResult>();

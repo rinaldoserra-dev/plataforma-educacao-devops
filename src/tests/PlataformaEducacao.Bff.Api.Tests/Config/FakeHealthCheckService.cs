@@ -11,7 +11,7 @@ using CoreResponseResult = PlataformaEducacao.Core.Communication.ResponseResult;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-    internal class FakeHealthCheckService : IHealthCheckService
+    internal sealed class FakeHealthCheckService : IHealthCheckService
     {
         public Task<CoreResponseResult> VerificarSaude()
         {

@@ -195,7 +195,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
             Assert.True(controller.TestOperacaoValida());
         }
 
-        private class TestableMainController : MainController
+        private sealed class TestableMainController : MainController
         {
             public ActionResult TestCustomResponse(HttpStatusCode statusCode = HttpStatusCode.OK, object? data = null)
                 => CustomResponse(statusCode, data);

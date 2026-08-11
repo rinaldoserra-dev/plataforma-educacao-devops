@@ -12,7 +12,7 @@ using CoreResponseResult = PlataformaEducacao.Core.Communication.ResponseResult;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-    internal class FakeAlunosService : IAlunosService
+    internal sealed class FakeAlunosService : IAlunosService
     {
         public Task<HttpResponseMessage> BaixarCertificado(Guid certificadoId)
         {

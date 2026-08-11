@@ -2,7 +2,6 @@
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
 {
-
     public class TransactionTest
     {
         [Fact(DisplayName = "AuthorizeCardTransaction deve retornar Authorized ou Refused")]

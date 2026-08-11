@@ -12,7 +12,7 @@ using CoreResponseResult = PlataformaEducacao.Core.Communication.ResponseResult;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
-    internal class FakeCursosService : ICursosService
+    internal sealed class FakeCursosService : ICursosService
     {
         public Task<CoreResponseResult> AdicionarAula(AdicionarAulaRequest aulaRequest)
             => Ok(new { aulaRequest.CursoId, aulaRequest.Titulo });

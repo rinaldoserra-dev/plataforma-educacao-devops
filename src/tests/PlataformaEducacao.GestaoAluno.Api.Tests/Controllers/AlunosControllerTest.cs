@@ -367,7 +367,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Controllers
             return new AlunosController(consultas, usuario, mediador);
         }
 
-        private class FakeAlunoQueries : IAlunoQueries
+        private sealed class FakeAlunoQueries : IAlunoQueries
         {
             public IEnumerable<MatriculaAtivaDTO>? ObterMatriculasAtivasPorAlunoIdResult { get; set; }
 
@@ -427,17 +427,17 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Controllers
             public HttpContext ObterHttpContext() => new DefaultHttpContext();
         }
 
-        private class UsuarioFakeSemPapelAdmin(Guid id) : FakeAspNetUser(id)
+        private sealed class UsuarioFakeSemPapelAdmin(Guid id) : FakeAspNetUser(id)
         {
             public override bool PossuiRole(string role) => role != "ADMIN";
         }
 
-        private class UsuarioFakeComPapelAdmin(Guid id) : FakeAspNetUser(id)
+        private sealed class UsuarioFakeComPapelAdmin(Guid id) : FakeAspNetUser(id)
         {
             public override bool PossuiRole(string role) => role == "ADMIN";
         }
 
-        private class FakeMediatorHandler : IMediatorHandler
+        private sealed class FakeMediatorHandler : IMediatorHandler
         {
             public ValidationResult SendCommandResult { get; set; } = new ValidationResult();
 

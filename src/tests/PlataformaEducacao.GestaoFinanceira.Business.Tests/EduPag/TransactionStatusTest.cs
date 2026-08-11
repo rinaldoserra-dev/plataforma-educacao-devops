@@ -2,7 +2,6 @@
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.EduPag
 {
-
     public class TransactionStatusTest
     {
         [Fact(DisplayName = "TransactionStatus deve conter valores esperados")]

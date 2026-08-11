@@ -164,7 +164,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Controllers
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _controller.Dispose();
         }
     }
 }

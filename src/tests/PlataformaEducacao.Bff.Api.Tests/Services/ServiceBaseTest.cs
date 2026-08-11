@@ -160,7 +160,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             public int Valor { get; set; }
         }
 
-        private class TestableService : Service
+        private sealed class TestableService : Service
         {
             public StringContent TestObterConteudo(object dado) => ObterConteudo(dado);
 

@@ -15,18 +15,23 @@ using static PlataformaEducacao.GestaoIdentidade.Api.Configurations.DbMigrationH
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Config
 {
-
-    internal class FakeMessageBus : IMessageBus
+    internal sealed class FakeMessageBus : IMessageBus
     {
-        public void Dispose() { }
+        public void Dispose()
+        {
+        }
 
         public bool IsConnected => true;
 
         public IAdvancedBus AdvancedBus => throw new NotImplementedException();
 
-        public void Publish<T>(T message) where T : IntegrationEvent { }
+        public void Publish<T>(T message)
+            where T : IntegrationEvent
+        {
+        }
 
-        public Task PublishAsync<T>(T message) where T : IntegrationEvent
+        public Task PublishAsync<T>(T message)
+            where T : IntegrationEvent
             => Task.CompletedTask;
 
         public TResponse Request<TRequest, TResponse>(TRequest request)
@@ -49,13 +54,21 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Config
             where TResponse : ResponseMessage
             => new FakeDisposable();
 
-        public void Subscribe<T>(string subscriptionId, Action<T> onMessage) where T : class { }
-
-        public void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage) where T : class { }
-
-        private class FakeDisposable : IDisposable
+        public void Subscribe<T>(string subscriptionId, Action<T> onMessage)
+            where T : class
         {
-            public void Dispose() { }
+        }
+
+        public void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage)
+            where T : class
+        {
+        }
+
+        private sealed class FakeDisposable : IDisposable
+        {
+            public void Dispose()
+            {
+            }
         }
     }
 }
