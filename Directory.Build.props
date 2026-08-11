@@ -1,0 +1,35 @@
+<Project>
+  <PropertyGroup>
+    <!-- Alvo padrão (projetos já em .NET 8 podem herdar) -->
+    <TargetFramework>net8.0</TargetFramework>
+
+    <!-- Habilita nullable e usings implícitos do .NET moderno -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Versão do C# compatível com .NET 8 -->
+    <LangVersion>12.0</LangVersion>
+
+    <!-- Ajuste de warnings -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Analisadores e modo de análise -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <CodeAnalysisTreatWarningsAsErrors>$(TreatWarningsAsErrors)</CodeAnalysisTreatWarningsAsErrors>
+
+    <!-- (Opcional) URL do repositório para pacotes e SourceLink -->
+    <RepositoryUrl>https://github.com/rinaldoserra-dev/plataforma-educacao-devops</RepositoryUrl>
+
+  </PropertyGroup>
+
+  <!-- Pacotes de analisadores aplicados a todos os projetos (PrivateAssets para não fluir para consumidores) -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0" PrivateAssets="all" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>  
+  </ItemGroup>
+</Project>

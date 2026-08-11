@@ -1,0 +1,110 @@
+root = true
+
+# Regras gerais para C#
+[*.cs]
+charset = utf-8
+dotnet_diagnostic.SA0001.severity = none
+dotnet_diagnostic.IDE0005.severity = none
+end_of_line = crlf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+
+# Forçar severidade padrão dos analisadores Roslyn
+dotnet_analyzer_diagnostic.severity = warning
+
+# Estilo de código recomendados (exemplos)
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+
+# Ordenação de using
+dotnet_sort_system_directives_first = true:warning
+
+# Exemplos de severidade para regras específicas (StyleCop)
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1309.severity = none
+
+# Nomes e formatos (exemplo simples)
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
+
+# Regras de nomenclatura
+dotnet_naming_rule.private_fields_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.private_fields_should_be_camel_case.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_case.style = camel_case
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+
+dotnet_naming_style.camel_case.capitalization = camel_case
+
+# Regras de estilo de código
+csharp_style_expression_bodied_methods = false:suggestion
+csharp_style_expression_bodied_constructors = false:suggestion
+csharp_style_expression_bodied_operators = false:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+csharp_style_expression_bodied_indexers = true:suggestion
+csharp_style_expression_bodied_accessors = true:suggestion
+
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = true:suggestion
+
+csharp_style_prefer_method_group_conversion = true:suggestion
+csharp_style_prefer_top_level_statements = true:suggestion
+csharp_style_prefer_primary_constructors = false:suggestion
+
+# Regras de espaço e formatação
+csharp_space_after_cast = false
+csharp_space_after_keywords_in_control_flow_statements = true
+csharp_space_between_method_call_parameter_list_parentheses = false
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+
+# Default severity for analyzer diagnostics with category 'StyleCop.CSharp.DocumentationRules'
+dotnet_analyzer_diagnostic.category-StyleCop.CSharp.DocumentationRules.severity = none
+
+# SYSLIB1045: Converter em 'GeneratedRegexAttribute'.
+dotnet_diagnostic.SYSLIB1045.severity = none
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+
+# IDE1006: Estilos de Nomenclatura
+dotnet_diagnostic.IDE1006.severity = none
+
+# IDE0058: O valor da expressão nunca é usado
+dotnet_diagnostic.IDE0058.severity = none
+
+# IDE0046: Converter em expressão condicional
+dotnet_diagnostic.IDE0046.severity = suggestion
+
+# SA1201: Elements should appear in the correct order
+dotnet_diagnostic.SA1201.severity = suggestion
+
+# IDE0041: Usar verificação 'is null'
+dotnet_diagnostic.IDE0041.severity = suggestion
+
+# SA1503: Braces should not be omitted
+dotnet_diagnostic.SA1503.severity = suggestion
+
+# IDE0011: Adicionar chaves
+dotnet_diagnostic.IDE0011.severity = suggestion
+
+# IDE0028: Simplificar a inicialização de coleção
+dotnet_diagnostic.IDE0028.severity = suggestion
+
+# IDE0200: Remover expressão lambda desnecessária
+dotnet_diagnostic.IDE0200.severity = suggestion
+
+# IDE0305: Simplificar a inicialização de coleção
+dotnet_diagnostic.IDE0305.severity = suggestion
+
+# IDE0060: Remover o parâmetro não utilizado
+dotnet_diagnostic.IDE0060.severity = suggestion
+
+# CA1720: O identificador contém o nome de tipo
+dotnet_diagnostic.CA1720.severity = none
+
+# Desabilita SA1633 (cabeçalho de arquivo) globalmente para arquivos C#
+dotnet_diagnostic.SA1633.severity = none
