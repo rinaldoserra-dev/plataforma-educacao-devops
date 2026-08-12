@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Net;
+using System.Net.Http.Json;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using PlataformaEducacao.GestaoIdentidade.Api.Data;
 using PlataformaEducacao.GestaoIdentidade.Api.Tests.Config;
 using PlataformaEducacao.MessageBus;
-using System.Net;
-using System.Net.Http.Json;
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Configurations
 {
@@ -98,8 +98,8 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Configurations
         {
             var response = await _client.PostAsJsonAsync("/api/identidade/autenticar", new
             {
-                Email = "",
-                Senha = ""
+                Email = string.Empty,
+                Senha = string.Empty
             });
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -124,10 +124,10 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Configurations
         {
             var response = await _client.PostAsJsonAsync("/api/identidade/novo-aluno", new
             {
-                Nome = "",
+                Nome = string.Empty,
                 Email = "invalido",
-                Senha = "",
-                SenhaConfirmacao = ""
+                Senha = string.Empty,
+                SenhaConfirmacao = string.Empty
             });
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);

@@ -5,10 +5,23 @@ using PlataformaEducacao.GestaoConteudo.Domain;
 
 namespace PlataformaEducacao.GestaoConteudo.Data
 {
-    public class GestaoConteudoContext(DbContextOptions<GestaoConteudoContext> options) : DbContext(options), IUnitOfWork
+    public class GestaoConteudoContext : DbContext, IUnitOfWork
     {
-        public DbSet<Curso> Cursos { get; set; }
-        public DbSet<Aula> Aulas { get; set; }
+        public GestaoConteudoContext(DbContextOptions<GestaoConteudoContext> options)
+            : base(options)
+        {
+        }
+
+        public DbSet<Curso> Cursos { get; set; } = default!;
+
+        public DbSet<Aula> Aulas { get; set; } = default!;
+
+        public async Task<bool> Commit()
+        {
+            var isSuccess = await base.SaveChangesAsync() > 0;
+
+            return isSuccess;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -17,19 +30,13 @@ namespace PlataformaEducacao.GestaoConteudo.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GestaoConteudoContext).Assembly);
 
-            modelBuilder.Ignore<Event>();
-            //modelBuilder.Ignore<ValidationResult>();
+            modelBuilder.Ignore<Evento>();
 
+            // modelBuilder.Ignore<ValidationResult>();
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientCascade;
 
             base.OnModelCreating(modelBuilder);
-        }
-        public async Task<bool> Commit()
-        {
-            var isSuccess = await base.SaveChangesAsync() > 0;
-
-            return isSuccess;
         }
     }
 }

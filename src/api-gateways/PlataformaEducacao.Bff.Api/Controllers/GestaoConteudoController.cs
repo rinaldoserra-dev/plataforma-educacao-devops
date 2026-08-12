@@ -24,6 +24,7 @@ namespace PlataformaEducacao.Bff.Api.Controllers
 
             return CustomResponse(resposta);
         }
+
         [HttpPut("{id:guid}")]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarCursoRequest cursoRequest)

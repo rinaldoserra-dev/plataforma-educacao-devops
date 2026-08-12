@@ -16,11 +16,11 @@ namespace PlataformaEducacao.GestaoAluno.Application.Commands.RealizarAula
             _alunoRepository = alunoRepository;
         }
 
-        public async Task<ValidationResult> Handle(RealizarAulaCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(RealizarAulaCommand request, CancellationToken cancellationToken)
         {
-            if (message.EhValido() is false) return message.ValidationResult;
+            if (request.EhValido() is false) return request.ValidationResult;
 
-            var matricula = await _alunoRepository.ObterMatriculaComProgressoAulasPorId(message.MatriculaId, cancellationToken);
+            var matricula = await _alunoRepository.ObterMatriculaComProgressoAulasPorId(request.MatriculaId, cancellationToken);
             if (matricula is null)
             {
                 AdicionarErro("Matrícula não encontrada.");
@@ -33,13 +33,13 @@ namespace PlataformaEducacao.GestaoAluno.Application.Commands.RealizarAula
                 return ValidationResult;
             }
 
-            if (matricula.CursoId != message.CursoId)
+            if (matricula.CursoId != request.CursoId)
             {
                 AdicionarErro("Essa aula não faz parte do curso dessa matrícula.");
                 return ValidationResult;
             }
 
-            var progressoAula = new ProgressoAula(message.AulaId);
+            var progressoAula = new ProgressoAula(request.AulaId);
             if (matricula.AulaRealizada(progressoAula))
             {
                 AdicionarErro("Aula já realizada.");

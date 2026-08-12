@@ -55,8 +55,8 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Queries
             // Arrange
             var cursos = new List<Curso>
             {
-                new Curso("Curso C#", new ConteudoProgramatico("Descricao do conteudo", 200), 500, true),
-                new Curso("Curso Angular", new ConteudoProgramatico("Descricao do conteudo", 150), 450, true)
+                new("Curso C#", new ConteudoProgramatico("Descricao do conteudo", 200), 500, true),
+                new("Curso Angular", new ConteudoProgramatico("Descricao do conteudo", 150), 450, true)
             };
 
             _cursoRepositoryMock.Setup(r => r.ObterTodos(default)).ReturnsAsync(cursos);
@@ -75,8 +75,8 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Queries
             // Arrange
             var cursos = new List<Curso>
             {
-                new Curso("Curso C#", new ConteudoProgramatico("Descricao do conteudo", 200), 500, true),
-                new Curso("Curso Angular", new ConteudoProgramatico("Descricao do conteudo", 150), 450, false)
+                new("Curso C#", new ConteudoProgramatico("Descricao do conteudo", 200), 500, true),
+                new("Curso Angular", new ConteudoProgramatico("Descricao do conteudo", 150), 450, false)
             };
 
             _cursoRepositoryMock.Setup(r => r.ObterDisponiveisComAula(default)).ReturnsAsync(cursos.Where(c => c.Disponivel));
@@ -103,8 +103,9 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Queries
             var resultado = await _queries.ObterAulasPorCursoId(curso.Id, default);
 
             // Assert
-            Assert.Equal(curso.Aulas.Count(), resultado.Count());
+            Assert.Equal(curso.Aulas.Count, resultado.Count());
         }
+
         [Fact(DisplayName = "Deve retornar o curso com as aulas do curso")]
         [Trait("Categoria", "Gestao Conteudo - CursoQueries")]
         public async Task ObterCursoComAulasPorCursoId_DeveRetornarCursoComAulas()
@@ -120,13 +121,15 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Queries
             var resultado = await _queries.ObterCursoComAulasPorCursoId(curso.Id, default);
 
             // Assert
-            Assert.Equal(curso.Aulas.Count(), resultado!.Aulas.Count());
+            Assert.Equal(curso.Aulas.Count, resultado!.Aulas.Count());
         }
+
         [Fact(DisplayName = "Deve retornar o curso com as aulas do curso")]
         [Trait("Categoria", "Gestao Conteudo - CursoQueries")]
         public async Task ObterCursoComAulasPorCursoId_DeveRetornarNullSeNaoEncontrarCurso()
         {
             var cursoInexistenteId = Guid.NewGuid();
+
             // Arrange
             var curso = new Curso("Curso C#", new ConteudoProgramatico("Descricao do conteudo", 200), 500, true);
             curso.AdicionarAula(new Aula("Aula 1", "Conteudo da Aula 1", 1, "Link do material 1"));
@@ -140,6 +143,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Queries
             // Assert
             Assert.Null(resultado);
         }
+
         [Fact(DisplayName = "Deve retornar a aula do curso")]
         [Trait("Categoria", "Gestao Conteudo - CursoQueries")]
         public async Task ObterAulaPorCursoIdEAulaId_DeveRetornarAula()
@@ -158,6 +162,5 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Queries
             Assert.Equal(resultado!.Id, aula.Id);
             Assert.Equal(resultado!.CursoId, aula.CursoId);
         }
-
     }
 }

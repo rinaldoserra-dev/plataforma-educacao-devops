@@ -15,10 +15,15 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Queries.ViewModels
         }
 
         public Guid Id { get; set; }
+
         public Guid CursoId { get; private set; }
+
         public string Titulo { get; private set; }
+
         public string Conteudo { get; private set; }
+
         public int Ordem { get; private set; }
+
         public string? Material { get; set; }
 
         public static AulaViewModel FromAula(Aula aula)
@@ -28,7 +33,6 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Queries.ViewModels
             aula.Titulo,
             aula.Conteudo,
             aula.Ordem,
-            aula.Material
-        );
+            aula.Material);
     }
 }

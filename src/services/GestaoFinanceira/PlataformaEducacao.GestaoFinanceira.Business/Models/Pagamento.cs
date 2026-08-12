@@ -1,6 +1,5 @@
 ﻿using PlataformaEducacao.Core.DomainObjects;
 
-
 namespace PlataformaEducacao.GestaoFinanceira.Business.Models
 {
     public class Pagamento : Entity, IAggregateRoot
@@ -15,6 +14,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Models
         public Guid MatriculaId { get; set; }
 
         public TipoPagamento TipoPagamento { get; set; }
+
         public decimal Valor { get; set; }
 
         public DadosCartao DadosCartao { get; set; } = null!;

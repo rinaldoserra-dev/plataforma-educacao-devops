@@ -8,7 +8,9 @@ namespace PlataformaEducacao.Bff.Api.Services
     public interface IPagamentoService
     {
         Task<ResponseResult> PagarMatricula(PagarMatriculaDTO pagamento);
+
         Task<ResponseResult> ObterStatus(Guid matriculaId);
+
         Task<ResponseResult> HealthCheck();
     }
 
@@ -16,8 +18,9 @@ namespace PlataformaEducacao.Bff.Api.Services
     {
         private readonly HttpClient _httpClient;
 
-        public PagamentoService(HttpClient httpClient,
-                                IOptions<AppServicesSettings> settings)
+        public PagamentoService(
+            HttpClient httpClient,
+            IOptions<AppServicesSettings> settings)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(settings.Value.GestaoFinanceiraUrl);

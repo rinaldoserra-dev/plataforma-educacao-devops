@@ -18,6 +18,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
                 var service = application.Services.CreateScope().ServiceProvider;
                 await EnsureSeedData(service);
             }
+
             public static async Task EnsureSeedData(IServiceProvider serviceProvider)
             {
                 using var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -30,28 +31,29 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
                     await alunoContext.Database.EnsureCreatedAsync();
                     await SeedTablesGestaoAluno(alunoContext);
                 }
-                else if (env.EnvironmentName == "Development" || env.EnvironmentName == "Docker")
+                else if (env.EnvironmentName is "Development" or "Docker")
                 {
                     await alunoContext.Database.MigrateAsync();
                     await SeedTablesGestaoAluno(alunoContext);
                 }
             }
+
             private static async Task SeedTablesGestaoAluno(GestaoAlunoContext alunoContext)
             {
                 if (!alunoContext.Matriculas.Any())
                 {
-                    Guid alunoUm = Guid.Parse("37e95975-6489-4323-8d2c-72cc91a5e3aa");
+                    var alunoUm = Guid.Parse("37e95975-6489-4323-8d2c-72cc91a5e3aa");
                     var aluno = new Aluno(alunoUm, "Aluno ", "aluno@teste.com");
 
-                    Guid cursoId = Guid.Parse("683C31AE-7DB1-4A89-B011-13076E794824");
+                    var cursoId = Guid.Parse("683C31AE-7DB1-4A89-B011-13076E794824");
                     var cursoNome = ".NET";
                     var matricula = new Matricula(cursoId, cursoNome, 5, 500);
 
-                    Guid cursoCoreId = Guid.Parse("2194EB04-6C17-4379-8F07-C847C899466F");
+                    var cursoCoreId = Guid.Parse("2194EB04-6C17-4379-8F07-C847C899466F");
                     var cursoCoreNome = ".NET Core";
                     var matriculaCore = new Matricula(cursoCoreId, cursoCoreNome, 1, 500);
 
-                    Guid cursoDominiosRicosId = Guid.Parse("12E04CBC-6ACF-4582-9345-C74B12C8183C");
+                    var cursoDominiosRicosId = Guid.Parse("12E04CBC-6ACF-4582-9345-C74B12C8183C");
                     var cursoDominiosRicosNome = "Dominios Ricos";
                     var matriculaDominiosRicos = new Matricula(cursoDominiosRicosId, cursoDominiosRicosNome, 1, 500);
 
@@ -60,9 +62,9 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
                     aluno.RealizarMatricula(matriculaDominiosRicos);
 
                     matricula.Ativar();
+
                     // matriculaCore.Ativar(); // deixada pendente de pagamento, para já aparecer na listagem de pendentes
                     matriculaDominiosRicos.Ativar();
-
 
                     var progresso = new ProgressoAula(Guid.Parse("C862D7FB-341D-476F-A978-98CBD44C2D08"));
                     matricula.RegistrarAula(progresso);

@@ -8,7 +8,9 @@ namespace PlataformaEducacao.Bff.Api.Services
     public interface IIdentidadeService
     {
         Task<ResponseResult> RegistrarAluno(RegistroAlunoRequest aluno);
+
         Task<ResponseResult> Login(LoginRequest login);
+
         Task<ResponseResult> RefreshToken(RefreshTokenRequest refreshToken);
     }
 
@@ -38,7 +40,6 @@ namespace PlataformaEducacao.Bff.Api.Services
             var response = await _httpClient.PostAsync("/api/identidade/novo-aluno/", alunoContent);
 
             return await DeserializarObjetoResponse(response);
-
         }
 
         public async Task<ResponseResult> RefreshToken(RefreshTokenRequest refreshToken)
@@ -48,7 +49,6 @@ namespace PlataformaEducacao.Bff.Api.Services
             var response = await _httpClient.PostAsync("/api/identidade/refresh-token/", refreshTokenContent);
 
             return await DeserializarObjetoResponse(response);
-
         }
     }
 }

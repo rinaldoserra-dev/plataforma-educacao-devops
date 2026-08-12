@@ -1,8 +1,8 @@
+using System.Security.Claims;
+using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Security.Claims;
-using System.Text.Encodings.Web;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Config
 {
@@ -12,7 +12,9 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder)
-            : base(options, logger, encoder) { }
+            : base(options, logger, encoder)
+        {
+        }
 
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
@@ -28,9 +30,9 @@ namespace PlataformaEducacao.Bff.Api.Tests.Config
 
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, $"Usuario {userRole}"),
-                new Claim(ClaimTypes.NameIdentifier, userId),
-                new Claim(ClaimTypes.Role, userRole)
+                new(ClaimTypes.Name, $"Usuario {userRole}"),
+                new(ClaimTypes.NameIdentifier, userId),
+                new(ClaimTypes.Role, userRole)
             };
 
             var identity = new ClaimsIdentity(claims, "Test");

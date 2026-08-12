@@ -16,11 +16,11 @@ namespace PlataformaEducacao.GestaoAluno.Application.Commands.AdicionarAluno
             _alunoRepository = alunoRepository;
         }
 
-        public async Task<ValidationResult> Handle(AdicionarAlunoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarAlunoCommand request, CancellationToken cancellationToken)
         {
-            if (!message.EhValido()) return message.ValidationResult;
+            if (!request.EhValido()) return request.ValidationResult;
 
-            var aluno = new Aluno(message.UsuarioId, message.Nome, message.Email);
+            var aluno = new Aluno(request.UsuarioId, request.Nome, request.Email);
 
             await _alunoRepository.Inserir(aluno, cancellationToken);
 

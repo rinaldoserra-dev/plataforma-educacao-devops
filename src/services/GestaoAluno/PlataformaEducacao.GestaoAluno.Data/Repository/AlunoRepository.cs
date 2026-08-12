@@ -20,10 +20,12 @@ namespace PlataformaEducacao.GestaoAluno.Data.Repository
         {
             await _context.Alunos.AddAsync(aluno, cancellationToken);
         }
+
         public Task AtualizarMatricula(Matricula matricula, CancellationToken cancellationToken)
         {
             return Task.FromResult(_context.Matriculas.Update(matricula));
         }
+
         public async Task AtualizarProgressoAula(ProgressoAula progressoAula, CancellationToken cancellationToken)
         {
             await _context.ProgressoAulas.AddAsync(progressoAula, cancellationToken);
@@ -33,6 +35,7 @@ namespace PlataformaEducacao.GestaoAluno.Data.Repository
         {
             await _context.Certificados.AddAsync(certificado, cancellationToken);
         }
+
         public async Task<IEnumerable<Matricula>> ListarMatriculasPendentesPagamentoPorAlunoId(Guid alunoId, CancellationToken cancellationToken)
         {
             return await _context.Matriculas
@@ -54,6 +57,7 @@ namespace PlataformaEducacao.GestaoAluno.Data.Repository
                             m.CursoId == cursoId)
                 .ToListAsync(cancellationToken);
         }
+
         public async Task<IEnumerable<Matricula>> ObterAlunosPendentesPorCursoId(Guid cursoId, CancellationToken cancellationToken)
         {
             return await _context.Matriculas
@@ -88,6 +92,7 @@ namespace PlataformaEducacao.GestaoAluno.Data.Repository
                 .Include(m => m.ProgressoAulas)
                 .FirstOrDefaultAsync(m => m.Id == matriculaId, cancellationToken);
         }
+
         public async Task<Matricula?> ObterMatriculaComCertificadoPorId(Guid matriculaId, CancellationToken cancellationToken)
         {
             return await _context.Matriculas
@@ -111,6 +116,7 @@ namespace PlataformaEducacao.GestaoAluno.Data.Repository
         {
             await _context.Matriculas.AddAsync(matricula, cancellationToken);
         }
+
         public async Task<Matricula?> ObterCertificadoPorCodigoVerificacao(string codigoVerificacao, CancellationToken cancellationToken)
         {
             return await _context.Matriculas
@@ -120,6 +126,7 @@ namespace PlataformaEducacao.GestaoAluno.Data.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.Certificado!.CodigoVerificacao == codigoVerificacao, cancellationToken);
         }
+
         public async Task<Certificado?> ObterCertificadoPorCertificadoId(Guid certificadoId, CancellationToken cancellationToken)
         {
             return await _context.Certificados
@@ -130,9 +137,9 @@ namespace PlataformaEducacao.GestaoAluno.Data.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == certificadoId, cancellationToken);
         }
+
         public void Dispose()
         {
-
         }
     }
 }

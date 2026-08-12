@@ -16,10 +16,21 @@ namespace PlataformaEducacao.GestaoAluno.Data
             _mediatorHandler = rebusHandler ?? throw new ArgumentNullException(nameof(rebusHandler));
         }
 
-        public DbSet<Aluno> Alunos { get; set; }
-        public DbSet<Matricula> Matriculas { get; set; }
-        public DbSet<Certificado> Certificados { get; set; }
-        public DbSet<ProgressoAula> ProgressoAulas { get; set; }
+        public DbSet<Aluno> Alunos { get; set; } = default!;
+
+        public DbSet<Matricula> Matriculas { get; set; } = default!;
+
+        public DbSet<Certificado> Certificados { get; set; } = default!;
+
+        public DbSet<ProgressoAula> ProgressoAulas { get; set; } = default!;
+
+        public async Task<bool> Commit()
+        {
+            var sucesso = await base.SaveChangesAsync() > 0;
+            if (sucesso) await _mediatorHandler.PublicarEventos(this);
+
+            return sucesso;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,19 +39,12 @@ namespace PlataformaEducacao.GestaoAluno.Data
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GestaoAlunoContext).Assembly);
 
-            modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<Evento>();
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes()
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientCascade;
 
             base.OnModelCreating(modelBuilder);
-        }
-        public async Task<bool> Commit()
-        {
-            var sucesso = await base.SaveChangesAsync() > 0;
-            if (sucesso) await _mediatorHandler.PublicarEventos(this);
-
-            return sucesso;
         }
     }
 }

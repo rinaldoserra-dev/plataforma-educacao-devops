@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
+﻿using System.Security.Claims;
+using FluentAssertions;
 using PlataformaEducacao.WebApi.Core.Usuario;
-using System.Security.Claims;
 
 namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
 {

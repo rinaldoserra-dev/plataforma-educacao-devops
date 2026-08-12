@@ -1,18 +1,19 @@
-﻿using FluentAssertions;
+﻿using System.Security.Claims;
+using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using PlataformaEducacao.WebApi.Core.Identidade;
-using System.Security.Claims;
 
 namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
 {
     public class CustomAuthorizationTest
     {
-        #region ValidarClaimsUsuario
-
+        /// <summary>
+        /// Região para testes da classe ValidarClaimsUsuario
+        /// </summary>
         [Fact(DisplayName = "ValidarClaimsUsuario autenticado com claim correta deve retornar true")]
         [Trait("Categoria", "WebApi.Core - Identidade - CustomAuthorization")]
         public void ValidarClaimsUsuario_AutenticadoComClaim_DeveRetornarTrue()
@@ -69,10 +70,9 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             resultado.Should().BeTrue();
         }
 
-        #endregion
-
-        #region RequisitoClaimFilter
-
+        /// <summary>
+        /// Região para testes da classe RequisitoClaimFilter
+        /// </summary>
         [Fact(DisplayName = "RequisitoClaimFilter não autenticado deve retornar 401")]
         [Trait("Categoria", "WebApi.Core - Identidade - RequisitoClaimFilter")]
         public void OnAuthorization_NaoAutenticado_DeveRetornar401()
@@ -125,10 +125,9 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             context.Result.Should().BeNull();
         }
 
-        #endregion
-
-        #region ClaimsAuthorizeAttribute
-
+        /// <summary>
+        /// Região para testes da classe ClaimsAuthorizeAttribute
+        /// </summary>
         [Fact(DisplayName = "ClaimsAuthorizeAttribute deve criar instância com Arguments")]
         [Trait("Categoria", "WebApi.Core - Identidade - ClaimsAuthorizeAttribute")]
         public void ClaimsAuthorizeAttribute_DeveCriarComArguments()
@@ -145,9 +144,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.WebApiCore
             claimArg.Value.Should().Be("Ler");
         }
 
-        #endregion
-
-        private static HttpContext CriarHttpContext(bool autenticado, string? claimType = null, string? claimValue = null)
+        private static DefaultHttpContext CriarHttpContext(bool autenticado, string? claimType = null, string? claimValue = null)
         {
             var claims = new List<Claim>();
             if (claimType != null && claimValue != null)

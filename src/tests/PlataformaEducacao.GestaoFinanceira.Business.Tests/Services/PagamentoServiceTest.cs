@@ -61,12 +61,12 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             var transacao = new Transacao
             {
                 Status = StatusTransacao.Negado,
-                CodigoAutorizacao = "",
-                BandeiraCartao = "",
+                CodigoAutorizacao = string.Empty,
+                BandeiraCartao = string.Empty,
                 ValorTotal = 0,
                 CustoTransacao = 0,
-                TID = "",
-                NSU = "",
+                TID = string.Empty,
+                NSU = string.Empty,
                 DataTransacao = DateTime.UtcNow
             };
 
@@ -104,7 +104,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             // Setup para CancelarPagamento
             var transacoes = new List<Transacao> { transacao };
             _repositoryMock.Setup(r => r.ObterTransacoesPorMatriculaId(pagamento.MatriculaId)).ReturnsAsync(transacoes);
-            var transacaoCancelada = new Transacao { Status = StatusTransacao.Cancelado, BandeiraCartao = "Visa", ValorTotal = 100m, TID = "TID", NSU = "NSU", CodigoAutorizacao = "" };
+            var transacaoCancelada = new Transacao { Status = StatusTransacao.Cancelado, BandeiraCartao = "Visa", ValorTotal = 100m, TID = "TID", NSU = "NSU", CodigoAutorizacao = string.Empty };
             _facadeMock.Setup(f => f.CancelarAutorizacao(It.IsAny<Transacao>())).ReturnsAsync(transacaoCancelada);
             _repositoryMock.Setup(r => r.UnitOfWork.Commit()).ReturnsAsync(false);
 
@@ -147,7 +147,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
 
             // Assert
             Assert.NotNull(resultado);
-            Assert.Equal(matriculaId, resultado!.MatriculaId);
+            Assert.Equal(matriculaId, resultado.MatriculaId);
             Assert.Equal("Pago", resultado.Status);
         }
 
@@ -230,7 +230,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             var transacaoCancelada = new Transacao
             {
                 Status = StatusTransacao.Cancelado,
-                CodigoAutorizacao = "",
+                CodigoAutorizacao = string.Empty,
                 BandeiraCartao = "Visa",
                 ValorTotal = 100m,
                 CustoTransacao = 0,
@@ -279,12 +279,12 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             });
 
             _busMock.Setup(b => b.PublishAsync(It.IsAny<MatriculaPagamentoRealizadoIntegrationEvent>()))
-                .ThrowsAsync(new Exception("Falha no bus"));
+                .ThrowsAsync(new InvalidOperationException("Falha no bus"));
 
             _repositoryMock.Setup(r => r.ObterTransacoesPorMatriculaId(pagamento.MatriculaId))
                 .ReturnsAsync(new List<Transacao> { transacao });
             _facadeMock.Setup(f => f.CancelarAutorizacao(It.IsAny<Transacao>()))
-                .ReturnsAsync(new Transacao { Status = StatusTransacao.Cancelado, BandeiraCartao = "Visa", ValorTotal = 100m, TID = "TID", NSU = "NSU", CodigoAutorizacao = "" });
+                .ReturnsAsync(new Transacao { Status = StatusTransacao.Cancelado, BandeiraCartao = "Visa", ValorTotal = 100m, TID = "TID", NSU = "NSU", CodigoAutorizacao = string.Empty });
 
             // Act
             var resultado = await _service.AutorizarPagamento(pagamento, CancellationToken.None);
@@ -314,12 +314,12 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             var transacaoCapturada = new Transacao
             {
                 Status = StatusTransacao.Negado,
-                CodigoAutorizacao = "",
-                BandeiraCartao = "",
+                CodigoAutorizacao = string.Empty,
+                BandeiraCartao = string.Empty,
                 ValorTotal = 0m,
                 CustoTransacao = 0,
-                TID = "",
-                NSU = ""
+                TID = string.Empty,
+                NSU = string.Empty
             };
 
             _repositoryMock.Setup(r => r.ObterTransacoesPorMatriculaId(matriculaId))
@@ -396,7 +396,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             _repositoryMock.Setup(r => r.ObterTransacoesPorMatriculaId(matriculaId))
                 .ReturnsAsync(new List<Transacao> { transacaoAutorizada });
             _facadeMock.Setup(f => f.CancelarAutorizacao(transacaoAutorizada))
-                .ReturnsAsync(new Transacao { Status = StatusTransacao.Negado, CodigoAutorizacao = "", BandeiraCartao = "", ValorTotal = 0, CustoTransacao = 0, TID = "", NSU = "" });
+                .ReturnsAsync(new Transacao { Status = StatusTransacao.Negado, CodigoAutorizacao = string.Empty, BandeiraCartao = string.Empty, ValorTotal = 0, CustoTransacao = 0, TID = string.Empty, NSU = string.Empty });
 
             // Act
             var resultado = await _service.CancelarPagamento(matriculaId);
@@ -427,7 +427,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
             _repositoryMock.Setup(r => r.ObterTransacoesPorMatriculaId(matriculaId))
                 .ReturnsAsync(new List<Transacao> { transacaoAutorizada });
             _facadeMock.Setup(f => f.CancelarAutorizacao(transacaoAutorizada))
-                .ReturnsAsync(new Transacao { Status = StatusTransacao.Cancelado, CodigoAutorizacao = "", BandeiraCartao = "Visa", ValorTotal = 100m, CustoTransacao = 0, TID = "TID", NSU = "NSU" });
+                .ReturnsAsync(new Transacao { Status = StatusTransacao.Cancelado, CodigoAutorizacao = string.Empty, BandeiraCartao = "Visa", ValorTotal = 100m, CustoTransacao = 0, TID = string.Empty, NSU = string.Empty });
             _repositoryMock.Setup(r => r.UnitOfWork.Commit()).ReturnsAsync(false);
 
             // Act
@@ -490,7 +490,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Services
 
             // Assert
             Assert.NotNull(resultado);
-            Assert.Equal("Sem transações", resultado!.Status);
+            Assert.Equal("Sem transações", resultado.Status);
         }
 
         private static Pagamento CriarPagamento()

@@ -1,5 +1,5 @@
-using PlataformaEducacao.GestaoAluno.Api.Requests;
 using System.ComponentModel.DataAnnotations;
+using PlataformaEducacao.GestaoAluno.Api.Requests;
 
 namespace PlataformaEducacao.GestaoAluno.Api.Tests.Requests
 {

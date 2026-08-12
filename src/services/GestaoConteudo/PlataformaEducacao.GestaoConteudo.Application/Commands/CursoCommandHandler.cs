@@ -6,10 +6,8 @@ using PlataformaEducacao.GestaoConteudo.Domain.ValueObjects;
 
 namespace PlataformaEducacao.GestaoConteudo.Application.Commands
 {
-    public class CursoCommandHandler : CommandHandler,
-         IRequestHandler<AdicionarCursoCommand, ValidationResult>,
-        IRequestHandler<AtualizarCursoCommand, ValidationResult>,
-        IRequestHandler<AdicionarAulaCommand, ValidationResult>
+    public class CursoCommandHandler : CommandHandler, IRequestHandler<AdicionarCursoCommand, ValidationResult>,
+        IRequestHandler<AtualizarCursoCommand, ValidationResult>, IRequestHandler<AdicionarAulaCommand, ValidationResult>
     {
         private readonly ICursoRepository _cursoRepository;
 
@@ -18,31 +16,32 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Commands
             _cursoRepository = cursoRepository;
         }
 
-        public async Task<ValidationResult> Handle(AdicionarCursoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarCursoCommand request, CancellationToken cancellationToken)
         {
-            if (!message.EhValido()) return message.ValidationResult;
+            if (!request.EhValido()) return request.ValidationResult;
 
-            var curso = await _cursoRepository.ObterPorNome(message.Nome, cancellationToken);
+            var curso = await _cursoRepository.ObterPorNome(request.Nome, cancellationToken);
 
             if (curso is not null)
             {
                 AdicionarErro("Já possui curso com esse nome!");
                 return ValidationResult;
             }
-            var conteudoProgramatico = new ConteudoProgramatico(message.DescricaoConteudo, message.CargaHoraria);
 
-            curso = new Curso(message.Nome, conteudoProgramatico, message.Valor, message.Disponivel);
+            var conteudoProgramatico = new ConteudoProgramatico(request.DescricaoConteudo, request.CargaHoraria);
+
+            curso = new Curso(request.Nome, conteudoProgramatico, request.Valor, request.Disponivel);
 
             await _cursoRepository.Inserir(curso, cancellationToken);
 
             return await PersistirDados(_cursoRepository.UnitOfWork);
         }
 
-        public async Task<ValidationResult> Handle(AtualizarCursoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AtualizarCursoCommand request, CancellationToken cancellationToken)
         {
-            if (!message.EhValido()) return message.ValidationResult;
+            if (!request.EhValido()) return request.ValidationResult;
 
-            var cursoAtualizar = await _cursoRepository.ObterPorId(message.CursoId, cancellationToken);
+            var cursoAtualizar = await _cursoRepository.ObterPorId(request.CursoId, cancellationToken);
 
             if (cursoAtualizar is null)
             {
@@ -50,17 +49,17 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Commands
                 return ValidationResult;
             }
 
-            var curso = await _cursoRepository.ObterPorNome(message.Nome, cancellationToken);
+            var curso = await _cursoRepository.ObterPorNome(request.Nome, cancellationToken);
             if (curso is not null && curso.Id != cursoAtualizar.Id)
             {
                 AdicionarErro("O nome do curso já existe!");
                 return ValidationResult;
             }
 
-            cursoAtualizar.AtualizarNome(message.Nome);
-            cursoAtualizar.AtualizarValor(message.Valor);
-            cursoAtualizar.AtualizarConteudoProgramatico(new ConteudoProgramatico(message.DescricaoConteudo, message.CargaHoraria));
-            if (message.Disponivel)
+            cursoAtualizar.AtualizarNome(request.Nome);
+            cursoAtualizar.AtualizarValor(request.Valor);
+            cursoAtualizar.AtualizarConteudoProgramatico(new ConteudoProgramatico(request.DescricaoConteudo, request.CargaHoraria));
+            if (request.Disponivel)
             {
                 cursoAtualizar.TornarDisponivel();
             }
@@ -74,18 +73,19 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Commands
             return await PersistirDados(_cursoRepository.UnitOfWork);
         }
 
-        public async Task<ValidationResult> Handle(AdicionarAulaCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(AdicionarAulaCommand request, CancellationToken cancellationToken)
         {
-            if (!message.EhValido()) return message.ValidationResult;
+            if (!request.EhValido()) return request.ValidationResult;
 
-            var curso = await _cursoRepository.ObterComAulasPorId(message.CursoId, cancellationToken);
+            var curso = await _cursoRepository.ObterComAulasPorId(request.CursoId, cancellationToken);
 
             if (curso is null)
             {
                 AdicionarErro("Curso não encontrado!");
                 return ValidationResult;
             }
-            var aula = new Aula(message.Titulo, message.Conteudo, message.Ordem, message.Material);
+
+            var aula = new Aula(request.Titulo, request.Conteudo, request.Ordem, request.Material);
             if (curso.AulaExistente(aula))
             {
                 AdicionarErro("O curso já possui uma aula com esse titulo!");

@@ -15,7 +15,6 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
                 .AddEntityFrameworkStores<GestaoIdentidadeContext>()
                 .AddDefaultTokenProviders();
 
-
             services.AddJwtConfiguration(configuration);
 
             return services;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlataformaEducacao.Core.Mediator;
 using PlataformaEducacao.GestaoAluno.Application.Commands.FinalizarCurso;
@@ -9,7 +10,6 @@ using PlataformaEducacao.GestaoAluno.Application.Queries;
 using PlataformaEducacao.GestaoAluno.Application.Queries.ViewModels;
 using PlataformaEducacao.WebApi.Core.Controllers;
 using PlataformaEducacao.WebApi.Core.Usuario;
-using System.Net;
 
 namespace PlataformaEducacao.GestaoAluno.Api.Controllers
 {
@@ -20,9 +20,10 @@ namespace PlataformaEducacao.GestaoAluno.Api.Controllers
         private readonly IAspNetUser _user;
         private readonly IMediatorHandler _mediatorHandler;
 
-        public AlunosController(IAlunoQueries alunoQueries,
-                                IAspNetUser user,
-                                IMediatorHandler mediatorHandler)
+        public AlunosController(
+            IAlunoQueries alunoQueries,
+            IAspNetUser user,
+            IMediatorHandler mediatorHandler)
         {
             _alunoQueries = alunoQueries;
             _user = user;
@@ -97,6 +98,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Controllers
                 AdicionarErroProcessamento("Certificado não encontrado.");
                 return CustomResponse();
             }
+
             return File(certificado.PdfBytes, certificado.ContentType, certificado.NomeArquivo);
         }
 
@@ -121,6 +123,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Controllers
                 AdicionarErroProcessamento("Histórico de aluno não encontrado.");
                 return CustomResponse();
             }
+
             return CustomResponse(HttpStatusCode.OK, historicoAluno);
         }
     }

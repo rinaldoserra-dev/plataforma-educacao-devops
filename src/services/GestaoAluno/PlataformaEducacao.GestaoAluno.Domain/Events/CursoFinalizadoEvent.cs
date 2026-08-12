@@ -2,7 +2,7 @@
 
 namespace PlataformaEducacao.GestaoAluno.Domain.Events
 {
-    public class CursoFinalizadoEvent : Event
+    public class CursoFinalizadoEvent : Evento
     {
         public Guid MatriculaId { get; private set; }
 

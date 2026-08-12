@@ -33,6 +33,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Queries.ViewModels
             Assert.Equal(curso.Disponivel, vm.Disponivel);
 
             Assert.Equal(2, vm.Aulas.Count());
+
             // Aulas devem estar ordenadas por Ordem (1 then 2)
             Assert.Equal(1, vm.Aulas.ElementAt(0).Ordem);
             Assert.Equal(aula2.Titulo, vm.Aulas.ElementAt(0).Titulo);

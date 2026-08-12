@@ -1,9 +1,9 @@
-﻿using FluentAssertions;
+﻿using System.Net;
+using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using PlataformaEducacao.Bff.Api.Extensions;
 using PlataformaEducacao.Bff.Api.Services;
-using System.Net;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Services
 {
@@ -103,7 +103,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             resultado.Data.Should().NotBeNull();
         }
 
-        private class ExceptionThrowingHandler : HttpMessageHandler
+        private sealed class ExceptionThrowingHandler : HttpMessageHandler
         {
             protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {

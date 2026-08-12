@@ -13,12 +13,10 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-
             // Mediator
             services.AddMediatR(
                typeof(AdicionarAulaCommand).Assembly,
-               typeof(CursoCommandHandler).Assembly
-           );
+               typeof(CursoCommandHandler).Assembly);
 
             // API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

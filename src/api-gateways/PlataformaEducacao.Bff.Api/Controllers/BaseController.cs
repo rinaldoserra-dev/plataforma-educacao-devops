@@ -24,7 +24,7 @@ namespace PlataformaEducacao.Bff.Api.Controllers
 
         protected ActionResult CustomResponse(ResponseResult response)
         {
-            if (response == null || !response.Sucesso || response.Erros.Mensagens.Any())
+            if (response == null || !response.Sucesso || response.Erros.Mensagens.Count != 0)
             {
                 return BadRequest(response);
             }

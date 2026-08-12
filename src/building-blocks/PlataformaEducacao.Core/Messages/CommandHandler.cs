@@ -5,12 +5,13 @@ namespace PlataformaEducacao.Core.Messages
 {
     public abstract class CommandHandler
     {
-        protected ValidationResult ValidationResult;
-
         protected CommandHandler()
         {
             ValidationResult = new ValidationResult();
         }
+
+        // Expor o ValidationResult para classes derivadas
+        protected ValidationResult ValidationResult { get; }
 
         protected void AdicionarErro(string mensagem)
         {

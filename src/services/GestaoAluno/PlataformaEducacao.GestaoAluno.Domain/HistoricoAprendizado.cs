@@ -5,11 +5,16 @@ namespace PlataformaEducacao.GestaoAluno.Domain
     public class HistoricoAprendizado
     {
         public int TotalAulasCurso { get; private set; }
+
         public double ProgressoGeralCurso { get; private set; }
+
         public SituacaoCurso SituacaoCurso { get; private set; }
+
         public DateTime? DataConclusao { get; private set; }
 
-        protected HistoricoAprendizado() { }
+        protected HistoricoAprendizado()
+        {
+        }
 
         public static class HistoricoAprendizadoFactory
         {

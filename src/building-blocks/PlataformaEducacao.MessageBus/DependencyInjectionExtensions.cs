@@ -6,7 +6,8 @@ namespace PlataformaEducacao.MessageBus
     {
         public static IServiceCollection AddMessageBus(this IServiceCollection services, string connection)
         {
-            if (string.IsNullOrEmpty(connection)) throw new ArgumentNullException();
+            if (string.IsNullOrEmpty(connection))
+                throw new ArgumentNullException(nameof(connection), "A conexão não pode ser nula ou vazia.");
 
             services.AddSingleton<IMessageBus>(new MessageBus(connection));
 

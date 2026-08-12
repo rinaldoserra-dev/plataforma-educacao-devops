@@ -54,7 +54,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Data.Repository
 
             // Assert
             Assert.NotNull(obtido);
-            Assert.Equal(tokenValido.Token, obtido!.Token);
+            Assert.Equal(tokenValido.Token, obtido.Token);
         }
 
         [Fact(DisplayName = "ObterRefreshToken Deve Retornar Nulo Quando Expirado")]

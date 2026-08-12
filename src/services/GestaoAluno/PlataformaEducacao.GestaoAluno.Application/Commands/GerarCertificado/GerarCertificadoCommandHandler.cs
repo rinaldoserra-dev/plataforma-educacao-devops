@@ -14,9 +14,10 @@ namespace PlataformaEducacao.GestaoAluno.Application.Commands.GerarCertificado
         {
             _alunoRepository = alunoRepository;
         }
-        public async Task<ValidationResult> Handle(GerarCertificadoCommand message, CancellationToken cancellationToken)
+
+        public async Task<ValidationResult> Handle(GerarCertificadoCommand request, CancellationToken cancellationToken)
         {
-            var matricula = await _alunoRepository.ObterMatriculaComCertificadoPorId(message.MatriculaId, cancellationToken);
+            var matricula = await _alunoRepository.ObterMatriculaComCertificadoPorId(request.MatriculaId, cancellationToken);
             matricula?.GerarCertificado();
 
             await _alunoRepository.GerarCertificado(matricula!.Certificado!, cancellationToken);

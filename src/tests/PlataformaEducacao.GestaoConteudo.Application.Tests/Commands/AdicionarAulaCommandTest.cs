@@ -23,7 +23,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Commands
         public void AdicionarAulaCommand_DeveSerInvalido_QuandoTituloVazio()
         {
             // Arrange
-            var command = new AdicionarAulaCommand("", "Conteudo da aula", 1, "Material", Guid.NewGuid());
+            var command = new AdicionarAulaCommand(string.Empty, "Conteudo da aula", 1, "Material", Guid.NewGuid());
 
             // Act
             var result = command.EhValido();
@@ -59,6 +59,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Commands
             Assert.False(result);
             Assert.Contains(command.ValidationResult.Errors, e => e.ErrorMessage == "A ordem da aula deve ser maior que 0.");
         }
+
         [Fact(DisplayName = "Deve ser inválido quando o curso é inválido")]
         [Trait("Categoria", "Gestao Conteudo - AdicionarAulaCommand")]
         public void AdicionarAulaCommand_DeveSerInvalido_QuandoCursoInvalido()
@@ -72,6 +73,5 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Commands
             Assert.False(result);
             Assert.Contains(command.ValidationResult.Errors, e => e.ErrorMessage == "Curso é obrigatório.");
         }
-
     }
 }

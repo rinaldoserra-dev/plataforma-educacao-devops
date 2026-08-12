@@ -31,14 +31,13 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
                         {
                             Reference = new OpenApiReference
                             {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
                             }
                         },
-                        new string[]{}
+                        Array.Empty<string>()
                     }
                 });
-
             });
             return services;
         }
@@ -50,7 +49,6 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
             {
                 o.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
             });
-
 
             return app;
         }

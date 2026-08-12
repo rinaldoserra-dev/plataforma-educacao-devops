@@ -8,7 +8,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.FinalizarCur
 {
     public class FinalizarCursoCommandHandlerTest
     {
-        readonly Aluno _aluno = new(Guid.NewGuid(), "Nome do Aluno", "email@teste.com");
+        private readonly Aluno _aluno = new(Guid.NewGuid(), "Nome do Aluno", "email@teste.com");
 
         [Fact(DisplayName = "FinalizarCursoCommand quando comando inválido retorna validação e não chama repositório")]
         [Trait("Categoria", "Gestão Aluno - Application - Commands - FinalizarCursoCommandHandler")]

@@ -21,7 +21,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.DTO
             DateTime? dataConclusao = DateTime.UtcNow.Date;
             var progresso = 75.5;
             Guid? certificadoId = Guid.NewGuid();
-            string? codigo = "ABC-123";
+            var codigo = "ABC-123";
 
             // Act
             var dto = new MatriculaAtivaDTO(matriculaId, alunoId, nomeAluno, cursoId, nomeCurso, situacaoMatricula, dataMatricula, situacaoCurso, dataConclusao, progresso, certificadoId, codigo);

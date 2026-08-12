@@ -6,11 +6,12 @@ namespace PlataformaEducacao.GestaoAluno.Domain
     public class ProgressoAula : Entity
     {
         public Guid MatriculaId { get; private set; }
-        public Guid AulaId { get; private set; }
-        public DateTime DataConclusao { get; private set; }
-        public Matricula Matricula { get; private set; } = null!;
 
-        protected ProgressoAula() { }
+        public Guid AulaId { get; private set; }
+
+        public DateTime DataConclusao { get; private set; }
+
+        public Matricula Matricula { get; private set; } = null!;
 
         public ProgressoAula(Guid aulaId)
         {
@@ -18,6 +19,10 @@ namespace PlataformaEducacao.GestaoAluno.Domain
             DataConclusao = DateTime.Now;
 
             Validacoes.ValidarSeVazio(AulaId, "A aula não pode ser vazia.");
+        }
+
+        protected ProgressoAula()
+        {
         }
 
         public void AssociarMatricula(Guid matriculaId)

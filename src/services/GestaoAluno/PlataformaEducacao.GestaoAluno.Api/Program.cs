@@ -1,7 +1,7 @@
-using QuestPDF.Infrastructure;
 using PlataformaEducacao.GestaoAluno.Api.Configurations;
 using PlataformaEducacao.WebApi.Core.Extensions;
 using PlataformaEducacao.WebApi.Core.Identidade;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,4 +30,6 @@ app.UseDbMigrationHelper();
 
 app.Run();
 
-public partial class Program { }
+public partial class Program
+{
+}

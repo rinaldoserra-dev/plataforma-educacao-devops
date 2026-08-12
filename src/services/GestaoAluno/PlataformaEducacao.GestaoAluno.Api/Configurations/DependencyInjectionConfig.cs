@@ -21,12 +21,10 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-
             // Mediator
             services.AddMediatR(
                typeof(AdicionarAlunoCommand).Assembly,
-               typeof(AdicionarAlunoCommandHandler).Assembly
-           );
+               typeof(AdicionarAlunoCommandHandler).Assembly);
 
             // API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -47,8 +45,8 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
             services.AddScoped<IAlunoQueries, AlunoQueries>();
             services.AddScoped<ICertificadoService, CertificadoService>();
 
-            services.AddScoped<INotificationHandler<CursoFinalizadoEvent>, MatriculaEventHandler>();
-            services.AddScoped<INotificationHandler<MatriculaAtivadaEvent>, MatriculaEventHandler>();
+            services.AddScoped<INotificationHandler<CursoFinalizadoEvent>, MatriculaNotificationHandler>();
+            services.AddScoped<INotificationHandler<MatriculaAtivadaEvent>, MatriculaNotificationHandler>();
 
             return services;
         }

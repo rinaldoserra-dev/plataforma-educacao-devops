@@ -15,8 +15,11 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Models
         }
 
         public string NomeCartao { get; private set; } = null!;
+
         public string NumeroCartao { get; private set; } = null!;
+
         public string ExpiracaoCartao { get; private set; } = null!;
+
         public string CvvCartao { get; private set; } = null!;
 
         protected void Validar()

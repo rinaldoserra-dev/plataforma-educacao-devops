@@ -1,5 +1,5 @@
-﻿using PlataformaEducacao.WebApi.Core.Extensions;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using PlataformaEducacao.WebApi.Core.Extensions;
 
 namespace PlataformaEducacao.Bff.Api.Models.Request.GestaoConteudo
 {

@@ -239,7 +239,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
         public void CriarMatricula_NomeVazio_DeveLancarDomainException()
         {
             // Act & Assert
-            Assert.Throws<DomainException>(() => new Matricula(Guid.NewGuid(), nomeCurso: "", totalAulasCurso: 1, valor: 50m));
+            Assert.Throws<DomainException>(() => new Matricula(Guid.NewGuid(), nomeCurso: string.Empty, totalAulasCurso: 1, valor: 50m));
         }
 
         [Fact(DisplayName = "Criar matricula com valor zero deve lançar DomainException")]

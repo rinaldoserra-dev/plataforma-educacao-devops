@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Net;
+using System.Net.Http.Json;
+using Microsoft.EntityFrameworkCore;
 using PlataformaEducacao.GestaoConteudo.Api.Requests;
 using PlataformaEducacao.GestaoConteudo.Api.Tests.Config;
 using PlataformaEducacao.GestaoConteudo.Application.Queries.ViewModels;
 using PlataformaEducacao.GestaoConteudo.Data;
-using System.Net;
-using System.Net.Http.Json;
 
 namespace PlataformaEducacao.GestaoConteudo.Api.Tests
 {
-    [Collection(nameof(IntegrationApiTestsFixtureCollection))]
+    [Collection(nameof(IntegrationApiTestsCollectionFixture))]
     public class CursosIntegrationTests : IClassFixture<IntegrationTestsFixture<Program>>
     {
         private readonly IntegrationTestsFixture<Program> _fixture;
@@ -110,8 +110,8 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Tests
             var result = _fixture.GetErrors(await response.Content.ReadAsStringAsync());
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.True(result.Contains("O campo Nome é obrigatório."), "");
-            Assert.True(result.Contains("O campo Nome precisa ter entre 2 e 255 caracteres"), "");
+            Assert.True(result.Contains("O campo Nome é obrigatório."), string.Empty);
+            Assert.True(result.Contains("O campo Nome precisa ter entre 2 e 255 caracteres"), string.Empty);
         }
 
         [Fact(DisplayName = nameof(AdicionarAula_DeveRetornarComSucesso))]
@@ -169,7 +169,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Tests
             var result = _fixture.GetErrors(await response.Content.ReadAsStringAsync());
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.True(result.Contains("O campo Conteudo é obrigatório."), "");
+            Assert.True(result.Contains("O campo Conteudo é obrigatório."), string.Empty);
         }
 
         [Fact(DisplayName = nameof(ObterDetalhesCurso_DeveRetornarComSucesso))]
@@ -201,7 +201,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Tests
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.True(retorno.Sucesso);
-            Assert.True(retorno.Data!.Count() > 0);
+            Assert.True(retorno.Data.Count() > 0);
         }
 
         [Fact(DisplayName = "Atualizar Curso")]
@@ -312,7 +312,7 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Tests
             var retorno = await _fixture.DeserializeResponse<ResponseApi<string>>(response);
 
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.True(result.Contains("O nome do curso já existe!"), "");
+            Assert.True(result.Contains("O nome do curso já existe!"), string.Empty);
         }
     }
 }

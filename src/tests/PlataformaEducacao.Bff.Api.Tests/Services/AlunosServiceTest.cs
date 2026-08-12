@@ -1,16 +1,16 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Net;
+using System.Text.Json;
+using Microsoft.Extensions.Options;
 using Moq;
 using PlataformaEducacao.Bff.Api.Extensions;
 using PlataformaEducacao.Bff.Api.Models.GestaoAlunos;
 using PlataformaEducacao.Bff.Api.Models.GestaoConteudo;
 using PlataformaEducacao.Bff.Api.Services;
 using PlataformaEducacao.Core.Communication;
-using System.Net;
-using System.Text.Json;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Services
 {
-    public class AlunosServiceTest
+    public class AlunosServiceTest : IDisposable
     {
         private readonly MockHttpMessageHandler _handler;
         private readonly Mock<ICursosService> _cursosServiceMock;
@@ -225,6 +225,11 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             var result = await _service.BaixarCertificado(Guid.NewGuid());
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+        }
+
+        public void Dispose()
+        {
+            _handler.Dispose();
         }
     }
 }

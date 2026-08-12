@@ -6,13 +6,17 @@ namespace PlataformaEducacao.GestaoConteudo.Domain
     public class Aula : Entity
     {
         public string Titulo { get; private set; } = null!;
+
         public string Conteudo { get; private set; } = null!;
+
         public int Ordem { get; private set; }
+
         public string? Material { get; private set; }
+
         public Guid CursoId { get; private set; }
+
         public Curso Curso { get; private set; } = null!;
 
-        protected Aula() { }
         public Aula(string titulo, string conteudo, int ordem, string? material)
         {
             Titulo = titulo;
@@ -22,6 +26,11 @@ namespace PlataformaEducacao.GestaoConteudo.Domain
 
             Validar();
         }
+
+        protected Aula()
+        {
+        }
+
         public void VincularCurso(Guid cursoId)
         {
             CursoId = cursoId;

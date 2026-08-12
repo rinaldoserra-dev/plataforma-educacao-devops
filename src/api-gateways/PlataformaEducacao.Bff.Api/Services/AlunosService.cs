@@ -9,12 +9,19 @@ namespace PlataformaEducacao.Bff.Api.Services
     public interface IAlunosService
     {
         Task<ResponseResult> Matricular(MatricularDTO solicitarMatricula);
+
         Task<ResponseResult> ObterMatriculasPendentesPagamento();
+
         Task<ResponseResult> ObterMatriculasAtivas();
+
         Task<ResponseResult> ValidarCertificado(string codigoVerificacao);
+
         Task<ResponseResult> RealizarAula(RealizarAulaDTO realizarAula);
+
         Task<ResponseResult> FinalizarCurso(FinalizarCursoDTO finalizarCurso);
+
         Task<ResponseResult> ObterHistorico(Guid alunoId);
+
         Task<HttpResponseMessage> BaixarCertificado(Guid certificadoId);
     }
 
@@ -23,21 +30,22 @@ namespace PlataformaEducacao.Bff.Api.Services
         private readonly HttpClient _httpClient;
         private readonly ICursosService _cursosService;
 
-        public AlunosService(HttpClient httpClient,
-                             ICursosService cursosService,
-                             IOptions<AppServicesSettings> settings)
+        public AlunosService(
+            HttpClient httpClient,
+            ICursosService cursosService,
+            IOptions<AppServicesSettings> settings)
         {
             _httpClient = httpClient;
             _cursosService = cursosService;
             _httpClient.BaseAddress = new Uri(settings.Value.GestaoAlunosUrl);
         }
 
-        public async Task<ResponseResult> Matricular(MatricularDTO matricular)
+        public async Task<ResponseResult> Matricular(MatricularDTO solicitarMatricula)
         {
-            if (DadosCursoPreenchidos(matricular) is false)
+            if (DadosCursoPreenchidos(solicitarMatricula) is false)
             {
-                var cursoResponse = await _cursosService.ObterCursoComAulasPorCursoId(matricular.CursoId);
-                if (cursoResponse.Sucesso is false || cursoResponse.Erros.Mensagens.Any())
+                var cursoResponse = await _cursosService.ObterCursoComAulasPorCursoId(solicitarMatricula.CursoId);
+                if (cursoResponse.Sucesso is false || cursoResponse.Erros.Mensagens.Count != 0)
                 {
                     return cursoResponse;
                 }
@@ -82,12 +90,12 @@ namespace PlataformaEducacao.Bff.Api.Services
                     };
                 }
 
-                matricular.NomeCurso = curso.Nome;
-                matricular.Valor = curso.Valor;
-                matricular.TotalAulasCurso = curso.Aulas.Count();
+                solicitarMatricula.NomeCurso = curso.Nome;
+                solicitarMatricula.Valor = curso.Valor;
+                solicitarMatricula.TotalAulasCurso = curso.Aulas.Count();
             }
 
-            var conteudoMatricular = ObterConteudo(matricular);
+            var conteudoMatricular = ObterConteudo(solicitarMatricula);
             var response = await _httpClient.PostAsync("/api/alunos/matricular", conteudoMatricular);
 
             return await DeserializarObjetoResponse(response);
