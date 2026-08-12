@@ -6,7 +6,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Data
 {
     public class GestaoIdentidadeContext(DbContextOptions<GestaoIdentidadeContext> options) : IdentityDbContext(options)
     {
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
