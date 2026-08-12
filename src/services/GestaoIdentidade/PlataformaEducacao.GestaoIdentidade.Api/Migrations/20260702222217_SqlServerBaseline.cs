@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class SqlServerBaseline : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
