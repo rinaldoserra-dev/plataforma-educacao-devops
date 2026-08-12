@@ -2,7 +2,7 @@ root = true
 
 # Regras gerais para C#
 [*.cs]
-charset = utf-8
+#charset = utf-8
 dotnet_diagnostic.SA0001.severity = none
 dotnet_diagnostic.IDE0005.severity = none
 end_of_line = lf
