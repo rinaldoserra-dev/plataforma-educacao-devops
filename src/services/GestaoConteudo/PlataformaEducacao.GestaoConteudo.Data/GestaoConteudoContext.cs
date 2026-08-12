@@ -5,11 +5,16 @@ using PlataformaEducacao.GestaoConteudo.Domain;
 
 namespace PlataformaEducacao.GestaoConteudo.Data
 {
-    public class GestaoConteudoContext(DbContextOptions<GestaoConteudoContext> options) : DbContext(options), IUnitOfWork
+    public class GestaoConteudoContext : DbContext, IUnitOfWork
     {
-        public required DbSet<Curso> Cursos { get; set; }
+        public GestaoConteudoContext(DbContextOptions<GestaoConteudoContext> options)
+            : base(options)
+        {
+        }
 
-        public required DbSet<Aula> Aulas { get; set; }
+        public DbSet<Curso> Cursos { get; set; } = default!;
+
+        public DbSet<Aula> Aulas { get; set; } = default!;
 
         public async Task<bool> Commit()
         {

@@ -15,9 +15,9 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
-        public required DbSet<Pagamento> Pagamentos { get; set; }
+        public DbSet<Pagamento> Pagamentos { get; set; } = default!;
 
-        public required DbSet<Transacao> Transacoes { get; set; }
+        public DbSet<Transacao> Transacoes { get; set; } = default!;
 
         public async Task<bool> Commit()
         {
