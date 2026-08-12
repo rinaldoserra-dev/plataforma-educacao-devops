@@ -16,13 +16,13 @@ namespace PlataformaEducacao.GestaoAluno.Data
             _mediatorHandler = rebusHandler ?? throw new ArgumentNullException(nameof(rebusHandler));
         }
 
-        public DbSet<Aluno> Alunos { get; set; }
+        public required DbSet<Aluno> Alunos { get; set; }
 
-        public DbSet<Matricula> Matriculas { get; set; }
+        public required DbSet<Matricula> Matriculas { get; set; }
 
-        public DbSet<Certificado> Certificados { get; set; }
+        public required DbSet<Certificado> Certificados { get; set; }
 
-        public DbSet<ProgressoAula> ProgressoAulas { get; set; }
+        public required DbSet<ProgressoAula> ProgressoAulas { get; set; }
 
         public async Task<bool> Commit()
         {

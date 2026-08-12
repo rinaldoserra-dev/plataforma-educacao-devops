@@ -30,7 +30,7 @@ namespace PlataformaEducacao.Bff.Api.Controllers
             }
 
             var cursoDetalhes = JsonSerializer.Deserialize<CursoDetalhesDTO>(
-                curso!.Data.ToString()!, JsonSerializerOptions);
+                curso.Data.ToString(), JsonSerializerOptions);
 
             if (cursoDetalhes != null)
             {

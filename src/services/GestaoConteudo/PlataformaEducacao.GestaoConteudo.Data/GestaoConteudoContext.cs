@@ -7,9 +7,9 @@ namespace PlataformaEducacao.GestaoConteudo.Data
 {
     public class GestaoConteudoContext(DbContextOptions<GestaoConteudoContext> options) : DbContext(options), IUnitOfWork
     {
-        public DbSet<Curso> Cursos { get; set; }
+        public required DbSet<Curso> Cursos { get; set; }
 
-        public DbSet<Aula> Aulas { get; set; }
+        public required DbSet<Aula> Aulas { get; set; }
 
         public async Task<bool> Commit()
         {

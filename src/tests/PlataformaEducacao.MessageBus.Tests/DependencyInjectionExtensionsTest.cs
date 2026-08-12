@@ -17,7 +17,7 @@ namespace PlataformaEducacao.MessageBus.Tests
             var services = new ServiceCollection();
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => services.AddMessageBus(connection!));
+            Assert.Throws<ArgumentNullException>(() => services.AddMessageBus(connection));
         }
     }
 }

@@ -136,7 +136,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
             var identityClaims = await ObterClaimsUsuario(claims, user);
             var encodedToken = CodificarToken(identityClaims);
 
-            var refreshToken = await _autenticacaoService.GerarRefreshToken(user.UserName!);
+            var refreshToken = await _autenticacaoService.GerarRefreshToken(user.UserName);
 
             return ObterRespostaToken(encodedToken, user, claims, refreshToken);
         }
@@ -146,7 +146,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Controllers
             var userRoles = await _userManager.GetRolesAsync(user);
 
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email!));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
