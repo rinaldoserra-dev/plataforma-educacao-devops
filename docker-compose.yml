@@ -44,7 +44,7 @@ services:
       - "5430:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
     volumes:
       - ./logs/identidade:/app/logs
@@ -66,7 +66,7 @@ services:
       - "7083:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
     volumes:
       - ./logs/financeira:/app/logs
@@ -88,7 +88,7 @@ services:
       - "5460:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
     volumes:
       - ./logs/aluno:/app/logs
@@ -110,7 +110,7 @@ services:
       - "5440:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoConteudo;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoConteudo;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
     volumes:
       - ./logs/conteudo:/app/logs

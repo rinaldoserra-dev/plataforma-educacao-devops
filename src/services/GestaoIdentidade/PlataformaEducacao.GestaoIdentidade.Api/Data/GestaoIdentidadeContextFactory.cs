@@ -8,7 +8,7 @@ public sealed class GestaoIdentidadeContextFactory : IDesignTimeDbContextFactory
     public GestaoIdentidadeContext CreateDbContext(string[] args)
     {
         var options = new DbContextOptionsBuilder<GestaoIdentidadeContext>()
-            .UseSqlServer("Server=localhost,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True")
+            .UseSqlServer("Server=localhost,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
             .Options;
 
         return new GestaoIdentidadeContext(options);
