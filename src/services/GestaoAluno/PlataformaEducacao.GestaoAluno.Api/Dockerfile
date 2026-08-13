@@ -18,15 +18,11 @@ RUN dotnet restore "src/services/GestaoAluno/PlataformaEducacao.GestaoAluno.Api/
 COPY . .
 
 WORKDIR "/src/src/services/GestaoAluno/PlataformaEducacao.GestaoAluno.Api"
-RUN dotnet build "PlataformaEducacao.GestaoAluno.Api.csproj" -c Release -o /app/build
-
 FROM build AS publish
 RUN dotnet publish "PlataformaEducacao.GestaoAluno.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
-
-RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
 
 ARG BUILD_DATE="unknown"
 ARG VCS_REF="unknown"
@@ -42,8 +38,5 @@ COPY --from=publish /app/publish .
 RUN mkdir -p /app/logs && chown -R app:app /app
 
 USER app
-
-HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
-    CMD curl --fail http://localhost:8080/swagger/index.html || exit 1
 
 ENTRYPOINT ["dotnet", "PlataformaEducacao.GestaoAluno.Api.dll"]
