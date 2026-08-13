@@ -21,16 +21,27 @@ namespace PlataformaEducacao.GestaoAluno.Application.Queries.ViewModels
         }
 
         public Guid MatriculaId { get; set; }
+
         public Guid AlunoId { get; set; }
+
         public string NomeAluno { get; set; } = null!;
+
         public Guid CursoId { get; set; }
+
         public string NomeCurso { get; set; } = null!;
+
         public SituacaoMatricula SituacaoMatricula { get; set; }
+
         public SituacaoCurso SituacaoCurso { get; set; }
+
         public DateTime? DataConclusao { get; set; }
+
         public double ProgressoGeralCurso { get; set; }
+
         public DateTime DataMatricula { get; set; }
+
         public Guid? CertificadoId { get; set; }
+
         public string? CodigoVerificacao { get; set; }
 
         public static MatriculaViewModel FromMatricula(Matricula matricula)
@@ -46,7 +57,6 @@ namespace PlataformaEducacao.GestaoAluno.Application.Queries.ViewModels
              matricula.HistoricoAprendizado.DataConclusao,
              matricula.HistoricoAprendizado.ProgressoGeralCurso,
              matricula.Certificado?.Id,
-             matricula.Certificado?.CodigoVerificacao
-         );
+             matricula.Certificado?.CodigoVerificacao);
     }
 }

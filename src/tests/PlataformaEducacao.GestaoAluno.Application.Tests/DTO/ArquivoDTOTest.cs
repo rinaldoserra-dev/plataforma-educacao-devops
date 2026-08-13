@@ -1,5 +1,5 @@
-using PlataformaEducacao.GestaoAluno.Application.DTO;
 using System.Text;
+using PlataformaEducacao.GestaoAluno.Application.DTO;
 
 namespace PlataformaEducacao.GestaoAluno.Application.Tests.DTO
 {
@@ -45,7 +45,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.DTO
 
             // Assert
             Assert.NotNull(dtoDeserialized);
-            Assert.Equal(dto.NomeArquivo, dtoDeserialized!.NomeArquivo);
+            Assert.Equal(dto.NomeArquivo, dtoDeserialized.NomeArquivo);
             Assert.Equal(dto.ContentType, dtoDeserialized.ContentType);
             Assert.Equal(dto.PdfBytes, dtoDeserialized.PdfBytes);
         }

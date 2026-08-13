@@ -6,13 +6,20 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Core
 {
     public class EntityTest
     {
-        private class EntidadeDeTeste : Entity { }
-
-        private class OutraEntidadeDeTeste : Entity { }
-
-        private class EventoDeTeste : Event
+        private sealed class EntidadeDeTeste : Entity
         {
-            public EventoDeTeste() : base() { }
+        }
+
+        private sealed class OutraEntidadeDeTeste : Entity
+        {
+        }
+
+        private sealed class EventoDeTeste : Evento
+        {
+            public EventoDeTeste()
+                : base()
+            {
+            }
         }
 
         [Fact(DisplayName = "Construtor deve gerar Id e inicializar notificações")]

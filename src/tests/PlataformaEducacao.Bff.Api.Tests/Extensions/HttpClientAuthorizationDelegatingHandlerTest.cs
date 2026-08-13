@@ -14,7 +14,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Extensions
         {
             // Arrange
             var httpContext = new DefaultHttpContext();
-            httpContext.Request.Headers["Authorization"] = "Bearer meu-token";
+            httpContext.Request.Headers.Authorization = "Bearer meu-token";
 
             var mockUser = new Mock<IAspNetUser>();
             mockUser.Setup(u => u.ObterHttpContext()).Returns(httpContext);
@@ -68,7 +68,7 @@ namespace PlataformaEducacao.Bff.Api.Tests.Extensions
             innerHandler.CapturedRequest!.Headers.Contains("Authorization").Should().BeFalse();
         }
 
-        private class CaptureRequestHandler : HttpMessageHandler
+        private sealed class CaptureRequestHandler : HttpMessageHandler
         {
             public HttpRequestMessage? CapturedRequest { get; private set; }
 

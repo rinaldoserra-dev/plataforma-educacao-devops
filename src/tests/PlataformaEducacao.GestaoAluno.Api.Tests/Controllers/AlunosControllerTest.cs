@@ -1,3 +1,5 @@
+using System.Net;
+using System.Security.Claims;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +14,6 @@ using PlataformaEducacao.GestaoAluno.Application.DTO;
 using PlataformaEducacao.GestaoAluno.Application.Queries;
 using PlataformaEducacao.GestaoAluno.Application.Queries.ViewModels;
 using PlataformaEducacao.WebApi.Core.Usuario;
-using System.Net;
-using System.Security.Claims;
 
 namespace PlataformaEducacao.GestaoAluno.Api.Tests.Controllers
 {
@@ -28,8 +28,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Controllers
             {
                 ObterMatriculasAtivasPorAlunoIdResult =
                 [
-                    new(matriculaId: Guid.NewGuid(), alunoId: Guid.NewGuid(), nomeAluno: "Aluno", cursoId: Guid.NewGuid(), nomeCurso: "Curso", situacaoMatricula: 0,
-                        dataMatricula: DateTime.UtcNow, situacaoCurso: 0, dataConclusao: null, progressoGeralCurso: 0, certificadoId: null, codigoVerificacao: null)
+                    new(matriculaId: Guid.NewGuid(), alunoId: Guid.NewGuid(), nomeAluno: "Aluno", cursoId: Guid.NewGuid(), nomeCurso: "Curso", situacaoMatricula: 0, dataMatricula: DateTime.UtcNow, situacaoCurso: 0, dataConclusao: null, progressoGeralCurso: 0, certificadoId: null, codigoVerificacao: null)
                 ]
             };
 
@@ -74,8 +73,8 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Controllers
             // Arrange
             var consultas = new FakeAlunoQueries
             {
-                ValidarCertificadoResult = new CertificadoDTO(certificadoId: Guid.NewGuid(), nomeAluno: "Aluno", nomeCurso: "Curso", dataConclusao: DateTime.UtcNow,
-                    codigoVerificacao: "ABC123")
+                ValidarCertificadoResult = new CertificadoDTO(
+                    certificadoId: Guid.NewGuid(), nomeAluno: "Aluno", nomeCurso: "Curso", dataConclusao: DateTime.UtcNow, codigoVerificacao: "ABC123")
             };
 
             var controlador = CriarControlador(consultas);
@@ -368,30 +367,39 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Controllers
             return new AlunosController(consultas, usuario, mediador);
         }
 
-        #region Fakes
-
-        private class FakeAlunoQueries : IAlunoQueries
+        private sealed class FakeAlunoQueries : IAlunoQueries
         {
             public IEnumerable<MatriculaAtivaDTO>? ObterMatriculasAtivasPorAlunoIdResult { get; set; }
+
             public IEnumerable<MatriculaPendentePagamentoDTO>? ListarMatriculasPendentesPagamentoPorAlunoIdResult { get; set; }
+
             public CertificadoDTO? ValidarCertificadoResult { get; set; }
+
             public ArquivoDTO? BaixarCertificadoResult { get; set; }
+
             public HistoricoAlunoViewModel? ObterHistoricoAlunoResult { get; set; }
 
             public Task<MatriculaViewModel?> ObterMatricula(Guid matriculaId, CancellationToken cancellationToken) =>
                 Task.FromResult<MatriculaViewModel?>(null);
+
             public Task<IEnumerable<MatriculaPendentePagamentoDTO>> ListarMatriculasPendentesPagamentoPorAlunoId(Guid alunoId, CancellationToken cancellationToken) =>
                 Task.FromResult(ListarMatriculasPendentesPagamentoPorAlunoIdResult ?? []);
+
             public Task<IEnumerable<MatriculaAtivaDTO>> ObterMatriculasAtivasPorAlunoId(Guid alunoId, CancellationToken cancellationToken) =>
                 Task.FromResult(ObterMatriculasAtivasPorAlunoIdResult ?? []);
+
             public Task<IEnumerable<MatriculaViewModel>> ObterAlunosMatriculadosPorCursoId(Guid cursoId, CancellationToken cancellationToken) =>
                 Task.FromResult(Enumerable.Empty<MatriculaViewModel>());
+
             public Task<IEnumerable<MatriculaViewModel>> ObterAlunosPendentesPorCursoId(Guid cursoId, CancellationToken cancellationToken) =>
                 Task.FromResult(Enumerable.Empty<MatriculaViewModel>());
+
             public Task<CertificadoDTO?> ValidarCertificado(string codigoVerificacao, CancellationToken cancellationToken) =>
                 Task.FromResult(ValidarCertificadoResult);
+
             public Task<ArquivoDTO?> BaixarCertificado(Guid certificadoId, CancellationToken cancellationToken) =>
                 Task.FromResult(BaixarCertificadoResult);
+
             public Task<HistoricoAlunoViewModel?> ObterHistoricoAluno(Guid alunoId, CancellationToken cancellationToken) =>
                 Task.FromResult(ObterHistoricoAlunoResult);
         }
@@ -399,39 +407,48 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Controllers
         private class FakeAspNetUser(Guid id) : IAspNetUser
         {
             private readonly Guid _id = id;
+
             public string Name => string.Empty;
+
             public Guid ObterUserId() => _id;
+
             public string ObterUserEmail() => string.Empty;
+
             public string ObterUserToken() => string.Empty;
+
             public string ObterUserRefreshToken() => string.Empty;
+
             public bool EstaAutenticado() => true;
+
             public virtual bool PossuiRole(string role) => true;
+
             public IEnumerable<Claim> ObterClaims() => [];
+
             public HttpContext ObterHttpContext() => new DefaultHttpContext();
         }
 
-        private class UsuarioFakeSemPapelAdmin(Guid id) : FakeAspNetUser(id)
+        private sealed class UsuarioFakeSemPapelAdmin(Guid id) : FakeAspNetUser(id)
         {
             public override bool PossuiRole(string role) => role != "ADMIN";
         }
 
-        private class UsuarioFakeComPapelAdmin(Guid id) : FakeAspNetUser(id)
+        private sealed class UsuarioFakeComPapelAdmin(Guid id) : FakeAspNetUser(id)
         {
             public override bool PossuiRole(string role) => role == "ADMIN";
         }
 
-        private class FakeMediatorHandler : IMediatorHandler
+        private sealed class FakeMediatorHandler : IMediatorHandler
         {
             public ValidationResult SendCommandResult { get; set; } = new ValidationResult();
 
-            public Task PublishEvent<T>(T evento) where T : Event => Task.CompletedTask;
+            public Task PublishEvent<T>(T evento)
+                where T : Evento => Task.CompletedTask;
 
-            public Task<ValidationResult> SendCommand<T>(T comando) where T : Command
+            public Task<ValidationResult> SendCommand<T>(T comando)
+                where T : Command
             {
                 return Task.FromResult(SendCommandResult);
             }
         }
-
-        #endregion
     }
 }

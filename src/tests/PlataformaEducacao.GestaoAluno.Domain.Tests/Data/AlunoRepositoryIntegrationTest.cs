@@ -21,7 +21,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             _connection.Open();
 
             _mediatorMock = new Mock<IMediatorHandler>();
-            _mediatorMock.Setup(m => m.PublishEvent(It.IsAny<Event>())).Returns(Task.CompletedTask);
+            _mediatorMock.Setup(m => m.PublishEvent(It.IsAny<Evento>())).Returns(Task.CompletedTask);
 
             var options = new DbContextOptionsBuilder<GestaoAlunoContext>()
                 .UseSqlite(_connection)
@@ -48,7 +48,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal("João", result!.Nome);
+            Assert.Equal("João", result.Nome);
             Assert.Equal("joao@test.com", result.Email.Endereco);
             Assert.Empty(result.Matriculas);
         }
@@ -72,7 +72,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             // Assert
             var result = await _repository.ObterMatriculaComAlunoPorId(matricula.Id, CancellationToken.None);
             Assert.NotNull(result);
-            Assert.Equal("Curso C#", result!.NomeCurso);
+            Assert.Equal("Curso C#", result.NomeCurso);
             Assert.Equal(aluno.Id, result.AlunoId);
         }
 
@@ -122,8 +122,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             // Arrange
             var cursoId = Guid.NewGuid();
             var aluno = Matricula.MatriculaFactory.CriarComPagamentoAprovado(
-                cursoId, "Curso K8s", 2, 500m,
-                new Aluno(Guid.NewGuid(), "Pedro", "pedro@test.com"));
+                cursoId, "Curso K8s", 2, 500m, new Aluno(Guid.NewGuid(), "Pedro", "pedro@test.com"));
             await _context.Alunos.AddAsync(aluno.Aluno);
             await _context.Matriculas.AddAsync(aluno);
             await _context.SaveChangesAsync();
@@ -171,7 +170,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotNull(result!.ProgressoAulas);
+            Assert.NotNull(result.ProgressoAulas);
         }
 
         [Fact(DisplayName = "AtualizarMatricula deve persistir alteração")]
@@ -196,7 +195,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(SituacaoMatricula.Ativa, result!.SituacaoMatricula);
+            Assert.Equal(SituacaoMatricula.Ativa, result.SituacaoMatricula);
         }
 
         [Fact(DisplayName = "AtualizarProgressoAula deve persistir progresso")]
@@ -242,7 +241,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             // Assert
             var result = await _context.Certificados.FirstOrDefaultAsync(c => c.Id == certificado.Id);
             Assert.NotNull(result);
-            Assert.Equal("CODIGO-123", result!.CodigoVerificacao);
+            Assert.Equal("CODIGO-123", result.CodigoVerificacao);
         }
 
         [Fact(DisplayName = "ObterMatriculaComCertificadoPorId deve retornar com certificado")]
@@ -265,8 +264,8 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotNull(result!.Certificado);
-            Assert.Equal("CERT-456", result.Certificado!.CodigoVerificacao);
+            Assert.NotNull(result.Certificado);
+            Assert.Equal("CERT-456", result.Certificado.CodigoVerificacao);
         }
 
         [Fact(DisplayName = "ObterCertificadoPorCodigoVerificacao deve retornar matrícula")]
@@ -289,7 +288,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotNull(result!.Certificado);
+            Assert.NotNull(result.Certificado);
         }
 
         [Fact(DisplayName = "ObterCertificadoPorCertificadoId deve retornar certificado completo")]
@@ -312,7 +311,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.NotNull(result);
-            Assert.NotNull(result!.Matricula);
+            Assert.NotNull(result.Matricula);
             Assert.NotNull(result.Matricula.Aluno);
         }
 
@@ -337,7 +336,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
 
             // Assert
             Assert.True(result);
-            _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Event>()), Times.Never);
+            _mediatorMock.Verify(m => m.PublishEvent(It.IsAny<Evento>()), Times.Never);
         }
 
         [Fact(DisplayName = "UnitOfWork deve retornar o contexto")]
@@ -355,6 +354,12 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             Assert.Null(exception);
         }
 
+        public void Dispose()
+        {
+            _context.Dispose();
+            _connection.Dispose();
+        }
+
         private static Aluno CriarAlunoComMatriculaAtiva(string nome, string email)
         {
             var aluno = new Aluno(Guid.NewGuid(), nome, email);
@@ -362,12 +367,6 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests.Data
             aluno.RealizarMatricula(matricula);
             aluno.ConcluirPagamentoMatricula(matricula);
             return aluno;
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-            _connection.Dispose();
         }
     }
 }

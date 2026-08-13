@@ -1,13 +1,13 @@
+using System.Net;
 using Microsoft.Extensions.Options;
 using PlataformaEducacao.Bff.Api.Extensions;
 using PlataformaEducacao.Bff.Api.Models.Request.GestaoConteudo;
 using PlataformaEducacao.Bff.Api.Services;
 using PlataformaEducacao.Core.Communication;
-using System.Net;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Services
 {
-    public class CursosServiceTest
+    public class CursosServiceTest : IDisposable
     {
         private readonly MockHttpMessageHandler _handler;
         private readonly CursosService _service;
@@ -88,6 +88,11 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             var result = await _service.ObterTodos();
 
             Assert.True(result.Sucesso);
+        }
+
+        public void Dispose()
+        {
+            _handler.Dispose();
         }
     }
 }

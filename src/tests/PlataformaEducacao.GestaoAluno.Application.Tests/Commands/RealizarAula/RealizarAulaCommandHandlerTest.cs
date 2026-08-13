@@ -8,7 +8,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.RealizarAula
 {
     public class RealizarAulaCommandHandlerTest
     {
-        readonly Aluno _aluno = new(alunoId: Guid.NewGuid(), "Fulano de Tal", "fulano@teste.com");
+        private readonly Aluno _aluno = new(alunoId: Guid.NewGuid(), "Fulano de Tal", "fulano@teste.com");
 
         [Fact(DisplayName = "RealizarAula quando comando inválido não chama repositório")]
         [Trait("Categoria", "Gestão Aluno - Application - Commands - RealizarAulaCommandHandler")]
@@ -24,8 +24,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.RealizarAula
 
             // Assert
             Assert.Same(comandoInvalido.ValidationResult, resultado);
-            repositorioMock.Verify(r => r.ObterMatriculaComProgressoAulasPorId(
-                It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
+            repositorioMock.Verify(r => r.ObterMatriculaComProgressoAulasPorId(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Fact(DisplayName = "RealizarAula quando aula pertence a curso diferente adiciona erro")]
@@ -171,10 +170,8 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.RealizarAula
             if (!resultadoCommit)
                 Assert.Contains(resultado.Errors, e => e.ErrorMessage == "Houve um erro ao persistir os dados");
 
-            repositorioMock.Verify(r => r.AtualizarProgressoAula(
-                It.IsAny<ProgressoAula>(), It.IsAny<CancellationToken>()), Times.Once);
-            repositorioMock.Verify(r => r.AtualizarMatricula(
-                It.IsAny<Matricula>(), It.IsAny<CancellationToken>()), Times.Once);
+            repositorioMock.Verify(r => r.AtualizarProgressoAula(It.IsAny<ProgressoAula>(), It.IsAny<CancellationToken>()), Times.Once);
+            repositorioMock.Verify(r => r.AtualizarMatricula(It.IsAny<Matricula>(), It.IsAny<CancellationToken>()), Times.Once);
             repositorioMock.VerifyGet(r => r.UnitOfWork, Times.AtLeastOnce);
             uowMock.Verify(u => u.Commit(), Times.Once);
 

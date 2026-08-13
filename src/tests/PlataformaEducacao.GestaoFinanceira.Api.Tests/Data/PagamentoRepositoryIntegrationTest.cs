@@ -189,6 +189,12 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Data
             Assert.Null(exception);
         }
 
+        public void Dispose()
+        {
+            _context.Dispose();
+            _connection.Dispose();
+        }
+
         private static Pagamento CriarPagamento()
         {
             return new Pagamento
@@ -200,12 +206,6 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Tests.Data
                 Valor = 100m,
                 DadosCartao = new DadosCartao("Fulano", "4111111111111111", "12/2030", "123")
             };
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-            _connection.Dispose();
         }
     }
 }

@@ -11,13 +11,22 @@ using static PlataformaEducacao.GestaoConteudo.Api.Configurations.DbMigrationHel
 
 namespace PlataformaEducacao.GestaoConteudo.Api.Tests.Config
 {
-    public class PlataformaEducacaoGestaoConteudoAppFactory<TProgram> : WebApplicationFactory<TProgram>, IDisposable where TProgram : class
+    public class PlataformaEducacaoGestaoConteudoAppFactory<TProgram> : WebApplicationFactory<TProgram>, IDisposable
+        where TProgram : class
     {
-        private SqliteConnection _connection = null!;
+        private readonly SqliteConnection _connection = null!;
+
         public PlataformaEducacaoGestaoConteudoAppFactory()
         {
             _connection = new SqliteConnection("DataSource=:memory:");
             _connection.Open();
+        }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+
+            _connection?.Close();
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -70,27 +79,16 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Tests.Config
 
                 services.AddDbContext<GestaoConteudoContext>(options => options.UseSqlite(_connection));
 
-
-                using (var scope = services.BuildServiceProvider().CreateScope())
-                {
-                    var serviceProvider = scope.ServiceProvider;
-                    DbMigrationHelper.EnsureSeedData(serviceProvider).GetAwaiter().GetResult();
-                }
+                using var scope = services.BuildServiceProvider().CreateScope();
+                var serviceProvider = scope.ServiceProvider;
+                DbMigrationHelper.EnsureSeedData(serviceProvider).GetAwaiter().GetResult();
             });
         }
+
         protected override IHost CreateHost(IHostBuilder builder)
         {
             builder.UseEnvironment("Testing");
             return base.CreateHost(builder);
-        }
-        public new void Dispose()
-        {
-            base.Dispose();
-
-            if (_connection != null)
-            {
-                _connection.Close();
-            }
         }
     }
 }

@@ -16,11 +16,17 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Queries.ViewModels
         }
 
         public Guid Id { get; set; }
+
         public string Nome { get; set; }
+
         public string DescricaoConteudo { get; set; }
+
         public int CargaHoraria { get; set; }
+
         public decimal Valor { get; set; }
+
         public bool Disponivel { get; set; }
+
         public IEnumerable<AulaViewModel> Aulas { get; set; } = new List<AulaViewModel>();
 
         public static CursoViewModel FromCurso(Curso curso)
@@ -31,8 +37,6 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Queries.ViewModels
             curso.ConteudoProgramatico.CargaHoraria,
             curso.Valor,
             curso.Disponivel,
-            curso.Aulas == null ? Enumerable.Empty<AulaViewModel>() : curso.Aulas.OrderBy(a => a.Ordem).Select(AulaViewModel.FromAula)
-
-        );
+            curso.Aulas == null ? Enumerable.Empty<AulaViewModel>() : curso.Aulas.OrderBy(a => a.Ordem).Select(AulaViewModel.FromAula));
     }
 }

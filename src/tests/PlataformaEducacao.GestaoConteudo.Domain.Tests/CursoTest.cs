@@ -12,7 +12,7 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             // Arrange
             var conteudoProgramatico = new ConteudoProgramatico("Módulo do curso C#", 150);
 
-            //Act
+            // Act
             var curso = new Curso("Introdução a C#", conteudoProgramatico, 500, true);
 
             // Assert
@@ -30,9 +30,8 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             // Arrange
             var conteudoProgramatico = new ConteudoProgramatico("Módulo do curso C#", 150);
 
-            //Act Assert
+            // Act & Assert
             Assert.Throws<DomainException>(() => new Curso("   ", conteudoProgramatico, 500, true));
-
         }
 
         [Fact(DisplayName = "Adicionar Novo Curso Com Valor Vazio")]
@@ -42,9 +41,8 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             // Arrange
             var conteudoProgramatico = new ConteudoProgramatico("Módulo do curso C#", 150);
 
-            //Act Assert
+            // Act & Assert
             Assert.Throws<DomainException>(() => new Curso("Curso C#", conteudoProgramatico, 0, true));
-
         }
 
         [Fact(DisplayName = "Atualizar Nome Curso")]
@@ -55,7 +53,7 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var conteudoProgramatico = new ConteudoProgramatico("Módulo do curso C#", 150);
             var curso = new Curso("Introdução a C#", conteudoProgramatico, 500, true);
 
-            //Act
+            // Act
             curso.AtualizarNome("Introdução Linguagem C#");
 
             // Assert
@@ -70,9 +68,8 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var conteudoProgramatico = new ConteudoProgramatico("Módulo do curso C#", 150);
             var cursoInvalido = new Curso("Introdução a C#", conteudoProgramatico, 500, true);
 
-            //Act Assert
+            // Act & Assert
             Assert.Throws<DomainException>(() => cursoInvalido.AtualizarNome("    "));
-
         }
 
         [Fact(DisplayName = "Atualizar Preco Curso Com Valor Inválido")]
@@ -83,9 +80,8 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var conteudoProgramatico = new ConteudoProgramatico("Módulo do curso C#", 150);
             var cursoInvalido = new Curso("Introdução a C#", conteudoProgramatico, 500, true);
 
-            //Act Assert
+            // Act & Assert
             Assert.Throws<DomainException>(() => cursoInvalido.AtualizarValor(-500));
-
         }
 
         [Fact(DisplayName = "Tornar Indisponivel Curso")]
@@ -96,13 +92,13 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var conteudoProgramatico = new ConteudoProgramatico("Módulo do curso C#", 150);
             var curso = new Curso("Introdução a C#", conteudoProgramatico, 500, true);
 
-            //Act
+            // Act
             curso.TornarIndisponivel();
 
             // Assert
             Assert.False(curso.Disponivel);
-
         }
+
         [Fact(DisplayName = "Tornar Disponivel Curso")]
         [Trait("Categoria", "Gestao Conteudo - Curso")]
         public void TornarDisponivelCurso()
@@ -111,12 +107,11 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var conteudoProgramatico = new ConteudoProgramatico("Módulo do curso C#", 150);
             var curso = new Curso("Introdução a C#", conteudoProgramatico, 500, false);
 
-            //Act
+            // Act
             curso.TornarDisponivel();
 
             // Assert
             Assert.True(curso.Disponivel);
-
         }
 
         [Fact(DisplayName = "Adicionar Aula Válida Ao Curso")]
@@ -133,10 +128,10 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var materialValida = "Material da Aula";
             var aula = new Aula(tituloValido, conteudoValido, ordemValida, materialValida);
 
-            // Act 
+            // Act
             curso.AdicionarAula(aula);
 
-            //Assert
+            // Assert
             Assert.Single(curso.Aulas);
         }
 
@@ -161,10 +156,10 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var novoMaterialValido = "Material da Aula";
             var novaAula = new Aula(novoTituloValido, novocConteudoValido, novaOrdemValida, novoMaterialValido);
 
-            // Act 
+            // Act
             curso.AdicionarAula(novaAula);
 
-            //Assert
+            // Assert
             Assert.Equal(2, curso.Aulas.Count);
         }
 
@@ -182,10 +177,10 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var materialValido = "Material da Aula";
             var aula = new Aula(tituloValido, conteudoValido, ordemValida, materialValido);
 
-            // Act 
+            // Act
             curso.AdicionarAula(aula);
 
-            //Assert
+            // Assert
             Assert.Throws<DomainException>(() => curso.AdicionarAula(aula));
             Assert.Single(curso.Aulas);
         }

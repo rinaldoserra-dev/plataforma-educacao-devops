@@ -36,7 +36,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Queries.ViewModels
             alunoField?.SetValue(matriculaPendente, aluno);
 
             var matriculasFieldAluno = typeof(Aluno).GetField("_matriculas", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-            var lista = (System.Collections.Generic.List<Matricula>?)matriculasFieldAluno?.GetValue(aluno);
+            var lista = (List<Matricula>?)matriculasFieldAluno?.GetValue(aluno);
             if (lista is not null)
             {
                 lista.Add(matriculaConcluida);

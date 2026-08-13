@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace PlataformaEducacao.WebApi.Core.Usuario
 {
@@ -21,17 +21,17 @@ namespace PlataformaEducacao.WebApi.Core.Usuario
 
         public string ObterUserEmail()
         {
-            return EstaAutenticado() ? _accessor.HttpContext!.User.GetUserEmail() : "";
+            return EstaAutenticado() ? _accessor.HttpContext!.User.GetUserEmail() : string.Empty;
         }
 
         public string ObterUserToken()
         {
-            return EstaAutenticado() ? _accessor.HttpContext!.User.GetUserToken() : "";
+            return EstaAutenticado() ? _accessor.HttpContext!.User.GetUserToken() : string.Empty;
         }
 
         public string ObterUserRefreshToken()
         {
-            return EstaAutenticado() ? _accessor.HttpContext!.User.GetUserRefreshToken() : "";
+            return EstaAutenticado() ? _accessor.HttpContext!.User.GetUserRefreshToken() : string.Empty;
         }
 
         public bool EstaAutenticado()

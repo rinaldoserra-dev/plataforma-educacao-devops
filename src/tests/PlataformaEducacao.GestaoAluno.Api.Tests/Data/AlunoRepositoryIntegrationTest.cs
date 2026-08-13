@@ -297,7 +297,13 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Data
             Assert.Null(exception);
         }
 
-        private Aluno CriarAlunoComMatricula()
+        public void Dispose()
+        {
+            _context.Dispose();
+            _connection.Dispose();
+        }
+
+        private static Aluno CriarAlunoComMatricula()
         {
             var aluno = new Aluno(Guid.NewGuid(), "Aluno Teste", "aluno@teste.com");
             var matricula = new Matricula(Guid.NewGuid(), "Curso Teste", 5, 100m);
@@ -305,7 +311,7 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Data
             return aluno;
         }
 
-        private Aluno CriarAlunoComMatriculaAtiva()
+        private static Aluno CriarAlunoComMatriculaAtiva()
         {
             var aluno = CriarAlunoComMatricula();
             aluno.ConcluirPagamentoMatricula(aluno.Matriculas.First());
@@ -316,12 +322,6 @@ namespace PlataformaEducacao.GestaoAluno.Api.Tests.Data
         {
             _context.Alunos.Add(aluno);
             await _context.SaveChangesAsync();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-            _connection.Dispose();
         }
     }
 }

@@ -6,18 +6,17 @@ namespace PlataformaEducacao.GestaoConteudo.Domain
 {
     public class Curso : Entity, IAggregateRoot
     {
+        private readonly List<Aula> _aulas;
+
         public string Nome { get; private set; } = null!;
+
         public ConteudoProgramatico ConteudoProgramatico { get; private set; } = null!;
+
         public decimal Valor { get; private set; }
+
         public bool Disponivel { get; private set; }
 
-        private readonly List<Aula> _aulas;
         public IReadOnlyCollection<Aula> Aulas => _aulas;
-
-        protected Curso()
-        {
-            _aulas = new List<Aula>();
-        }
 
         public Curso(string nome, ConteudoProgramatico conteudoProgramatico, decimal valor, bool disponivel)
         {
@@ -28,6 +27,11 @@ namespace PlataformaEducacao.GestaoConteudo.Domain
             _aulas = new List<Aula>();
 
             Validar();
+        }
+
+        protected Curso()
+        {
+            _aulas = new List<Aula>();
         }
 
         public void AtualizarNome(string nome)
@@ -48,6 +52,7 @@ namespace PlataformaEducacao.GestaoConteudo.Domain
         {
             Disponivel = true;
         }
+
         public void TornarIndisponivel()
         {
             Disponivel = false;

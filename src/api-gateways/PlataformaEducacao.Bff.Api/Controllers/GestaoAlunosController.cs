@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlataformaEducacao.Bff.Api.Models.GestaoAlunos;
 using PlataformaEducacao.Bff.Api.Models.GestaoConteudo;
 using PlataformaEducacao.Bff.Api.Services;
 using PlataformaEducacao.WebApi.Core.Controllers;
-using System.Text.Json;
 
 namespace PlataformaEducacao.Bff.Api.Controllers
 {
@@ -30,9 +30,7 @@ namespace PlataformaEducacao.Bff.Api.Controllers
             }
 
             var cursoDetalhes = JsonSerializer.Deserialize<CursoDetalhesDTO>(
-                curso!.Data.ToString()!,
-                new JsonSerializerOptions { PropertyNameCaseInsensitive = true }
-            );
+                curso.Data.ToString(), JsonSerializerOptions);
 
             if (cursoDetalhes != null)
             {
@@ -115,5 +113,10 @@ namespace PlataformaEducacao.Bff.Api.Controllers
 
             return File(bytes, contentType, fileName.Trim('"'));
         }
+
+        private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
     }
 }

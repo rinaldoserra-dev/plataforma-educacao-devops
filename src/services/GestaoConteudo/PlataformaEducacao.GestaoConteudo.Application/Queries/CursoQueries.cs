@@ -38,17 +38,19 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Queries
             var curso = await _cursoRepository.ObterComAulasPorId(cursoId, cancellationToken);
             if (curso is null)
             {
-                return Enumerable.Empty<AulaViewModel>();
+                return [];
             }
 
             return curso.Aulas.Select(AulaViewModel.FromAula);
         }
+
         public async Task<CursoViewModel?> ObterCursoComAulasPorCursoId(Guid cursoId, CancellationToken cancellationToken)
         {
             var curso = await _cursoRepository.ObterComAulasPorId(cursoId, cancellationToken);
 
             return curso is null ? null : CursoViewModel.FromCurso(curso);
         }
+
         public async Task<AulaViewModel?> ObterAulaPorCursoIdEAulaId(Guid cursoId, Guid aulaId, CancellationToken cancellationToken)
         {
             var aula = await _cursoRepository.ObterAulaPorCursoIdEAulaId(cursoId, aulaId, cancellationToken);

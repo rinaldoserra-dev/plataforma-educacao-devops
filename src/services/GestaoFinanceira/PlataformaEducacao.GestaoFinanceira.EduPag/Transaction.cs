@@ -2,19 +2,18 @@
 {
     public class Transaction
     {
+        private readonly EduPagService _eduPagService = null!;
 
         public Transaction(EduPagService eduPagService)
         {
-            EduPagService = eduPagService;
+            _eduPagService = eduPagService;
         }
 
-        protected Transaction() { }
-
-        private readonly EduPagService EduPagService = null!;
-
-        protected string Endpoint { get; set; } = string.Empty;
-
         public int SubscriptionId { get; set; }
+
+        protected Transaction()
+        {
+        }
 
         public TransactionStatus Status { get; set; }
 
@@ -102,7 +101,7 @@
                     AuthorizationCode = GetGenericCode(),
                     CardBrand = "MasterCard",
                     TransactionDate = DateTime.Now,
-                    Cost = Amount * (decimal)0.03,
+                    Cost = Amount * 0.03M,
                     Amount = Amount,
                     Status = TransactionStatus.Authorized,
                     Tid = GetGenericCode(),
@@ -114,14 +113,14 @@
 
             transaction = new Transaction
             {
-                AuthorizationCode = "",
-                CardBrand = "",
+                AuthorizationCode = string.Empty,
+                CardBrand = string.Empty,
                 TransactionDate = DateTime.Now,
                 Cost = 0,
                 Amount = 0,
                 Status = TransactionStatus.Refused,
-                Tid = "",
-                Nsu = ""
+                Tid = string.Empty,
+                Nsu = string.Empty
             };
 
             return Task.FromResult(transaction);
@@ -148,7 +147,7 @@
         {
             var transaction = new Transaction
             {
-                AuthorizationCode = "",
+                AuthorizationCode = string.Empty,
                 CardBrand = CardBrand,
                 TransactionDate = DateTime.Now,
                 Cost = 0,
@@ -161,11 +160,12 @@
             return Task.FromResult(transaction);
         }
 
-        private string GetGenericCode()
+        protected string Endpoint { get; set; } = string.Empty;
+
+        private static string GetGenericCode()
         {
             return new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 10)
                 .Select(s => s[new Random().Next(s.Length)]).ToArray());
         }
     }
-
 }

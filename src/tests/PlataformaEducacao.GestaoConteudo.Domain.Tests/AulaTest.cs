@@ -9,14 +9,15 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
         public void Criar_Aula_DeveRetornarException_QuandoDescricaoEhVazia()
         {
             // Arrange
-            var tituloInvalido = "";
+            var tituloInvalido = string.Empty;
             var conteudoValido = "Conteudo da aula";
             var ordemValida = 1;
             var material = "Material da Aula";
-            // Act 
+
+            // Act
             var ex = Assert.Throws<DomainException>(() => new Aula(tituloInvalido, conteudoValido, ordemValida, material));
 
-            //Assert
+            // Assert
             Assert.Equal("O título da aula é orbigatório.", ex.Message);
         }
 
@@ -26,14 +27,14 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
         {
             // Arrange
             var tituloValido = "Estrutura de Dados";
-            var conteudoInvalido = "";
+            var conteudoInvalido = string.Empty;
             var ordemValida = 1;
             var material = "Material da Aula";
 
-            // Act 
+            // Act
             var ex = Assert.Throws<DomainException>(() => new Aula(tituloValido, conteudoInvalido, ordemValida, material));
 
-            //Assert
+            // Assert
             Assert.Equal("O conteudo da aula é obrigatório.", ex.Message);
         }
 
@@ -46,10 +47,11 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var conteudoValido = "Conteudo da aula";
             var ordemValida = 1;
             var materialValido = "Material da Aula";
-            // Act 
+
+            // Act
             var aula = new Aula(tituloValido, conteudoValido, ordemValida, materialValido);
 
-            //Assert
+            // Assert
             Assert.Equal(aula.Titulo, tituloValido);
             Assert.Equal(aula.Conteudo, conteudoValido);
             Assert.Equal(aula.Ordem, ordemValida);
@@ -65,10 +67,10 @@ namespace PlataformaEducacao.GestaoConteudo.Domain.Tests
             var conteudoValido = "Conteudo da aula";
             var ordemValida = 1;
 
-            // Act 
+            // Act
             var aula = new Aula(tituloValido, conteudoValido, ordemValida, null);
 
-            //Assert
+            // Assert
             Assert.Equal(aula.Titulo, tituloValido);
             Assert.Equal(aula.Conteudo, conteudoValido);
             Assert.Null(aula.Material);

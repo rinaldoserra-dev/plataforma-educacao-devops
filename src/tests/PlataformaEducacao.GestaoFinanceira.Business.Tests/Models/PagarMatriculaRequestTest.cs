@@ -1,5 +1,5 @@
-﻿using PlataformaEducacao.GestaoFinanceira.Api.Models.Requests;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using PlataformaEducacao.GestaoFinanceira.Api.Models.Requests;
 
 namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
 {

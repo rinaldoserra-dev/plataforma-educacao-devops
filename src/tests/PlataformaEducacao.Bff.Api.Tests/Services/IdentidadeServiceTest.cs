@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Net;
+using Microsoft.Extensions.Options;
 using PlataformaEducacao.Bff.Api.Extensions;
 using PlataformaEducacao.Bff.Api.Models.Request.Identidade;
 using PlataformaEducacao.Bff.Api.Services;
 using PlataformaEducacao.Core.Communication;
-using System.Net;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Services
 {
-    public class IdentidadeServiceTest
+    public class IdentidadeServiceTest : IDisposable
     {
         private readonly MockHttpMessageHandler _handler;
         private readonly IdentidadeService _service;
@@ -59,6 +59,11 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             var result = await _service.Login(login);
 
             Assert.False(result.Sucesso);
+        }
+
+        public void Dispose()
+        {
+            _handler.Dispose();
         }
     }
 }

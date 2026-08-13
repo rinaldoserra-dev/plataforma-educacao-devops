@@ -6,7 +6,8 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
 {
     public static class MessageBusConfig
     {
-        public static IServiceCollection AddMessageBusConfiguration(this IServiceCollection services,
+        public static IServiceCollection AddMessageBusConfiguration(
+            this IServiceCollection services,
             IConfiguration configuration)
         {
             services.AddMessageBus(configuration.GetMessageQueueConnection("MessageBus"))

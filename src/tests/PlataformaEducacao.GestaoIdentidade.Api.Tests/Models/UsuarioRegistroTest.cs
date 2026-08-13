@@ -1,5 +1,5 @@
-﻿using PlataformaEducacao.GestaoIdentidade.Api.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using PlataformaEducacao.GestaoIdentidade.Api.Models;
 
 namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
 {
@@ -35,7 +35,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Tests.Models
             // Arrange
             var registro = new UsuarioRegistro
             {
-                Nome = "",
+                Nome = string.Empty,
                 Email = "aluno@teste.com",
                 Senha = "Teste@123",
                 SenhaConfirmacao = "Teste@123"

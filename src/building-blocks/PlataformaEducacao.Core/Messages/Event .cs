@@ -2,9 +2,9 @@
 
 namespace PlataformaEducacao.Core.Messages
 {
-    public class Event : Message, INotification
+    public class Evento : Message, INotification
     {
-        protected Event()
+        protected Evento()
         {
             Timestamp = DateTime.Now;
         }

@@ -23,28 +23,28 @@ namespace PlataformaEducacao.GestaoFinanceira.Business.Tests.Models
         [Trait("Categoria", "Gestão Financeira - Business - DadosCartao")]
         public void CriarDadosCartao_SemNome_DeveLancarDomainException()
         {
-            Assert.Throws<DomainException>(() => new DadosCartao("", "4111111111111111", "12/2030", "123"));
+            Assert.Throws<DomainException>(() => new DadosCartao(string.Empty, "4111111111111111", "12/2030", "123"));
         }
 
         [Fact(DisplayName = "Criar DadosCartao sem número deve lançar DomainException")]
         [Trait("Categoria", "Gestão Financeira - Business - DadosCartao")]
         public void CriarDadosCartao_SemNumero_DeveLancarDomainException()
         {
-            Assert.Throws<DomainException>(() => new DadosCartao("Fulano", "", "12/2030", "123"));
+            Assert.Throws<DomainException>(() => new DadosCartao("Fulano", string.Empty, "12/2030", "123"));
         }
 
         [Fact(DisplayName = "Criar DadosCartao sem expiração deve lançar DomainException")]
         [Trait("Categoria", "Gestão Financeira - Business - DadosCartao")]
         public void CriarDadosCartao_SemExpiracao_DeveLancarDomainException()
         {
-            Assert.Throws<DomainException>(() => new DadosCartao("Fulano", "4111111111111111", "", "123"));
+            Assert.Throws<DomainException>(() => new DadosCartao("Fulano", "4111111111111111", string.Empty, "123"));
         }
 
         [Fact(DisplayName = "Criar DadosCartao sem CVV deve lançar DomainException")]
         [Trait("Categoria", "Gestão Financeira - Business - DadosCartao")]
         public void CriarDadosCartao_SemCvv_DeveLancarDomainException()
         {
-            Assert.Throws<DomainException>(() => new DadosCartao("Fulano", "4111111111111111", "12/2030", ""));
+            Assert.Throws<DomainException>(() => new DadosCartao("Fulano", "4111111111111111", "12/2030", string.Empty));
         }
     }
 }

@@ -7,7 +7,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
         public void SituacaoMatricula_ValoresEsperados()
         {
             // Arrange & Act
-            var names = Enum.GetNames(typeof(SituacaoMatricula));
+            var names = Enum.GetNames<SituacaoMatricula>();
 
             // Assert
             Assert.Contains("PendentePagamento", names);
@@ -31,7 +31,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
         {
             // Act
             var parsed = Enum.Parse<SituacaoMatricula>("Ativa");
-            var fromString = (SituacaoMatricula)Enum.Parse(typeof(SituacaoMatricula), "ProcessoPagamento");
+            var fromString = Enum.Parse<SituacaoMatricula>("ProcessoPagamento");
 
             // Assert
             Assert.Equal(SituacaoMatricula.Ativa, parsed);

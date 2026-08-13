@@ -1,8 +1,8 @@
-﻿using FluentValidation.Results;
+﻿using System.Net;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using PlataformaEducacao.Core.Communication;
-using System.Net;
 
 namespace PlataformaEducacao.WebApi.Core.Controllers
 {

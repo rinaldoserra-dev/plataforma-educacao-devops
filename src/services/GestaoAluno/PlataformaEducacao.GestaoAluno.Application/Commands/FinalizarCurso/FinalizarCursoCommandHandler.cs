@@ -16,20 +16,20 @@ namespace PlataformaEducacao.GestaoAluno.Application.Commands.FinalizarCurso
             _alunoRepository = alunoRepository;
         }
 
-        public async Task<ValidationResult> Handle(FinalizarCursoCommand message, CancellationToken cancellationToken)
+        public async Task<ValidationResult> Handle(FinalizarCursoCommand request, CancellationToken cancellationToken)
         {
-            if (message.EhValido() is false) return message.ValidationResult;
+            if (request.EhValido() is false) return request.ValidationResult;
 
-            var matricula = await _alunoRepository.ObterMatriculaComProgressoAulasPorId(message.MatriculaId, cancellationToken);
+            var matricula = await _alunoRepository.ObterMatriculaComProgressoAulasPorId(request.MatriculaId, cancellationToken);
             if (matricula is null)
             {
-                AdicionarErro($"Matrícula {message.MatriculaId} não encontrada.");
+                AdicionarErro($"Matrícula {request.MatriculaId} não encontrada.");
                 return ValidationResult;
             }
 
             if (matricula.EstaAtiva() is false)
             {
-                AdicionarErro($"Matrícula {message.MatriculaId} pendente de pagamento.");
+                AdicionarErro($"Matrícula {request.MatriculaId} pendente de pagamento.");
                 return ValidationResult;
             }
 

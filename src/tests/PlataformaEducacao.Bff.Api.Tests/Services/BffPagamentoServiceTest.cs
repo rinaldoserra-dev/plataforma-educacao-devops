@@ -1,13 +1,13 @@
+using System.Net;
 using Microsoft.Extensions.Options;
 using PlataformaEducacao.Bff.Api.Extensions;
 using PlataformaEducacao.Bff.Api.Models.GestaoFinanceira;
 using PlataformaEducacao.Bff.Api.Services;
 using PlataformaEducacao.Core.Communication;
-using System.Net;
 
 namespace PlataformaEducacao.Bff.Api.Tests.Services
 {
-    public class BffPagamentoServiceTest
+    public class BffPagamentoServiceTest : IDisposable
     {
         private readonly MockHttpMessageHandler _handler;
         private readonly PagamentoService _service;
@@ -87,6 +87,11 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             var result = await _service.PagarMatricula(dto);
 
             Assert.False(result.Sucesso);
+        }
+
+        public void Dispose()
+        {
+            _handler.Dispose();
         }
     }
 }

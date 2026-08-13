@@ -1,16 +1,19 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PlataformaEducacao.GestaoFinanceira.Api.Data.Migrations;
-
-public partial class SqlServerBaseline : Migration
+namespace PlataformaEducacao.GestaoFinanceira.Api.Data.Migrations
 {
-    protected override void Up(MigrationBuilder migrationBuilder)
+    [ExcludeFromCodeCoverage]
+    public partial class SqlServerBaseline : Migration
     {
-    }
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+        }
 
-    protected override void Down(MigrationBuilder migrationBuilder)
-    {
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+        }
     }
 }

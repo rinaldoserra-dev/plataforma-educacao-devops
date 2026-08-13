@@ -14,8 +14,14 @@ namespace PlataformaEducacao.GestaoAluno.Domain.Tests
 
             // Act
             var evento = new IniciaPagamentoIntegrationEvent(
-                matriculaId, alunoId, 500m, 1,
-                "Fulano", "4111111111111111", "12/2030", "123");
+                matriculaId,
+                alunoId,
+                500m,
+                1,
+                "Fulano",
+                "4111111111111111",
+                "12/2030",
+                "123");
 
             // Assert
             Assert.Equal(matriculaId, evento.MatriculaId);

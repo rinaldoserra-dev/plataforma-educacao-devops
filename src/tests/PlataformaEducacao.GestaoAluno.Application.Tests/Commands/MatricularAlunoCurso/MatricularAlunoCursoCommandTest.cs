@@ -57,7 +57,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.MatricularAl
         {
             // Arrange
             var comando = new MatricularAlunoCursoCommand(
-                cursoId: Guid.NewGuid(), alunoId: Guid.NewGuid(), nomeCurso: "", totalAulasCurso: 10, valor: 100m);
+                cursoId: Guid.NewGuid(), alunoId: Guid.NewGuid(), nomeCurso: string.Empty, totalAulasCurso: 10, valor: 100m);
 
             // Act
             var resultado = comando.EhValido();

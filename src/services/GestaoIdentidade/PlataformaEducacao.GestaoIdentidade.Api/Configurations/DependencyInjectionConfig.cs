@@ -8,9 +8,8 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddScoped<IAspNetUser, AspNetUser>();
-
+            // services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            // services.AddScoped<IAspNetUser, AspNetUser>();
             services.AddScoped<IAutenticacaoService, AutenticacaoService>();
 
             services.AddScoped<IAutenticacaoRepository, AutenticacaoRepository>();

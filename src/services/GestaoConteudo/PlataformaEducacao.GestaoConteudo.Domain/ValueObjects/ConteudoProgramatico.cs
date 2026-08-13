@@ -1,14 +1,12 @@
-﻿
-
-using PlataformaEducacao.Core;
+﻿using PlataformaEducacao.Core;
 
 namespace PlataformaEducacao.GestaoConteudo.Domain.ValueObjects
 {
     public class ConteudoProgramatico
     {
         public string Descricao { get; private set; } = null!;
-        public int CargaHoraria { get; private set; }
 
+        public int CargaHoraria { get; private set; }
 
         public ConteudoProgramatico(string descricao, int cargaHoraria)
         {

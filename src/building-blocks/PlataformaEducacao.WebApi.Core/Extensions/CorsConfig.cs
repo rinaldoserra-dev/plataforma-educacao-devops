@@ -12,7 +12,7 @@ namespace PlataformaEducacao.WebApi.Core.Extensions
             var allowedOrigins = configuration
                 .GetSection("Cors:AllowedOrigins")
                 .Get<string[]>()
-                ?? Array.Empty<string>();
+                ?? [];
 
             services.AddCors(options =>
             {

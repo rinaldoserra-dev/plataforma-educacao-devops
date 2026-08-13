@@ -10,24 +10,20 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
 
         public void SetupResponse(string url, HttpStatusCode statusCode, object? content = null)
         {
-            var json = content != null
-                ? JsonSerializer.Serialize(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-                : "";
+            var json = content != null ? JsonSerializer.Serialize(content, PropertyNameCaseInsensitive) : string.Empty;
             _responses[url] = (statusCode, json);
         }
 
         public void SetupResponse(HttpStatusCode statusCode, object? content = null)
         {
-            var json = content != null
-                ? JsonSerializer.Serialize(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-                : "";
+            var json = content != null ? JsonSerializer.Serialize(content, PropertyNameCaseInsensitive) : string.Empty;
             _responses["*"] = (statusCode, json);
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var url = request.RequestUri?.ToString() ?? "";
-            var path = request.RequestUri?.PathAndQuery ?? "";
+            var url = request.RequestUri?.ToString() ?? string.Empty;
+            var path = request.RequestUri?.PathAndQuery ?? string.Empty;
 
             foreach (var kvp in _responses)
             {
@@ -45,5 +41,10 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
                 Content = new StringContent("{}", Encoding.UTF8, "application/json")
             });
         }
+
+        private static readonly JsonSerializerOptions PropertyNameCaseInsensitive = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
     }
 }

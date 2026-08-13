@@ -41,7 +41,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Services
             busMock.SetupGet(b => b.AdvancedBus).Returns(advancedBusMock.Object);
 
             Func<UsuarioRegistradoIntegrationEvent, Task<ResponseMessage>>? responderCapturado = null;
-            busMock.Setup(b => b.RespondAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(
+            busMock.Setup(b => b.RespondAsync(
                 It.IsAny<Func<UsuarioRegistradoIntegrationEvent, Task<ResponseMessage>>>()))
                 .Callback<Func<UsuarioRegistradoIntegrationEvent, Task<ResponseMessage>>>(r => responderCapturado = r)
                 .Returns(Mock.Of<IDisposable>);
@@ -54,11 +54,12 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Services
 
             // Invocar o responder capturado e aguardar o resultado
             Assert.NotNull(responderCapturado);
-            var resposta = await responderCapturado!(evento);
+            var resposta = await responderCapturado(evento);
 
             // Assert
-            mediatorMock.Verify(m => m.SendCommand(It.Is<AdicionarAlunoCommand>(
-                c => c.UsuarioId == usuarioId && c.Nome == nome && c.Email == email)), Times.Once);
+            mediatorMock.Verify(
+                m => m.SendCommand(It.Is<AdicionarAlunoCommand>(c => c.UsuarioId == usuarioId && c.Nome == nome && c.Email == email)),
+                Times.Once);
             Assert.NotNull(resposta);
             Assert.True(resposta.ValidationResult.IsValid);
         }

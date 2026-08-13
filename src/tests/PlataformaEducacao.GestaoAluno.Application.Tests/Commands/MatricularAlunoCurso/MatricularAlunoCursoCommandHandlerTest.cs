@@ -8,7 +8,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.MatricularAl
 {
     public class MatricularAlunoCursoCommandHandlerTest
     {
-        readonly Aluno _aluno = new(alunoId: Guid.NewGuid(), "Fulano de Tal", "fulano@teste.com");
+        private readonly Aluno _aluno = new(alunoId: Guid.NewGuid(), "Fulano de Tal", "fulano@teste.com");
 
         [Fact(DisplayName = "MatricularAlunoCurso quando comando inválido retorna validação e não chama repositório")]
         [Trait("Categoria", "Gestão Aluno - Application - Commands - MatricularAlunoCursoHandler")]
@@ -16,7 +16,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.MatricularAl
         {
             // Arrange
             var comandoInvalido = new MatricularAlunoCursoCommand(
-                cursoId: Guid.Empty, alunoId: Guid.Empty, nomeCurso: "", totalAulasCurso: 0, valor: 0m);
+                cursoId: Guid.Empty, alunoId: Guid.Empty, nomeCurso: string.Empty, totalAulasCurso: 0, valor: 0m);
             var repositorioMock = new Mock<IAlunoRepository>(MockBehavior.Strict);
             var handler = new MatricularAlunoCursoCommandHandler(repositorioMock.Object);
 
@@ -111,7 +111,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.MatricularAl
             uowMock.Verify(u => u.Commit(), Times.Once);
 
             Assert.NotNull(matriculaObtida);
-            Assert.Equal(cursoId, matriculaObtida!.CursoId);
+            Assert.Equal(cursoId, matriculaObtida.CursoId);
             Assert.Equal("Curso X", matriculaObtida.NomeCurso);
             Assert.Equal(200m, matriculaObtida.Valor);
         }

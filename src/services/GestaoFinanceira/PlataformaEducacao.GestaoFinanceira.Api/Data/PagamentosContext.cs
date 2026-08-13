@@ -15,13 +15,19 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data
             ChangeTracker.AutoDetectChangesEnabled = false;
         }
 
-        public DbSet<Pagamento> Pagamentos { get; set; }
-        public DbSet<Transacao> Transacoes { get; set; }
+        public DbSet<Pagamento> Pagamentos { get; set; } = default!;
+
+        public DbSet<Transacao> Transacoes { get; set; } = default!;
+
+        public async Task<bool> Commit()
+        {
+            return await SaveChangesAsync() > 0;
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<ValidationResult>();
-            modelBuilder.Ignore<Event>();
+            modelBuilder.Ignore<Evento>();
 
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                 e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
@@ -31,11 +37,6 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data
                 .SelectMany(e => e.GetForeignKeys())) relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PagamentosContext).Assembly);
-        }
-
-        public async Task<bool> Commit()
-        {
-            return await SaveChangesAsync() > 0;
         }
     }
 }

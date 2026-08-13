@@ -4,7 +4,6 @@ using PlataformaEducacao.GestaoFinanceira.Business.Models;
 
 namespace PlataformaEducacao.GestaoFinanceira.Api.Data.Repository
 {
-
     public class PagamentoRepository : IPagamentoRepository
     {
         private readonly PagamentosContext _context;

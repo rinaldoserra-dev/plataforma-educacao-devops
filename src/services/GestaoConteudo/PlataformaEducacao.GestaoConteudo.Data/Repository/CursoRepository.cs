@@ -14,6 +14,7 @@ namespace PlataformaEducacao.GestaoConteudo.Data.Repository
         }
 
         public IUnitOfWork UnitOfWork => _context;
+
         public async Task Inserir(Curso curso, CancellationToken cancellationToken)
         {
             await _context.Cursos.AddAsync(curso, cancellationToken);
@@ -23,12 +24,14 @@ namespace PlataformaEducacao.GestaoConteudo.Data.Repository
         {
             return Task.FromResult(_context.Cursos.Update(curso));
         }
+
         public async Task<Curso?> ObterPorId(Guid cursoId, CancellationToken cancellationToken)
         {
             return await _context.Cursos
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == cursoId, cancellationToken);
         }
+
         public async Task<Aula?> ObterAulaPorCursoIdEAulaId(Guid cursoId, Guid aulaId, CancellationToken cancellationToken)
         {
             return await _context.Aulas
@@ -42,6 +45,7 @@ namespace PlataformaEducacao.GestaoConteudo.Data.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Nome == nome, cancellationToken);
         }
+
         public async Task<IEnumerable<Curso>> ObterTodos(CancellationToken cancellationToken)
         {
             return await _context.Cursos
@@ -56,10 +60,12 @@ namespace PlataformaEducacao.GestaoConteudo.Data.Repository
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == cursoId, cancellationToken);
         }
+
         public async Task InserirAula(Aula aula, CancellationToken cancellationToken)
         {
             await _context.Aulas.AddAsync(aula, cancellationToken);
         }
+
         public async Task<IEnumerable<Curso>> ObterDisponiveisComAula(CancellationToken cancellationToken)
         {
             return await _context.Cursos
@@ -68,9 +74,9 @@ namespace PlataformaEducacao.GestaoConteudo.Data.Repository
                 .Where(c => c.Disponivel)
                 .ToListAsync(cancellationToken);
         }
+
         public void Dispose()
         {
-
         }
     }
 }

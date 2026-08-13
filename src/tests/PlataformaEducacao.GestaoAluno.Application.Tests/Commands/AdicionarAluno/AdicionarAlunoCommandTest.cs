@@ -38,7 +38,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.AdicionarAlu
         public void AdicionarAlunoCommand_QuandoNomeVazio_DeveSerInvalido()
         {
             // Arrange
-            var command = new AdicionarAlunoCommand(Guid.NewGuid(), "", "fulano@teste.com");
+            var command = new AdicionarAlunoCommand(Guid.NewGuid(), string.Empty, "fulano@teste.com");
 
             // Act
             var result = command.EhValido();
@@ -53,7 +53,7 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Commands.AdicionarAlu
         public void AdicionarAlunoCommand_QuandoEmailVazio_DeveSerInvalido()
         {
             // Arrange
-            var command = new AdicionarAlunoCommand(Guid.NewGuid(), "Fulano de Tal", "");
+            var command = new AdicionarAlunoCommand(Guid.NewGuid(), "Fulano de Tal", string.Empty);
 
             // Act
             var result = command.EhValido();

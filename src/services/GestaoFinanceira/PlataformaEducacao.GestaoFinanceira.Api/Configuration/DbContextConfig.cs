@@ -23,6 +23,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
                     opt.EnableSensitiveDataLogging();
                 });
             }
+
             return services;
         }
     }

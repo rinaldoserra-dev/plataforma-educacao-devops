@@ -26,7 +26,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Commands
         public void AdicionarCursoCommand_DeveSerInvalido_QuandoNomeVazio()
         {
             // Arrange
-            var command = new AdicionarCursoCommand("", "Conteudo do curso", 5, 500, true);
+            var command = new AdicionarCursoCommand(string.Empty, "Conteudo do curso", 5, 500, true);
 
             // Act
             var result = command.EhValido();
@@ -55,7 +55,7 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Commands
         public void AdicionarCursoCommand_DeveSerInvalido_QuandoDescricaoConteudoVazio()
         {
             // Arrange
-            var command = new AdicionarCursoCommand("Curso C#", "", 5, 500, true);
+            var command = new AdicionarCursoCommand("Curso C#", string.Empty, 5, 500, true);
 
             // Act
             var result = command.EhValido();

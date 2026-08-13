@@ -6,16 +6,23 @@ namespace PlataformaEducacao.Core.DomainObjects
     {
         public const int EnderecoMaxLength = 254;
         public const int EnderecoMinLength = 5;
-        public string Endereco { get; private set; } = null!;
-
-        //Construtor do EntityFramework
-        protected Email() { }
 
         public Email(string endereco)
         {
-            if (!Validar(endereco)) throw new DomainException("E-mail inválido");
+            if (!Validar(endereco))
+            {
+                throw new DomainException("E-mail inválido");
+            }
+
             Endereco = endereco;
         }
+
+        // Construtor do EntityFramework
+        protected Email()
+        {
+        }
+
+        public string Endereco { get; private set; } = null!;
 
         public static bool Validar(string email)
         {

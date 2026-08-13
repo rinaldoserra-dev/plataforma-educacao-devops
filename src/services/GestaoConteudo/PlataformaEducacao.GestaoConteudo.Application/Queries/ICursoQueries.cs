@@ -11,7 +11,9 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Queries
         Task<IEnumerable<CursoViewModel>> ObterDisponiveisComAula(CancellationToken cancellationToken);
 
         Task<IEnumerable<AulaViewModel>> ObterAulasPorCursoId(Guid cursoId, CancellationToken cancellationToken);
+
         Task<CursoViewModel?> ObterCursoComAulasPorCursoId(Guid cursoId, CancellationToken cancellationToken);
+
         Task<AulaViewModel?> ObterAulaPorCursoIdEAulaId(Guid cursoId, Guid aulaId, CancellationToken cancellationToken);
     }
 }

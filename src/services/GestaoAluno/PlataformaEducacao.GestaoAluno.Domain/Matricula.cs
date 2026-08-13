@@ -7,22 +7,26 @@ namespace PlataformaEducacao.GestaoAluno.Domain
     public class Matricula : Entity
     {
         public Guid CursoId { get; private set; }
+
         public string NomeCurso { get; private set; } = null!;
+
         public decimal Valor { get; private set; }
+
         public Guid AlunoId { get; private set; }
+
         public DateTime DataMatricula { get; private set; }
+
         public SituacaoMatricula SituacaoMatricula { get; private set; }
+
         public HistoricoAprendizado HistoricoAprendizado { get; private set; } = null!;
+
         public Aluno Aluno { get; private set; } = null!;
+
         public Certificado? Certificado { get; private set; }
 
         private readonly List<ProgressoAula> _progressoAulas;
-        public IReadOnlyCollection<ProgressoAula> ProgressoAulas => _progressoAulas;
 
-        protected Matricula()
-        {
-            _progressoAulas = [];
-        }
+        public IReadOnlyCollection<ProgressoAula> ProgressoAulas => _progressoAulas;
 
         public Matricula(Guid cursoId, string nomeCurso, int totalAulasCurso, decimal valor)
         {
@@ -36,6 +40,11 @@ namespace PlataformaEducacao.GestaoAluno.Domain
             _progressoAulas = [];
 
             Validar();
+        }
+
+        protected Matricula()
+        {
+            _progressoAulas = [];
         }
 
         public void AssociarAluno(Guid alunoId)
@@ -96,23 +105,13 @@ namespace PlataformaEducacao.GestaoAluno.Domain
             AtualizaProgressoCurso();
         }
 
-        private void AtualizaProgressoCurso()
-        {
-            var totalAulasCurso = HistoricoAprendizado.TotalAulasCurso;
-            int aulasConcluidas = _progressoAulas.Count;
-
-            double novoProgresso = (double)aulasConcluidas / totalAulasCurso * 100;
-
-            HistoricoAprendizado = HistoricoAprendizado.HistoricoAprendizadoFactory.CriarEmAndamento(totalAulasCurso, novoProgresso);
-        }
-
         public void FinalizarCurso()
         {
             if (EstaAtiva() is false)
                 throw new DomainException("Antes de finalizar curso é obrigatório realizar pagamento da matrícula.");
 
-            int aulasConcluidas = _progressoAulas.Count;
-            int totalAulasCurso = HistoricoAprendizado.TotalAulasCurso;
+            var aulasConcluidas = _progressoAulas.Count;
+            var totalAulasCurso = HistoricoAprendizado.TotalAulasCurso;
 
             if (HistoricoAprendizado.ProgressoGeralCurso < 100 || aulasConcluidas != totalAulasCurso)
                 throw new DomainException("Para finalizar curso é necessário assistir todas as aulas.");
@@ -120,7 +119,7 @@ namespace PlataformaEducacao.GestaoAluno.Domain
             if (HistoricoAprendizado.SituacaoCurso == SituacaoCurso.Concluido)
                 throw new DomainException("Curso já finalizado, não pode ser finalizado novamente.");
 
-            double progresso = HistoricoAprendizado.ProgressoGeralCurso;
+            var progresso = HistoricoAprendizado.ProgressoGeralCurso;
 
             HistoricoAprendizado = HistoricoAprendizado.HistoricoAprendizadoFactory.CriarFinalizado(totalAulasCurso, progresso);
 
@@ -140,6 +139,16 @@ namespace PlataformaEducacao.GestaoAluno.Domain
             Validacoes.ValidarSeVazio(CursoId, "O id do curso é obrigatório.");
             Validacoes.ValidarSeVazio(NomeCurso, "O nome do curso é obrigatório.");
             Validacoes.ValidarSeMenorOuIgualQue(Valor, 0, "O valor do curso deve ser maior que zero.");
+        }
+
+        private void AtualizaProgressoCurso()
+        {
+            var totalAulasCurso = HistoricoAprendizado.TotalAulasCurso;
+            var aulasConcluidas = _progressoAulas.Count;
+
+            var novoProgresso = (double)aulasConcluidas / totalAulasCurso * 100;
+
+            HistoricoAprendizado = HistoricoAprendizado.HistoricoAprendizadoFactory.CriarEmAndamento(totalAulasCurso, novoProgresso);
         }
 
         public static class MatriculaFactory
