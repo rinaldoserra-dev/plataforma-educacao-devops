@@ -1,16 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace PlataformaEducacao.GestaoFinanceira.Api.Data;
-
-public sealed class PagamentosContextFactory : IDesignTimeDbContextFactory<PagamentosContext>
+namespace PlataformaEducacao.GestaoFinanceira.Api.Data
 {
-    public PagamentosContext CreateDbContext(string[] args)
+    public sealed class PagamentosContextFactory : IDesignTimeDbContextFactory<PagamentosContext>
     {
-        var options = new DbContextOptionsBuilder<PagamentosContext>()
-            .UseSqlServer("Server=localhost,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
-            .Options;
+        public PagamentosContext CreateDbContext(string[] args)
+        {
+            var options = new DbContextOptionsBuilder<PagamentosContext>()
+                .UseSqlServer("Server=localhost,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
+                .Options;
 
-        return new PagamentosContext(options);
+            return new PagamentosContext(options);
+        }
     }
 }

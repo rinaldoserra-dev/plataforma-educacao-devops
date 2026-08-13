@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Design;
 using PlataformaEducacao.Core.Mediator;
 using PlataformaEducacao.Core.Messages;
 
-namespace PlataformaEducacao.GestaoAluno.Data;
-
-public sealed class GestaoAlunoContextFactory : IDesignTimeDbContextFactory<GestaoAlunoContext>
+namespace PlataformaEducacao.GestaoAluno.Data
 {
-    public GestaoAlunoContext CreateDbContext(string[] args)
+    public sealed class GestaoAlunoContextFactory : IDesignTimeDbContextFactory<GestaoAlunoContext>
     {
-        var options = new DbContextOptionsBuilder<GestaoAlunoContext>()
-            .UseSqlServer("Server=localhost,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
-            .Options;
+        public GestaoAlunoContext CreateDbContext(string[] args)
+        {
+            var options = new DbContextOptionsBuilder<GestaoAlunoContext>()
+                .UseSqlServer("Server=localhost,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
+                .Options;
 
             return new GestaoAlunoContext(options, new DesignTimeMediatorHandler());
         }
