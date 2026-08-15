@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureAppSettings();
 builder.Host.AddLoggingConfiguration(builder.Configuration, "GestaoConteudo");
 builder.Services.AddCorrelationIdConfiguration(builder.Configuration);
+builder.Services.AddMetricsConfiguration();
 
 builder.Services
     .AddApiConfiguration(builder.Configuration)
@@ -18,7 +19,8 @@ builder.Services
 
 var app = builder.Build();
 
-app.UseLoggingConfiguration()
+app.UseMetricsConfiguration()
+   .UseLoggingConfiguration()
    .UseSwaggerConfiguration()
    .UseApiConfiguration(app.Environment);
 
