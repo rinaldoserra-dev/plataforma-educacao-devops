@@ -33,7 +33,7 @@ namespace PlataformaEducacao.Bff.Api.Configurations
             services.AddCorsConfiguration(configuration);
             services.AddHealthChecks()
                 .AddCheck("live", () => HealthCheckResult.Healthy(), tags: ["live"])
-                .AddCheck<BffDependenciesHealthCheck>("dependencies", tags: ["ready"]);
+                .AddCheck<BffDependenciesHealthCheck>("dependencies", tags: ["ready"], timeout: TimeSpan.FromSeconds(10));
             return services;
         }
 
