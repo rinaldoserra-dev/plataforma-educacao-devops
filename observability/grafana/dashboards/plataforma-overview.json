@@ -1,0 +1,22 @@
+{
+  "annotations": {"list": []},
+  "editable": false,
+  "graphTooltip": 0,
+  "panels": [
+    {"title": "Status dos servicos", "type": "stat", "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0}, "targets": [{"expr": "sum(up)", "legendFormat": "UP"}], "options": {"reduceOptions": {"calcs": ["lastNotNull"]}, "colorMode": "value", "orientation": "auto"}},
+    {"title": "Requisicoes por segundo", "type": "timeseries", "gridPos": {"h": 8, "w": 9, "x": 6, "y": 0}, "targets": [{"expr": "sum by (job) (rate(http_requests_received_total[5m]))", "legendFormat": "{{job}}"}]},
+    {"title": "Taxa de erro HTTP", "type": "timeseries", "gridPos": {"h": 8, "w": 9, "x": 15, "y": 0}, "targets": [{"expr": "sum(rate(http_requests_received_total{code=~\"5..\"}[5m])) / clamp_min(sum(rate(http_requests_received_total[5m])), 1)", "legendFormat": "5xx"}]},
+    {"title": "Latencia media", "type": "timeseries", "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8}, "targets": [{"expr": "sum(rate(http_request_duration_seconds_sum[5m])) / clamp_min(sum(rate(http_request_duration_seconds_count[5m])), 1)", "legendFormat": "media"}]},
+    {"title": "Latencia P95", "type": "timeseries", "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8}, "targets": [{"expr": "histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket[5m])))", "legendFormat": "p95"}]},
+    {"title": "Memoria utilizada", "type": "timeseries", "gridPos": {"h": 8, "w": 12, "x": 0, "y": 16}, "targets": [{"expr": "process_working_set_bytes", "legendFormat": "{{job}}"}]},
+    {"title": "CPU utilizada", "type": "timeseries", "gridPos": {"h": 8, "w": 12, "x": 12, "y": 16}, "targets": [{"expr": "rate(process_cpu_seconds_total[5m])", "legendFormat": "{{job}}"}]},
+    {"title": "Health checks / disponibilidade", "type": "timeseries", "gridPos": {"h": 6, "w": 24, "x": 0, "y": 24}, "targets": [{"expr": "up", "legendFormat": "{{job}}"}]}
+  ],
+  "schemaVersion": 39,
+  "tags": ["plataforma-educacao", "observabilidade"],
+  "templating": {"list": []},
+  "time": {"from": "now-6h", "to": "now"},
+  "title": "Plataforma Educacao - Overview",
+  "uid": "plataforma-overview",
+  "version": 1
+}

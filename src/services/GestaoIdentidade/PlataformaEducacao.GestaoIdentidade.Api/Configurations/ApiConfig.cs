@@ -43,8 +43,8 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Configurations
             services.AddCorsConfiguration(configuration);
             services.AddHealthChecks()
                 .AddCheck("live", () => HealthCheckResult.Healthy(), tags: ["live"])
-                .AddCheck<DatabaseHealthCheck<GestaoIdentidadeContext>>("sqlserver", tags: ["ready"])
-                .AddCheck<MessageBusHealthCheck>("rabbitmq", tags: ["ready"]);
+                .AddCheck<DatabaseHealthCheck<GestaoIdentidadeContext>>("sqlserver", tags: ["ready"], timeout: TimeSpan.FromSeconds(5))
+                .AddCheck<MessageBusHealthCheck>("rabbitmq", tags: ["ready"], timeout: TimeSpan.FromSeconds(5));
 
             return services;
         }

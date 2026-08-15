@@ -46,6 +46,7 @@ O projeto consiste em:
 - **Orquestração:** Kubernetes (Kind local)
 - **CI/CD:** GitHub Actions
 - **Documentação:** Swagger / OpenAPI
+- **Observabilidade:** prometheus-net.AspNetCore, Prometheus, Grafana e Serilog
 
 ## **4. Estrutura do Projeto**
 
@@ -70,6 +71,7 @@ plataforma-educacao-devops/
 |   +-- bff-api.yaml
 |   +-- ingress.yaml          # Ingress (nginx) roteando host plataforma.local -> bff-api
 |   +-- hpa.yaml              # HorizontalPodAutoscalers das 5 APIs
+|   +-- observability/        # Prometheus, Grafana, ConfigMaps e PVCs
 |   +-- deploy.sh             # Script único que aplica todos os manifests na ordem correta
 |
 +-- src/
@@ -92,6 +94,15 @@ plataforma-educacao-devops/
 |       +-- ... (demais projetos de teste)
 |
 +-- docker-compose.yml
++-- observability/            # Configurações de Prometheus e Grafana
+|   +-- prometheus/
+|   |   +-- prometheus.yml
+|   +-- grafana/
+|       +-- provisioning/
+|       |   +-- datasources/
+|       |   +-- dashboards/
+|       +-- dashboards/
+|           +-- plataforma-overview.json
 +-- PlataformaEducacao.sln
 +-- build.ps1 / build.sh
 ```
@@ -110,6 +121,7 @@ plataforma-educacao-devops/
 - **API Gateway (BFF):** Ponto único de entrada que agrega chamadas dos serviços de Identidade, Conteúdo e Alunos.
 - **Documentação da API:** Documentação automática dos endpoints de cada API utilizando Swagger.
 - **Health checks nativos (/health)**
+- **Observabilidade:** métricas HTTP e de runtime, endpoint `/metrics`, Prometheus, Grafana e logs estruturados em JSON.
 
 ## 6. Arquitetura DevOps
 
@@ -209,8 +221,45 @@ Todos os serviços + RabbitMQ sobem automaticamente. Swagger acessível em:
 | Gestão Conteúdo API | http://localhost:5440/swagger/ |
 | Gestão Aluno API | http://localhost:5460/swagger/ |
 | Gestão Financeira API | http://localhost:7083/swagger/ |
-| BFF API Gateway | http://localhost:5450/swagger/ |
+| BFF API Gateway | http://localhost:5000/swagger/ |
 | RabbitMQ Management | http://localhost:15672 |
+
+### 7.3.1. Observabilidade
+
+O ambiente Docker Compose inclui Prometheus e Grafana. Para iniciar os serviços, incluindo os componentes de observabilidade:
+
+```bash
+docker compose up -d --build
+```
+
+| Componente | URL |
+|------------|-----|
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3000 |
+| Métricas do BFF | http://localhost:5000/metrics |
+| Métricas de Identidade | http://localhost:5430/metrics |
+| Métricas de Conteúdo | http://localhost:5440/metrics |
+| Métricas de Aluno | http://localhost:5460/metrics |
+| Métricas Financeiras | http://localhost:7083/metrics |
+
+O Grafana utiliza o Prometheus como datasource, carrega automaticamente o dashboard **Plataforma Educacao - Overview** e o define como dashboard inicial após o login.
+
+Credenciais padrão para o ambiente local:
+
+- Usuário: `admin`
+- Senha: `admin`
+
+Altere essas credenciais antes de utilizar o Grafana em qualquer ambiente compartilhado ou produtivo.
+
+As métricas e os health checks podem ser verificados diretamente com:
+
+```bash
+curl http://localhost:5000/metrics
+curl http://localhost:5000/health/live
+curl http://localhost:5000/health/ready
+```
+
+No Prometheus, os targets podem ser consultados em http://localhost:9090/targets. As cinco aplicações devem aparecer com o estado `UP`.
 
 Para derrubar:
 ```bash
@@ -257,7 +306,7 @@ docker pull rabbitmq:3-management                 && kind load docker-image rabb
 
 #### Executar o deploy (script único)
 
-O script `k8s/deploy.sh` orquestra toda a aplicação dos manifests na ordem correta (namespace → secret → configmap → infra → wait → APIs → ingress → HPA):
+O script `k8s/deploy.sh` orquestra toda a aplicação dos manifests na ordem correta (namespace → secret → configmap → infra → wait → APIs → observabilidade → ingress → HPA):
 
 ```bash
 ./k8s/deploy.sh
@@ -272,7 +321,7 @@ O script `k8s/deploy.sh` orquestra toda a aplicação dos manifests na ordem cor
 ```bash
 kubectl get pods -n plataforma-educacao
 ```
-São esperados 7 pods em `Running` (sqlserver, rabbitmq, 4 APIs e o BFF) e os pods do `ingress-nginx` no namespace `ingress-nginx`.
+São esperados 9 pods em `Running` (sqlserver, rabbitmq, Prometheus, Grafana, 4 APIs e o BFF) e os pods do `ingress-nginx` no namespace `ingress-nginx`.
 
 ```bash
 kubectl get hpa -n plataforma-educacao    # ver os autoscalers
@@ -310,6 +359,38 @@ kubectl port-forward -n plataforma-educacao service/gestao-identidade-api 5430:8
 ```
 Swagger do BFF em `http://localhost:5450/swagger/`.
 
+#### Acessar a observabilidade no Kubernetes
+
+O deploy também instala Prometheus e Grafana no namespace `plataforma-educacao`:
+
+```bash
+kubectl port-forward -n plataforma-educacao service/prometheus 9090:9090
+kubectl port-forward -n plataforma-educacao service/grafana 3000:3000
+```
+
+Os comandos devem ser executados em terminais separados. Depois, acesse:
+
+| Componente | URL |
+|------------|-----|
+| Prometheus | http://localhost:9090 |
+| Prometheus targets | http://localhost:9090/targets |
+| Grafana | http://localhost:3000 |
+| Dashboard Grafana | http://localhost:3000/d/plataforma-overview/plataforma-educacao-overview |
+
+Credenciais locais do Grafana:
+
+- Usuário: `admin`
+- Senha: `admin`
+
+O Prometheus coleta internamente os endpoints `/metrics` dos Services das cinco aplicações. Após gerar tráfego no BFF, valide no Prometheus com:
+
+```promql
+up
+sum(rate(http_requests_received_total[5m]))
+```
+
+Todos os cinco targets devem aparecer como `UP` em `http://localhost:9090/targets`.
+
 #### Verificando o log estruturado (JSON)
 
 No k8s, por padrão, apenas o sink Console está ativo (stdout do pod — o sink File é neutralizado via env var no `k8s/configmap.yaml`). Para inspecionar:
@@ -340,7 +421,7 @@ kind delete cluster --name plataforma-educacao
 
 Disparada em **pull requests** e **push** para `main`:
 
-A etapa de CI é composta por 2 jobs paralelos:
+A etapa de CI é composta por 3 jobs paralelos:
 
 1. **build-test (Build e testes)**
    - `actions/checkout@v4` → `actions/setup-dotnet@v4` (utilizando .NET 8.0.x)
@@ -353,9 +434,15 @@ A etapa de CI é composta por 2 jobs paralelos:
    - `dotnet restore PlataformaEducacao.sln` — restaura as dependências da solução
    - `dotnet format PlataformaEducacao.sln --verify-no-changes --no-restore` — valida se o código segue os padrões de formatação definidos, falhando o job caso existam divergências.
 
+3. **observability-validation (Validação de observabilidade)**
+   - Valida a configuração com `docker compose config`.
+   - Confirma os cinco targets configurados no Prometheus.
+   - Valida o JSON do dashboard Grafana.
+   - Verifica a existência dos endpoints de health check e métricas.
+
 ### CD (Deploy Contínuo)
 
-Disparada automaticamente após o sucesso dos jobs de CI (build-test e lint) apenas quando o evento for um push na branch `main`:
+Disparada automaticamente após o sucesso dos jobs de CI (`build-test`, `lint` e `observability-validation`) apenas quando o evento for um push na branch `main`:
 
 1. **docker-push (Build e push das imagens) (matrix strategy)**
    - `docker/login-action@v3` — realiza a autenticação no Docker Hub
@@ -432,7 +519,7 @@ Todas as APIs possuem Swagger configurado com autenticação Bearer JWT.
 | Conteúdo | https://localhost:5441/swagger/ | http://localhost:5440/swagger/ | http://localhost:5440/swagger/ |
 | Aluno | https://localhost:5461/swagger/ | http://localhost:5460/swagger/ | http://localhost:5460/swagger/ |
 | Financeira | https://localhost:7083/swagger/ | http://localhost:7083/swagger/ | http://localhost:7083/swagger/ |
-| BFF | https://localhost:5451/swagger/ | http://localhost:5450/swagger/ | http://localhost:5450/swagger/ |
+| BFF | https://localhost:5451/swagger/ | http://localhost:5000/swagger/ | http://localhost:5000/swagger/ |
 
 ### Autenticação no Swagger
 
@@ -452,7 +539,17 @@ Todas as APIs possuem Swagger configurado com autenticação Bearer JWT.
     - Campos estruturados por evento: `@t` (timestamp UTC ISO 8601), `@mt` (message template), `@l` (level), `@tr`/`@sp` (TraceId/SpanId), `CorrelationId`, `SourceContext`, `MachineName`, `ProcessId`, `ThreadId`, `Application`, `Service`, e campos de request HTTP (`RequestMethod`, `RequestPath`, `StatusCode`, `Elapsed`) via `UseSerilogRequestLogging`.
   - **Correlação entre serviços:** middleware `CorrelationId` lê/gera o header `X-Correlation-ID` (presente na resposta HTTP). No BFF, `AddCorrelationIdForwarding` propaga o header em chamadas `HttpClient` outbound para os serviços backend. O mesmo `CorrelationId` atravessa BFF → serviço backend → log, permitindo rastrear uma requisição ponta-a-ponta.
   - **Logs no Kubernetes:** o sink File é neutralizado via env vars no `k8s/configmap.yaml` (`Serilog__WriteTo__1__Args__path=/dev/null`), de modo que **apenas o sink Console** grava em **stdout** do pod — consumido via `kubectl logs -n plataforma-educacao <pod>`. No docker-compose o File sink permanece ativo (`logs/log-YYYYMMDD.json`, 7 dias).
-- **Health Checks:** Endpoints `/health` de todas as APIs
+  - **Métricas:** todas as cinco aplicações expõem o endpoint `/metrics`, com métricas HTTP, runtime e de exceções não tratadas.
+    - Métricas HTTP incluem quantidade de requisições, duração, status HTTP e requisições em andamento.
+    - Métricas de runtime incluem uso de memória e CPU do processo .NET.
+    - Exceções não tratadas são contabilizadas em `application_exceptions_total`.
+    - A configuração centralizada está em `src/building-blocks/PlataformaEducacao.WebApi.Core/Extensions/MetricsConfig.cs`.
+  - **Prometheus:** coleta as métricas das aplicações a cada 15 segundos, conforme `observability/prometheus/prometheus.yml`.
+  - **Grafana:** utiliza o Prometheus como datasource e provisiona o dashboard `observability/grafana/dashboards/plataforma-overview.json`.
+  - **Health Checks:**
+    - `/health/live` verifica somente se a aplicação está em execução.
+    - `/health/ready` verifica SQL Server, RabbitMQ e as APIs dependentes do BFF.
+    - As dependências possuem timeouts para evitar respostas bloqueadas indefinidamente.
 
 ## 12. Avaliação
 

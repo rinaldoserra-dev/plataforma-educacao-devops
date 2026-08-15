@@ -46,8 +46,8 @@ namespace PlataformaEducacao.GestaoConteudo.Api.Configurations
             services.AddCorsConfiguration(configuration);
             services.AddHealthChecks()
                 .AddCheck("live", () => HealthCheckResult.Healthy(), tags: ["live"])
-                .AddCheck<DatabaseHealthCheck<GestaoConteudoContext>>("sqlserver", tags: ["ready"])
-                .AddCheck<MessageBusHealthCheck>("rabbitmq", tags: ["ready"]);
+                .AddCheck<DatabaseHealthCheck<GestaoConteudoContext>>("sqlserver", tags: ["ready"], timeout: TimeSpan.FromSeconds(5))
+                .AddCheck<MessageBusHealthCheck>("rabbitmq", tags: ["ready"], timeout: TimeSpan.FromSeconds(5));
 
             return services;
         }

@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureAppSettings();
 builder.Host.AddLoggingConfiguration(builder.Configuration, "BFF");
 builder.Services.AddCorrelationIdConfiguration(builder.Configuration);
+builder.Services.AddMetricsConfiguration();
 
 builder.Services
     .AddApiConfig(builder.Configuration)
@@ -17,7 +18,8 @@ builder.Services
 
 var app = builder.Build();
 
-app.UseLoggingConfiguration()
+app.UseMetricsConfiguration()
+   .UseLoggingConfiguration()
    .UseSwaggerConfiguration()
    .UseApiConfiguration(app.Environment);
 
