@@ -121,12 +121,42 @@ jobs:
       - name: Verificar formatação
         run: dotnet format PlataformaEducacao.sln --verify-no-changes --no-restore
 
+  observability-validation:
+    name: Validar observabilidade
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validar Docker Compose
+        run: docker compose config --quiet
+
+      - name: Validar configurações Prometheus e Grafana
+        run: |
+          test -s observability/prometheus/prometheus.yml
+          grep -q 'bff-api:8080' observability/prometheus/prometheus.yml
+          grep -q 'gestao-identidade-api:8080' observability/prometheus/prometheus.yml
+          grep -q 'gestao-conteudo-api:8080' observability/prometheus/prometheus.yml
+          grep -q 'gestao-aluno-api:8080' observability/prometheus/prometheus.yml
+          grep -q 'gestao-financeira-api:8080' observability/prometheus/prometheus.yml
+          jq empty observability/grafana/dashboards/plataforma-overview.json
+
+      - name: Validar endpoints declarados
+        run: |
+          grep -R -q '/health/live' k8s
+          grep -R -q '/health/ready' k8s
+          grep -R -q 'UseMetricsConfiguration' src
+
   docker-push:
     name: Build e Push das Imagens
 
     needs:
       - build-test
       - lint
+      - observability-validation
 
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
 
