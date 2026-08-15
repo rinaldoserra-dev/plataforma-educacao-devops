@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: plataforma-educacao
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+
+    scrape_configs:
+      - job_name: bff-api
+        metrics_path: /metrics
+        static_configs:
+          - targets: ["bff-api:8080"]
+
+      - job_name: gestao-identidade-api
+        metrics_path: /metrics
+        static_configs:
+          - targets: ["gestao-identidade-api:8080"]
+
+      - job_name: gestao-conteudo-api
+        metrics_path: /metrics
+        static_configs:
+          - targets: ["gestao-conteudo-api:8080"]
+
+      - job_name: gestao-aluno-api
+        metrics_path: /metrics
+        static_configs:
+          - targets: ["gestao-aluno-api:8080"]
+
+      - job_name: gestao-financeira-api
+        metrics_path: /metrics
+        static_configs:
+          - targets: ["gestao-financeira-api:8080"]
