@@ -120,9 +120,51 @@ services:
     depends_on:
       - gestao-identidade-api
 
+  prometheus:
+    image: prom/prometheus:v3.5.0
+    container_name: plataforma-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus-data:/prometheus
+      - ./observability/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+    networks:
+      - plataforma-network
+    depends_on:
+      - bff-api
+      - gestao-identidade-api
+      - gestao-conteudo-api
+      - gestao-aluno-api
+      - gestao-financeira-api
+
+  grafana:
+    image: grafana/grafana:12.1.1
+    container_name: plataforma-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      - plataforma-network
+    depends_on:
+      - prometheus
+
 networks:
   plataforma-network:
     driver: bridge
 
 volumes:
   sqlserver-data:
+  prometheus-data:
+  grafana-data:
