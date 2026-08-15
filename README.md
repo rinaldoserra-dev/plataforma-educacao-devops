@@ -71,6 +71,7 @@ plataforma-educacao-devops/
 |   +-- bff-api.yaml
 |   +-- ingress.yaml          # Ingress (nginx) roteando host plataforma.local -> bff-api
 |   +-- hpa.yaml              # HorizontalPodAutoscalers das 5 APIs
+|   +-- observability/        # Prometheus, Grafana, ConfigMaps e PVCs
 |   +-- deploy.sh             # Script único que aplica todos os manifests na ordem correta
 |
 +-- src/
@@ -241,7 +242,7 @@ docker compose up -d --build
 | Métricas de Aluno | http://localhost:5460/metrics |
 | Métricas Financeiras | http://localhost:7083/metrics |
 
-O Grafana utiliza o Prometheus como datasource e carrega automaticamente o dashboard **Plataforma Educacao - Overview**.
+O Grafana utiliza o Prometheus como datasource, carrega automaticamente o dashboard **Plataforma Educacao - Overview** e o define como dashboard inicial após o login.
 
 Credenciais padrão para o ambiente local:
 
@@ -305,7 +306,7 @@ docker pull rabbitmq:3-management                 && kind load docker-image rabb
 
 #### Executar o deploy (script único)
 
-O script `k8s/deploy.sh` orquestra toda a aplicação dos manifests na ordem correta (namespace → secret → configmap → infra → wait → APIs → ingress → HPA):
+O script `k8s/deploy.sh` orquestra toda a aplicação dos manifests na ordem correta (namespace → secret → configmap → infra → wait → APIs → observabilidade → ingress → HPA):
 
 ```bash
 ./k8s/deploy.sh
@@ -320,7 +321,7 @@ O script `k8s/deploy.sh` orquestra toda a aplicação dos manifests na ordem cor
 ```bash
 kubectl get pods -n plataforma-educacao
 ```
-São esperados 7 pods em `Running` (sqlserver, rabbitmq, 4 APIs e o BFF) e os pods do `ingress-nginx` no namespace `ingress-nginx`.
+São esperados 9 pods em `Running` (sqlserver, rabbitmq, Prometheus, Grafana, 4 APIs e o BFF) e os pods do `ingress-nginx` no namespace `ingress-nginx`.
 
 ```bash
 kubectl get hpa -n plataforma-educacao    # ver os autoscalers
@@ -357,6 +358,38 @@ kubectl port-forward -n plataforma-educacao service/gestao-identidade-api 5430:8
 # etc.
 ```
 Swagger do BFF em `http://localhost:5450/swagger/`.
+
+#### Acessar a observabilidade no Kubernetes
+
+O deploy também instala Prometheus e Grafana no namespace `plataforma-educacao`:
+
+```bash
+kubectl port-forward -n plataforma-educacao service/prometheus 9090:9090
+kubectl port-forward -n plataforma-educacao service/grafana 3000:3000
+```
+
+Os comandos devem ser executados em terminais separados. Depois, acesse:
+
+| Componente | URL |
+|------------|-----|
+| Prometheus | http://localhost:9090 |
+| Prometheus targets | http://localhost:9090/targets |
+| Grafana | http://localhost:3000 |
+| Dashboard Grafana | http://localhost:3000/d/plataforma-overview/plataforma-educacao-overview |
+
+Credenciais locais do Grafana:
+
+- Usuário: `admin`
+- Senha: `admin`
+
+O Prometheus coleta internamente os endpoints `/metrics` dos Services das cinco aplicações. Após gerar tráfego no BFF, valide no Prometheus com:
+
+```promql
+up
+sum(rate(http_requests_received_total[5m]))
+```
+
+Todos os cinco targets devem aparecer como `UP` em `http://localhost:9090/targets`.
 
 #### Verificando o log estruturado (JSON)
 
