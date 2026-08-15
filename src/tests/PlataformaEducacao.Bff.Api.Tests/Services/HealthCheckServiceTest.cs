@@ -103,11 +103,32 @@ namespace PlataformaEducacao.Bff.Api.Tests.Services
             resultado.Data.Should().NotBeNull();
         }
 
+        [Fact(DisplayName = "VerificarSaude quando resposta não possui motivo deve usar OK")]
+        [Trait("Categoria", "Bff.Api - Services - HealthCheckService")]
+        public async Task VerificarSaude_RespostaSemReasonPhrase_DeveUsarOk()
+        {
+            var httpClient = new HttpClient(new ReasonPhraseMissingHandler());
+            var service = new HealthCheckService(httpClient, Options.Create(_settings));
+
+            var resultado = await service.VerificarSaude();
+
+            resultado.Data.Should().NotBeNull();
+            resultado.Sucesso.Should().BeTrue();
+        }
+
         private sealed class ExceptionThrowingHandler : HttpMessageHandler
         {
             protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {
                 throw new HttpRequestException("Serviço indisponível");
+            }
+        }
+
+        private sealed class ReasonPhraseMissingHandler : HttpMessageHandler
+        {
+            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) { ReasonPhrase = null });
             }
         }
     }

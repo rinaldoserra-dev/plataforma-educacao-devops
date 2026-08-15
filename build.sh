@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Remove resultados de execucoes anteriores para o relatorio nao reutilizar
+# referencias a arquivos que foram renomeados ou removidos.
+rm -rf src/tests/*/TestResults coveragereport
+
 dotnet build PlataformaEducacao.sln
 
 dotnet test --collect:"XPlat Code Coverage" --settings coverage.runsettings

@@ -19,10 +19,20 @@ namespace PlataformaEducacao.GestaoAluno.Application.Services
             _serviceProvider = serviceProvider;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            SetResponder();
-            return Task.CompletedTask;
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                try
+                {
+                    SetResponder();
+                    await Task.Delay(Timeout.InfiniteTimeSpan, stoppingToken);
+                }
+                catch (Exception) when (!stoppingToken.IsCancellationRequested)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+                }
+            }
         }
 
         private void SetResponder()

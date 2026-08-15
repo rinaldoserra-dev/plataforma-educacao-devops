@@ -1,3 +1,5 @@
+Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "src/tests/*/TestResults", "coveragereport"
+
 dotnet build PlataformaEducacao.sln
 
 dotnet test --collect:"XPlat Code Coverage" --settings coverage.runsettings
