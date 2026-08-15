@@ -13,7 +13,8 @@ builder.Services
     .AddSwaggerConfiguration()
     .AddDbContextConfig(builder.Configuration, builder.Environment)
     .AddJwtConfiguration(builder.Configuration)
-    .RegisterServices();
+    .RegisterServices()
+    .AddMessageBusConfiguration(builder.Configuration);
 
 var app = builder.Build();
 

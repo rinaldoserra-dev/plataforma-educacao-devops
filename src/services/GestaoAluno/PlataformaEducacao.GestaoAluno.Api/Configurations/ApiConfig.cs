@@ -1,6 +1,11 @@
 ﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using PlataformaEducacao.GestaoAluno.Data;
+using PlataformaEducacao.MessageBus.HealthChecks;
 using PlataformaEducacao.WebApi.Core.Extensions;
+using PlataformaEducacao.WebApi.Core.HealthChecks;
 using PlataformaEducacao.WebApi.Core.Identidade;
 
 namespace PlataformaEducacao.GestaoAluno.Api.Configurations
@@ -39,7 +44,10 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
             services.AddControllers();
 
             services.AddCorsConfiguration(configuration);
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddCheck("live", () => HealthCheckResult.Healthy(), tags: ["live"])
+                .AddCheck<DatabaseHealthCheck<GestaoAlunoContext>>("sqlserver", tags: ["ready"])
+                .AddCheck<MessageBusHealthCheck>("rabbitmq", tags: ["ready"]);
 
             return services;
         }
@@ -61,8 +69,14 @@ namespace PlataformaEducacao.GestaoAluno.Api.Configurations
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health");
-                endpoints.MapHealthChecks("/health/ready");
+                endpoints.MapHealthChecks("/health/live", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains("live")
+                });
+                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains("ready")
+                });
             });
         }
     }

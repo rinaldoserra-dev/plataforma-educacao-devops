@@ -1,4 +1,7 @@
-﻿using PlataformaEducacao.Bff.Api.Extensions;
+﻿using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using PlataformaEducacao.Bff.Api.Extensions;
+using PlataformaEducacao.Bff.Api.Services;
 using PlataformaEducacao.WebApi.Core.Extensions;
 using PlataformaEducacao.WebApi.Core.Identidade;
 
@@ -28,7 +31,9 @@ namespace PlataformaEducacao.Bff.Api.Configurations
             services.Configure<AppServicesSettings>(configuration);
 
             services.AddCorsConfiguration(configuration);
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddCheck("live", () => HealthCheckResult.Healthy(), tags: ["live"])
+                .AddCheck<BffDependenciesHealthCheck>("dependencies", tags: ["ready"]);
             return services;
         }
 
@@ -50,8 +55,14 @@ namespace PlataformaEducacao.Bff.Api.Configurations
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health");
-                endpoints.MapHealthChecks("/health/ready");
+                endpoints.MapHealthChecks("/health/live", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains("live")
+                });
+                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains("ready")
+                });
             });
         }
     }
