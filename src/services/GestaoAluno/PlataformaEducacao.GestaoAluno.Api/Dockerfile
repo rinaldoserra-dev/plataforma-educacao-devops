@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
-USER root
-
 WORKDIR /app
 
 EXPOSE 8080
@@ -40,6 +38,8 @@ LABEL org.opencontainers.image.title="gestao-aluno-api" \
 COPY --from=publish /app/publish .
 
 COPY docker/entrypoint.sh /entrypoint.sh
+
+USER app
 
 RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/logs \
