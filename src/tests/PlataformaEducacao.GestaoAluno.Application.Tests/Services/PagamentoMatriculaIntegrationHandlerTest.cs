@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using PlataformaEducacao.Core.Data;
+using PlataformaEducacao.Core.DomainObjects;
 using PlataformaEducacao.Core.Messages.Integration;
 using PlataformaEducacao.GestaoAluno.Application.Services;
 using PlataformaEducacao.GestaoAluno.Domain;
@@ -77,6 +78,84 @@ namespace PlataformaEducacao.GestaoAluno.Application.Tests.Services
             _alunoRepositoryMock!.Verify(r => r.ObterMatriculaComAlunoPorId(_matricula.Id, It.IsAny<CancellationToken>()), Times.Once);
             _uowMock!.Verify(u => u.Commit(), Times.Once);
             Assert.Equal(SituacaoMatricula.Ativa, _matricula.SituacaoMatricula);
+        }
+
+        [Fact(DisplayName = "Recusar matrícula inexistente deve lançar erro de domínio")]
+        public async Task RecusarMatricula_MatriculaInexistente_DeveLancarDomainException()
+        {
+            ConfigurarUnitOfWorkMock();
+            ConfigurarServiceProviderMock();
+            _alunoRepositoryMock!.Setup(r => r.ObterMatriculaComAlunoPorId(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Matricula?)null);
+
+            Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>? acaoRecusar = null;
+            _messageBusMock.Setup(b => b.SubscribeAsync(
+                    It.IsAny<string>(), It.IsAny<Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>>()))
+                .Callback<string, Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>>((_, f) => acaoRecusar = f);
+
+            var handler = new PagamentoMatriculaIntegrationHandler(_messageBusMock.Object, _rootServiceProviderMock!.Object);
+            await handler.StartAsync(CancellationToken.None);
+
+            await Assert.ThrowsAsync<DomainException>(() => acaoRecusar!(new MatriculaPagamentoRecusadoIntegrationEvent(Guid.NewGuid())));
+        }
+
+        [Fact(DisplayName = "Finalizar matrícula inexistente deve lançar erro de domínio")]
+        public async Task FinalizarMatricula_MatriculaInexistente_DeveLancarDomainException()
+        {
+            ConfigurarUnitOfWorkMock();
+            ConfigurarServiceProviderMock();
+            _alunoRepositoryMock!.Setup(r => r.ObterMatriculaComAlunoPorId(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Matricula?)null);
+
+            Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>? acaoFinalizar = null;
+            _messageBusMock.Setup(b => b.SubscribeAsync(
+                    It.IsAny<string>(), It.IsAny<Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>>()))
+                .Callback<string, Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>>((_, f) => acaoFinalizar = f);
+
+            var handler = new PagamentoMatriculaIntegrationHandler(_messageBusMock.Object, _rootServiceProviderMock!.Object);
+            await handler.StartAsync(CancellationToken.None);
+
+            await Assert.ThrowsAsync<DomainException>(() => acaoFinalizar!(new MatriculaPagamentoRealizadoIntegrationEvent(Guid.NewGuid())));
+        }
+
+        [Fact(DisplayName = "Recusar matrícula quando commit falha deve lançar erro de domínio")]
+        public async Task RecusarMatricula_CommitFalha_DeveLancarDomainException()
+        {
+            CriarMatriculaTeste();
+            ConfigurarAlunoRepositoryMock();
+            ConfigurarUnitOfWorkMock();
+            _uowMock!.Setup(u => u.Commit()).ReturnsAsync(false);
+            ConfigurarServiceProviderMock();
+
+            Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>? acaoRecusar = null;
+            _messageBusMock.Setup(b => b.SubscribeAsync(
+                    It.IsAny<string>(), It.IsAny<Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>>()))
+                .Callback<string, Func<MatriculaPagamentoRecusadoIntegrationEvent, Task>>((_, f) => acaoRecusar = f);
+
+            var handler = new PagamentoMatriculaIntegrationHandler(_messageBusMock.Object, _rootServiceProviderMock!.Object);
+            await handler.StartAsync(CancellationToken.None);
+
+            await Assert.ThrowsAsync<DomainException>(() => acaoRecusar!(new MatriculaPagamentoRecusadoIntegrationEvent(_matricula!.Id)));
+        }
+
+        [Fact(DisplayName = "Finalizar matrícula quando commit falha deve lançar erro de domínio")]
+        public async Task FinalizarMatricula_CommitFalha_DeveLancarDomainException()
+        {
+            CriarMatriculaTeste();
+            ConfigurarAlunoRepositoryMock();
+            ConfigurarUnitOfWorkMock();
+            _uowMock!.Setup(u => u.Commit()).ReturnsAsync(false);
+            ConfigurarServiceProviderMock();
+
+            Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>? acaoFinalizar = null;
+            _messageBusMock.Setup(b => b.SubscribeAsync(
+                    It.IsAny<string>(), It.IsAny<Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>>()))
+                .Callback<string, Func<MatriculaPagamentoRealizadoIntegrationEvent, Task>>((_, f) => acaoFinalizar = f);
+
+            var handler = new PagamentoMatriculaIntegrationHandler(_messageBusMock.Object, _rootServiceProviderMock!.Object);
+            await handler.StartAsync(CancellationToken.None);
+
+            await Assert.ThrowsAsync<DomainException>(() => acaoFinalizar!(new MatriculaPagamentoRealizadoIntegrationEvent(_matricula!.Id)));
         }
 
         private void CriarMatriculaTeste()

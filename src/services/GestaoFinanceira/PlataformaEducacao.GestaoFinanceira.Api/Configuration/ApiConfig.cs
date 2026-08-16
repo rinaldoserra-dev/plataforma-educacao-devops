@@ -1,6 +1,11 @@
 ﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using PlataformaEducacao.GestaoFinanceira.Api.Data;
+using PlataformaEducacao.MessageBus.HealthChecks;
 using PlataformaEducacao.WebApi.Core.Extensions;
+using PlataformaEducacao.WebApi.Core.HealthChecks;
 using PlataformaEducacao.WebApi.Core.Identidade;
 
 namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
@@ -39,7 +44,10 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
             services.AddControllers();
 
             services.AddCorsConfiguration(configuration);
-            services.AddHealthChecks();
+            services.AddHealthChecks()
+                .AddCheck("live", () => HealthCheckResult.Healthy(), tags: ["live"])
+                .AddCheck<DatabaseHealthCheck<PagamentosContext>>("sqlserver", tags: ["ready"], timeout: TimeSpan.FromSeconds(5))
+                .AddCheck<MessageBusHealthCheck>("rabbitmq", tags: ["ready"], timeout: TimeSpan.FromSeconds(5));
 
             return services;
         }
@@ -62,8 +70,14 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Configuration
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHealthChecks("/health");
-                endpoints.MapHealthChecks("/health/ready");
+                endpoints.MapHealthChecks("/health/live", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains("live")
+                });
+                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions
+                {
+                    Predicate = check => check.Tags.Contains("ready")
+                });
             });
         }
     }

@@ -25,28 +25,28 @@ namespace PlataformaEducacao.MessageBus
             where T : IntegrationEvent
         {
             TryConnect();
-            _bus.Publish(message);
+            GetBus().Publish(message);
         }
 
         public async Task PublishAsync<T>(T message)
             where T : IntegrationEvent
         {
             TryConnect();
-            await _bus.PublishAsync(message);
+            await GetBus().PublishAsync(message);
         }
 
         public void Subscribe<T>(string subscriptionId, Action<T> onMessage)
             where T : class
         {
             TryConnect();
-            _bus.Subscribe(subscriptionId, onMessage);
+            GetBus().Subscribe(subscriptionId, onMessage);
         }
 
         public void SubscribeAsync<T>(string subscriptionId, Func<T, Task> onMessage)
             where T : class
         {
             TryConnect();
-            _bus.SubscribeAsync(subscriptionId, onMessage);
+            GetBus().SubscribeAsync(subscriptionId, onMessage);
         }
 
         public TResponse Request<TRequest, TResponse>(TRequest request)
@@ -54,7 +54,7 @@ namespace PlataformaEducacao.MessageBus
             where TResponse : ResponseMessage
         {
             TryConnect();
-            return _bus.Request<TRequest, TResponse>(request);
+            return GetBus().Request<TRequest, TResponse>(request);
         }
 
         public async Task<TResponse> RequestAsync<TRequest, TResponse>(TRequest request)
@@ -62,7 +62,7 @@ namespace PlataformaEducacao.MessageBus
             where TResponse : ResponseMessage
         {
             TryConnect();
-            return await _bus.RequestAsync<TRequest, TResponse>(request);
+            return await GetBus().RequestAsync<TRequest, TResponse>(request);
         }
 
         public IDisposable Respond<TRequest, TResponse>(Func<TRequest, TResponse> responder)
@@ -70,7 +70,7 @@ namespace PlataformaEducacao.MessageBus
             where TResponse : ResponseMessage
         {
             TryConnect();
-            return _bus.Respond(responder);
+            return GetBus().Respond(responder);
         }
 
         public IDisposable RespondAsync<TRequest, TResponse>(Func<TRequest, Task<TResponse>> responder)
@@ -78,7 +78,7 @@ namespace PlataformaEducacao.MessageBus
             where TResponse : ResponseMessage
         {
             TryConnect();
-            return _bus.RespondAsync(responder);
+            return GetBus().RespondAsync(responder);
         }
 
         public void Dispose()
@@ -95,12 +95,27 @@ namespace PlataformaEducacao.MessageBus
                 .WaitAndRetry(3, retryAttempt =>
                     TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
-            policy.Execute(() =>
+            try
             {
-                _bus = RabbitHutch.CreateBus(_connectionString);
-                _advancedBus = _bus.Advanced;
-                _advancedBus.Disconnected += OnDisconnect;
-            });
+                policy.Execute(() =>
+                {
+                    _bus = RabbitHutch.CreateBus(_connectionString);
+                    _advancedBus = _bus.Advanced;
+                    _advancedBus.Disconnected += OnDisconnect;
+                });
+            }
+            catch (Exception) when (_bus is null || IsConnected is false)
+            {
+                // Readiness reports the unavailable broker while the API remains startable.
+            }
+        }
+
+        private IBus GetBus()
+        {
+            if (_bus is null || IsConnected is false)
+                throw new EasyNetQException("RabbitMQ is not connected.");
+
+            return _bus;
         }
 
         private void OnDisconnect(object? s, EventArgs e)

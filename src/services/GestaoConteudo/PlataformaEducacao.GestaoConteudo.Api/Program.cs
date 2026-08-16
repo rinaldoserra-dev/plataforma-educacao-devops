@@ -7,17 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureAppSettings();
 builder.Host.AddLoggingConfiguration(builder.Configuration, "GestaoConteudo");
 builder.Services.AddCorrelationIdConfiguration(builder.Configuration);
+builder.Services.AddMetricsConfiguration();
 
 builder.Services
     .AddApiConfiguration(builder.Configuration)
     .AddSwaggerConfiguration()
     .AddDbContextConfig(builder.Configuration, builder.Environment)
     .AddJwtConfiguration(builder.Configuration)
-    .RegisterServices();
+    .RegisterServices()
+    .AddMessageBusConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseLoggingConfiguration()
+app.UseMetricsConfiguration()
+   .UseLoggingConfiguration()
    .UseSwaggerConfiguration()
    .UseApiConfiguration(app.Environment);
 

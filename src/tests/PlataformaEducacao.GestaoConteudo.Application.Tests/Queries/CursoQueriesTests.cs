@@ -106,6 +106,17 @@ namespace PlataformaEducacao.GestaoConteudo.Application.Tests.Queries
             Assert.Equal(curso.Aulas.Count, resultado.Count());
         }
 
+        [Fact(DisplayName = "Deve retornar lista vazia quando curso não existir")]
+        public async Task ObterAulasPorCursoId_DeveRetornarListaVazia_QuandoCursoNaoExistir()
+        {
+            _cursoRepositoryMock.Setup(r => r.ObterComAulasPorId(It.IsAny<Guid>(), default))
+                .ReturnsAsync((Curso)null!);
+
+            var resultado = await _queries.ObterAulasPorCursoId(Guid.NewGuid(), default);
+
+            Assert.Empty(resultado);
+        }
+
         [Fact(DisplayName = "Deve retornar o curso com as aulas do curso")]
         [Trait("Categoria", "Gestao Conteudo - CursoQueries")]
         public async Task ObterCursoComAulasPorCursoId_DeveRetornarCursoComAulas()

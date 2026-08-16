@@ -45,6 +45,7 @@ namespace PlataformaEducacao.Bff.Api.Configurations
                     p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
 
             services.AddHttpClient<IHealthCheckService, HealthCheckService>()
+                .ConfigureHttpClient(client => client.Timeout = TimeSpan.FromSeconds(5))
                 .AddCorrelationIdForwarding()
                 .AddPolicyHandler(PollyExtensions.EsperarTentar())
                 .AddTransientHttpErrorPolicy(

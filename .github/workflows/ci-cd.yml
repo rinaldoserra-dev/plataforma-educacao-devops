@@ -121,18 +121,49 @@ jobs:
       - name: Verificar formatação
         run: dotnet format PlataformaEducacao.sln --verify-no-changes --no-restore
 
+  observability-validation:
+    name: Validar observabilidade
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validar Docker Compose
+        run: docker compose config --quiet
+
+      - name: Validar configurações Prometheus e Grafana
+        run: |
+          test -s observability/prometheus/prometheus.yml
+          grep -q 'bff-api:8080' observability/prometheus/prometheus.yml
+          grep -q 'gestao-identidade-api:8080' observability/prometheus/prometheus.yml
+          grep -q 'gestao-conteudo-api:8080' observability/prometheus/prometheus.yml
+          grep -q 'gestao-aluno-api:8080' observability/prometheus/prometheus.yml
+          grep -q 'gestao-financeira-api:8080' observability/prometheus/prometheus.yml
+          jq empty observability/grafana/dashboards/plataforma-overview.json
+
+      - name: Validar endpoints declarados
+        run: |
+          grep -R -q '/health/live' k8s
+          grep -R -q '/health/ready' k8s
+          grep -R -q 'UseMetricsConfiguration' src
+
   docker-push:
     name: Build e Push das Imagens
 
     needs:
       - build-test
       - lint
+      - observability-validation
 
     if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
 
     runs-on: ubuntu-latest
 
     permissions:
+      actions: write
       contents: read
 
     strategy:
@@ -160,6 +191,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login Docker Hub
         uses: docker/login-action@v3
         with:
@@ -172,6 +206,8 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           push: true
+          cache-from: type=gha,scope=${{ matrix.service }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.service }}
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/plataforma-educacao-${{ matrix.service }}:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/plataforma-educacao-${{ matrix.service }}:${{ github.sha }}

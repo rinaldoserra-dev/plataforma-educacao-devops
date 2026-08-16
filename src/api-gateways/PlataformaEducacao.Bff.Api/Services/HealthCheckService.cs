@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using PlataformaEducacao.Bff.Api.Extensions;
 using PlataformaEducacao.Bff.Api.Models.Health;
@@ -56,7 +57,7 @@ namespace PlataformaEducacao.Bff.Api.Services
         {
             try
             {
-                using var response = await _httpClient.GetAsync($"{url.TrimEnd('/')}/swagger/index.html");
+                using var response = await _httpClient.GetAsync($"{url.TrimEnd('/')}/health/ready");
 
                 return new HealthStatusDTO
                 {
