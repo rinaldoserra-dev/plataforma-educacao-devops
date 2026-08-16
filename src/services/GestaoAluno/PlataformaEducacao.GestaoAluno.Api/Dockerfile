@@ -1,5 +1,9 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
+USER root
+
 WORKDIR /app
+
 EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -35,8 +39,10 @@ LABEL org.opencontainers.image.title="gestao-aluno-api" \
 
 COPY --from=publish /app/publish .
 
-RUN mkdir -p /app/logs && chown -R app:app /app
+COPY docker/entrypoint.sh /entrypoint.sh
 
-USER app
+RUN chmod +x /entrypoint.sh \
+    && mkdir -p /app/logs \
+    && chown -R app:app /app
 
-ENTRYPOINT ["dotnet", "PlataformaEducacao.GestaoAluno.Api.dll"]
+ENTRYPOINT ["/entrypoint.sh"]
