@@ -8,7 +8,7 @@ namespace PlataformaEducacao.GestaoFinanceira.Api.Data
         public PagamentosContext CreateDbContext(string[] args)
         {
             var options = new DbContextOptionsBuilder<PagamentosContext>()
-                .UseSqlServer("Server=localhost,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
+                .UseSqlServer("Server=localhost,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=False")
                 .Options;
 
             return new PagamentosContext(options);

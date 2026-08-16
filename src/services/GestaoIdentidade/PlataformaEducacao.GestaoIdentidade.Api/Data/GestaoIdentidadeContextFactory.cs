@@ -8,7 +8,7 @@ namespace PlataformaEducacao.GestaoIdentidade.Api.Data
         public GestaoIdentidadeContext CreateDbContext(string[] args)
         {
             var options = new DbContextOptionsBuilder<GestaoIdentidadeContext>()
-                .UseSqlServer("Server=localhost,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
+                .UseSqlServer("Server=localhost,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=False")
                 .Options;
 
             return new GestaoIdentidadeContext(options);

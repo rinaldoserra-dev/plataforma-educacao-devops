@@ -11,7 +11,7 @@ namespace PlataformaEducacao.GestaoAluno.Data
         public GestaoAlunoContext CreateDbContext(string[] args)
         {
             var options = new DbContextOptionsBuilder<GestaoAlunoContext>()
-                .UseSqlServer("Server=localhost,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
+                .UseSqlServer("Server=localhost,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=False")
                 .Options;
 
             return new GestaoAlunoContext(options, new DesignTimeMediatorHandler());

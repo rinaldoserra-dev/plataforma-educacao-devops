@@ -8,7 +8,7 @@ namespace PlataformaEducacao.GestaoConteudo.Data
         public GestaoConteudoContext CreateDbContext(string[] args)
         {
             var options = new DbContextOptionsBuilder<GestaoConteudoContext>()
-                .UseSqlServer("Server=localhost,1433;Database=GestaoConteudo;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False")
+                .UseSqlServer("Server=localhost,1433;Database=GestaoConteudo;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=False")
                 .Options;
 
             return new GestaoConteudoContext(options);
