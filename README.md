@@ -312,7 +312,7 @@ O script `k8s/deploy.sh` orquestra toda a aplicação dos manifests na ordem cor
 ./k8s/deploy.sh
 ```
 
-> **Importante:** execute o script **a partir da raiz do repositório** (não de dentro de `k8s/`), pois ele referencia os manifests com caminho relativo (`k8s/namespace.yaml`, etc.). No Windows, use Git Bash, WSL ou PowerShell com `bash k8s/deploy.sh`.
+> **Importante:** execute o script **a partir da raiz do repositório** (não de dentro de `k8s/`), pois ele referencia os manifests com caminho relativo (`k8s/namespace.yaml`, etc.). No Windows, use Git Bash com `bash k8s/deploy.sh` ou PowerShell com `powershell -ExecutionPolicy Bypass -File .\k8s\deploy.ps1`.
 
 > Caso queira pular o script e aplicar manualmente, use `kubectl apply -f k8s/` (pode ocorrer race condition no namespace na primeira execução — aguarde alguns segundos e execute novamente).
 
