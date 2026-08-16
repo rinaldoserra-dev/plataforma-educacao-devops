@@ -404,7 +404,7 @@ Cada linha é um JSON compacto (formato `Serilog.Formatting.Compact`) contendo `
 Para rastrear uma requisição ponta-a-ponta entre serviços, envie um header `X-Correlation-ID` e procure o mesmo valor nos logs de todos os pods envolvidos:
 
 ```bash
-curl -i -H "X-Correlation-ID: meu-teste-123" http://plataforma.local/api/alunos/matriculas-ativas
+curl -i -H "X-Correlation-ID: meu-teste-123" http://plataforma.local/alunos/matriculas-ativas
 kubectl logs -n plataforma-educacao -l app=bff-api          | grep meu-teste-123
 kubectl logs -n plataforma-educacao -l app=gestao-aluno-api  | grep meu-teste-123
 ```
@@ -523,7 +523,7 @@ Todas as APIs possuem Swagger configurado com autenticação Bearer JWT.
 
 ### Autenticação no Swagger
 
-1. Faça login via **Identidade API**: `POST /api/identidade/autenticar`
+1. Faça login via **Identidade API**: `POST /identidade/autenticar`
 2. Copie o `accessToken` da resposta
 3. Clique em **Authorize** no Swagger e insira `Bearer {token}`
 
