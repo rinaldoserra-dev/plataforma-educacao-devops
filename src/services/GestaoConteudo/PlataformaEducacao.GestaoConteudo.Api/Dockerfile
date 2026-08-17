@@ -1,4 +1,5 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
 WORKDIR /app
 EXPOSE 8080
 
@@ -35,8 +36,13 @@ LABEL org.opencontainers.image.title="gestao-conteudo-api" \
 
 COPY --from=publish /app/publish .
 
-RUN mkdir -p /app/logs && chown -R app:app /app
+COPY docker/entrypoint.sh /entrypoint.sh
 
 USER app
 
-ENTRYPOINT ["dotnet", "PlataformaEducacao.GestaoConteudo.Api.dll"]
+RUN chmod +x /entrypoint.sh \
+    && mkdir -p /app/logs \
+    && chown -R app:app /app
+
+ENTRYPOINT ["/entrypoint.sh"]
+

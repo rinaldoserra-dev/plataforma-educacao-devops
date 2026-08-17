@@ -1,15 +1,67 @@
 services:
+  cert-generator:
+    image: alpine:3.20
+    container_name: plataforma-cert-generator
+
+    volumes:
+      - certificates-data:/certificates
+      - ./certificates/sqlserver.cnf:/config/sqlserver.cnf:ro
+
+    command: >
+      /bin/sh -c "
+      apk add --no-cache openssl &&
+
+      if [ ! -f /certificates/root-ca.crt ]; then
+        echo 'Gerando certificados...';
+
+        openssl genrsa -out /certificates/root-ca.key 2048 &&
+
+        openssl req -x509 -new -nodes -key /certificates/root-ca.key -sha256 -days 3650 -out /certificates/root-ca.crt -subj '/CN=PlataformaEducacao-Root-CA' &&
+
+        openssl genrsa -out /certificates/sqlserver.key 2048 &&
+
+        openssl req -new -key /certificates/sqlserver.key -out /certificates/sqlserver.csr -config /config/sqlserver.cnf &&
+
+        openssl x509 -req -in /certificates/sqlserver.csr -CA /certificates/root-ca.crt -CAkey /certificates/root-ca.key -CAcreateserial -out /certificates/sqlserver.crt -days 825 -sha256 -extensions req_ext -extfile /config/sqlserver.cnf &&
+
+        chmod 644 /certificates/root-ca.crt &&
+        chmod 644 /certificates/sqlserver.crt &&
+        chmod 644 /certificates/sqlserver.key &&
+        chmod 600 /certificates/root-ca.key &&
+
+        echo 'Certificados gerados com sucesso.';
+      else
+        echo 'Certificados já existem.';
+      fi
+      "
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: plataforma-sqlserver
+    
+    depends_on:
+      cert-generator:
+        condition: service_completed_successfully
+
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+      - certificates-data:/var/opt/mssql/certs:ro
+      - ./certificates/mssql.conf:/var/opt/mssql/mssql.conf:ro
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=Plataforma@2026
     ports:
       - "1433:1433"
-    volumes:
-      - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Plataforma@2026' -C -Q 'SELECT 1' || exit 1"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
     networks:
       - plataforma-network
 
@@ -33,15 +85,21 @@ services:
       - "5430:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
+      - APP_DLL=PlataformaEducacao.GestaoIdentidade.Api.dll
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoIdentidade;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
     volumes:
       - ./logs/identidade:/app/logs
+      - certificates-data:/certificates:ro
     networks:
       - plataforma-network
     depends_on:
-      - sqlserver
-      - rabbitmq
+      cert-generator:
+        condition: service_completed_successfully
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
 
   gestao-financeira-api:
     build:
@@ -53,15 +111,21 @@ services:
       - "7083:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
+      - APP_DLL=PlataformaEducacao.GestaoFinanceira.Api.dll
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoFinanceira;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
     volumes:
       - ./logs/financeira:/app/logs
+      - certificates-data:/certificates:ro
     networks:
       - plataforma-network
     depends_on:
-      - sqlserver
-      - rabbitmq
+      cert-generator:
+        condition: service_completed_successfully
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
 
   gestao-aluno-api:
     build:
@@ -73,15 +137,21 @@ services:
       - "5460:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
+      - APP_DLL=PlataformaEducacao.GestaoAluno.Api.dll
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoAluno;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
     volumes:
       - ./logs/aluno:/app/logs
+      - certificates-data:/certificates:ro
     networks:
       - plataforma-network
     depends_on:
-      - sqlserver
-      - rabbitmq
+      cert-generator:
+        condition: service_completed_successfully
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
 
   gestao-conteudo-api:
     build:
@@ -93,15 +163,21 @@ services:
       - "5440:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoConteudo;User Id=sa;Password=Plataforma@2026;TrustServerCertificate=True
+      - APP_DLL=PlataformaEducacao.GestaoConteudo.Api.dll
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=GestaoConteudo;User Id=sa;Password=Plataforma@2026;Encrypt=True;TrustServerCertificate=False
       - MessageQueueConnection__MessageBus=host=rabbitmq:5672;publisherConfirms=true;timeout=10
     volumes:
       - ./logs/conteudo:/app/logs
+      - certificates-data:/certificates:ro
     networks:
       - plataforma-network
     depends_on:
-      - sqlserver
-      - rabbitmq
+      cert-generator:
+        condition: service_completed_successfully
+      sqlserver:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_started
 
   bff-api:
     build:
@@ -169,3 +245,4 @@ volumes:
   sqlserver-data:
   prometheus-data:
   grafana-data:
+  certificates-data:

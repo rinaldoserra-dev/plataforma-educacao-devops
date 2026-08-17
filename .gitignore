@@ -378,3 +378,12 @@ MigrationBackup/
 # Logs estruturados gerados pelo Serilog (Console + arquivo rotativo logs/log-*.txt)
 logs/
 **/logs/
+
+################################################################################
+# Certificados locais
+################################################################################
+# Certificados, chaves privadas e arquivos auxiliares gerados localmente
+certificates/*.key
+certificates/*.crt
+certificates/*.csr
+certificates/*.srl
