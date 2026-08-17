@@ -184,8 +184,8 @@ feature/ branch --> PR --> main
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/rinaldoserra-dev/plataforma-devops.git
-   cd plataforma-devops
+   git clone https://github.com/rinaldoserra-dev/plataforma-educacao-devops.git
+   cd plataforma-educacao-devops
    ```
 
 2. Inicie o RabbitMQ:
