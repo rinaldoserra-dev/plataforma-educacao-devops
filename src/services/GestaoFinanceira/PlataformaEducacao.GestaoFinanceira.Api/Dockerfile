@@ -35,8 +35,6 @@ COPY --from=publish /app/publish .
 
 COPY docker/entrypoint.sh /entrypoint.sh
 
-USER app
-
 RUN chmod +x /entrypoint.sh \
     && mkdir -p /app/logs \
     && chown -R app:app /app
